@@ -69,3 +69,15 @@ export interface Overview {
     produccion: number;
   };
 }
+
+
+export type AccesoTecnologia = {
+  anio: number;
+  trimestre: number;
+  total: number;
+  fibra_optica: number;
+  cablemodem: number;
+  adsl: number;
+  wireless: number;
+  otros: number;
+};
