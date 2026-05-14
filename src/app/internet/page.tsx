@@ -4,7 +4,7 @@ import Link from "next/link";
 import { useLatestTwo } from "@/hooks/use-latest-two";
 import { trendPct, firstNumKey } from "@/lib/utilsInternet";
 import { dispValue, dispCurrency } from "@/lib/format";
-import { CustomTooltip } from "@/components/internet/tooltip";
+// import { CustomTooltip } from "@/components/internet/tooltip";
 import { KPICard } from "@/components/internet/kpi-card";
 import { DonutChart } from "@/components/internet/donut-chart";
 import { VelocidadGauge } from "@/components/internet/velocidad-gauge";
@@ -22,14 +22,16 @@ const NAV_ITEMS = [
       </svg>
     ),
   },
-  { 
-    href: "/internet/accesos", 
-    title: "Accesos por provincia", 
-    desc: "Ranking provincial y composición local.", 
-    badge: "2 endpoints" },
-  { 
-    href: "/internet/penetracion", 
-    title: "Penetración", desc: "Accesos cada 100 hogares y habitantes.", badge: "2 endpoints" },
+  {
+    href: "/internet/accesos",
+    title: "Accesos por provincia",
+    desc: "Ranking provincial y composición local.",
+    badge: "2 endpoints"
+  },
+  {
+    href: "/internet/penetracion",
+    title: "Penetración", desc: "Accesos cada 100 hogares y habitantes.", badge: "2 endpoints"
+  },
   // ... agrega los que necesites
 ];
 
@@ -105,7 +107,7 @@ export default function InternetPage() {
         {/* Visualizaciones */}
         <section className="charts-container">
           <ChartWrapper title="Composición por tecnología" sub={`Nacional — ${periodo}`}>
-            <DonutChart cur={tecnologias.cur} prev={tecnologias.prev} />
+            <DonutChart cur={tecnologias.cur} />
           </ChartWrapper>
 
           <ChartWrapper title="Velocidad media" sub="Mbps de descarga">

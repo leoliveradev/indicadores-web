@@ -3,7 +3,11 @@ import Link from "next/link";
 export function NavCard({
   href, icon, title, desc, badge,
 }: {
-  href: string; icon: React.ReactNode; title: string; desc: string; badge?: string;
+  href: string; 
+  icon?: React.ReactNode; 
+  title: string; 
+  desc: string; 
+  badge?: string;
 }) {
   return (
     <Link href={href} style={{ textDecoration: "none" }}>
