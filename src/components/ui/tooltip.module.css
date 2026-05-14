@@ -1,0 +1,30 @@
+.container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Tooltip oculto */
+.tooltip {
+  position: absolute;
+  bottom: 120%;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background: #111;
+  color: #fff;
+  font-size: 11px;
+  padding: 6px 8px;
+  border-radius: 6px;
+
+  white-space: nowrap;
+
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.2s ease;
+}
+
+/* Mostrar en hover */
+.container:hover .tooltip {
+  opacity: 1;
+  visibility: visible;
+}
