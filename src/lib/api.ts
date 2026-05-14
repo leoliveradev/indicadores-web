@@ -1,4 +1,4 @@
-import { AccesoTecnologia, ApiResponse, BaseResponseAPI } from "./types"
+import { ApiResponse, BaseResponseAPI } from "./types"
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3333'
 
@@ -54,9 +54,4 @@ export async function getOverview() {
 async function get<T>(path: string, revalidate = 3600): Promise<T> {
   const res = await fetch(`${API_URL}${path}`, { next: { revalidate } })
   return res.json() as Promise<T>
-}
-
-export async function getAccesosTecnologias(): Promise<AccesoTecnologia[]> {
-  const res = await get<ApiResponse<AccesoTecnologia>>("api/v1/internet/accesos/tecnologias")
-  return res.data
 }
