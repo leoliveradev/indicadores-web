@@ -21,6 +21,9 @@
   opacity: 0;
   visibility: hidden;
   transition: opacity 0.2s ease;
+  pointer-events: none;
+  
+  z-index: 999;
 }
 
 /* Mostrar en hover */

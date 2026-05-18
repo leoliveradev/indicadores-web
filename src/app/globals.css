@@ -157,39 +157,10 @@ html, body { height: 100%; margin: 0; padding: 0; background: var(--bg); color: 
 /* ── KPI Cards (home style — vertical, like ENACOM site) ── */
 .kpi-cards-grid {
   display: grid;
+  position: relative;
   grid-template-columns: repeat(4, 1fr);
   gap: 14px;
 }
-.kpi-card-home {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius-lg);
-  padding: 22px 18px 18px;
-  text-align: center;
-  box-shadow: var(--shadow-card);
-  display: flex; flex-direction: column; align-items: center;
-  transition: box-shadow 0.15s, border-color 0.15s;
-}
-.kpi-card-home:hover {
-  box-shadow: 0 4px 20px rgba(11,23,66,0.13);
-  border-color: var(--border-strong);
-}
-.kpi-icon { margin-bottom: 10px; }
-.kpi-service { font-size: 12px; color: var(--text-secondary); margin: 0 0 6px; font-weight: 400; }
-.kpi-service small { display: block; font-size: 10px; color: var(--text-muted); }
-.kpi-number { font-size: 20px; font-weight: 600; color: var(--enacom-navy); margin: 0 0 14px; line-height: 1.2; }
-.kpi-unit { font-size: 12px; font-weight: 400; color: var(--text-secondary); }
-.btn-chart {
-  display: inline-flex; align-items: center; gap: 6px;
-  font-size: 11px; font-weight: 500; font-family: var(--font);
-  padding: 7px 14px; border-radius: var(--radius);
-  border: 1.5px solid var(--border-strong);
-  background: var(--surface); color: var(--text-secondary);
-  cursor: pointer; text-decoration: none;
-  transition: border-color 0.1s, color 0.1s, background 0.1s;
-  margin-top: auto;
-}
-.btn-chart:hover { border-color: var(--blue-300); color: var(--blue-400); background: var(--blue-100); }
 
 /* ── Alternating section bg ── */
 .section-wrap.alt { background: var(--bg); }
