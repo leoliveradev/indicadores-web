@@ -1,3 +1,5 @@
+import { MONTHS } from "./constant";
+
 export const fmtNumber = (v: number, decimals = 0) =>
   new Intl.NumberFormat("es-AR", {
     minimumFractionDigits: decimals,
@@ -92,3 +94,13 @@ export const dispCurrency = (v?: number) =>
 
 export const dispCurrencyCompact = (v?: number) =>
   v == null ? null : fmtCurrencyCompact(v);
+
+export const fmtPeriod = (period?: string) => {
+  if (!period) return "Último período disponible";
+
+  const [anio, mes] = period.split("-");
+
+  const mesLabel = MONTHS[mes] ?? "Período";
+
+  return `${mesLabel} ${anio}`;
+}

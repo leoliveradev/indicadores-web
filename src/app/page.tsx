@@ -1,19 +1,13 @@
 import { getOverview } from "@/lib/api";
 import { getAccesosItems, getFacturacionItems, getMiscelaneasItems, getPenetrationItems, getPortabilidadItems, getPostalItems } from "@/lib/home/sections";
 import { KPISection } from "@/components/home/kpi-section";
+import { fmtPeriod } from "@/lib/format";
 
-// mejorarlo
-function formatPeriodo(periodo: string) {
-  if (!periodo) return "Último período disponible";
-
-  const [anio, mes] = periodo.split("-");
-  return `${mes === "12" ? "Diciembre" : "Mes"} ${anio}`;
-}
 
 export default async function HomePage() {
   const data = await getOverview();
 
-  const periodo = formatPeriodo(data.periodo);
+  const period = fmtPeriod(data.periodo);
 
   return (
     <>
@@ -21,10 +15,10 @@ export default async function HomePage() {
       <div className="home-hero">
         <div className="home-hero-inner">
           <div className="home-period-badge">
-            Indicadores a {periodo}
+            {period} · Datos oficiales ENACOM
           </div>
           <h1 className="home-title">
-            Indicadores del Sector TIC · Argentina
+            Indicadores del sector TIC en Argentina
           </h1>
         </div>
       </div>
