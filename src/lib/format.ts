@@ -1,4 +1,4 @@
-import { MONTHS } from "./constant";
+import { MONTHS } from "@/lib/constants/dates";
 
 export const fmtNumber = (v: number, decimals = 0) =>
   new Intl.NumberFormat("es-AR", {

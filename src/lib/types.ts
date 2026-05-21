@@ -6,7 +6,6 @@ export interface BaseResponseAPI {
   anio: number;
   trimestre: number;
   mes: number;
-  [key: string]: number ;
 }
 
 export type AsyncState<T> = 
@@ -14,13 +13,6 @@ export type AsyncState<T> =
   | { status: 'loading'; data: null; error: null }
   | { status: 'success'; data: T; error: null }
   | { status: 'error'; data: null; error: Error };
-
-export const TRIMESTRES_LABELS: Record<number, string> = {
-  1: 'T1 - Ene-Mar',
-  2: 'T2 - Abr-Jun',
-  3: 'T3 - Jul-Sep',
-  4: 'T4 - Oct-Dic',
-};
 
 export interface Overview {
   periodo: string;
@@ -70,8 +62,7 @@ export interface Overview {
   };
 }
 
-
-export type AccesoTecnologia = {
+export type InternetAccesosTecnologia = {
   anio: number;
   trimestre: number;
   total: number;
@@ -80,4 +71,27 @@ export type AccesoTecnologia = {
   adsl: number;
   wireless: number;
   otros: number;
+};
+
+export type InternetTecnologiaRow = {
+  periodo: string;
+  fibra_optica: number;
+  cablemodem: number;
+  adsl: number;
+  wireless: number;
+  otros: number;
+  total: number;
+};
+
+export type InternetVelocidadMediaRow = {
+  anio: number;
+  trimestre: number;
+  Mbps: number;
+};
+
+export type InternetPenetracionRow = {
+  anio: number;
+  trimestre: number;
+  accesos_cada_100_hogares: number;
+  accesos_cada_100_habitantes: number;
 };

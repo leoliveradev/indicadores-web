@@ -3,11 +3,11 @@ export const BASE_URL =
 
 export interface EndpointConfig {
   path: string;
-  label: string;        // Nombre para la UI
-  tab: string;          // Tab en la página de detalle
+  label: string;
+  tab: string;
   hasProvincias?: boolean;
   hasLocalidades?: boolean;
-  unit?: string;        // Unidad de la métrica principal
+  unit?: string;
 }
 
 // ── Internet ──────────────────────────────────────────────────────────
