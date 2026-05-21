@@ -1,7 +1,8 @@
-import { getOverview } from "@/lib/api";
+import { getOverview } from "@/lib/api/home";
 import { getAccesosItems, getFacturacionItems, getMiscelaneasItems, getPenetrationItems, getPortabilidadItems, getPostalItems } from "@/lib/home/sections";
 import { KPISection } from "@/components/home/kpi-section";
 import { fmtPeriod } from "@/lib/format";
+import { PageHero } from "@/components/layout/page-hero";
 
 
 export default async function HomePage() {
@@ -12,16 +13,11 @@ export default async function HomePage() {
   return (
     <>
       {/* HERO */}
-      <div className="home-hero">
-        <div className="home-hero-inner">
-          <div className="home-period-badge">
-            {period} · Datos oficiales ENACOM
-          </div>
-          <h1 className="home-title">
-            Indicadores del sector TIC en Argentina
-          </h1>
-        </div>
-      </div>
+
+      <PageHero
+        title="Indicadores del sector TIC en Argentina"
+        subtitle={`${period} · Datos oficiales ENACOM`}
+      />
 
       {/* SECTIONS */}
       <KPISection
