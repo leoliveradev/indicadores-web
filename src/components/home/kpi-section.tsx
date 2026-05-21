@@ -1,7 +1,7 @@
-import { Section } from "./section";
-import { KPIValCard } from "./kpi-val-card";
+import { Section } from "@/components/home/section";
+import { KPIValCard } from "@/components/home/kpi-val-card";
 
-type KPIItem = {
+export type KPIItem = {
   label: string;
   icon: React.ComponentType;
   value: number;

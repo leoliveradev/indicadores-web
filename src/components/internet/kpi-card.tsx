@@ -1,4 +1,4 @@
-import { TrendBadge } from "./trend-badge";
+import { TrendBadge } from "@/components/internet/trend-badge";
 
 export function KPICard({
   label, value, trend,

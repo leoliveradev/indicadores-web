@@ -1,6 +1,6 @@
 import Link from "next/link";
-import { Tooltip } from "../ui/tooltip-wrapper";
-import styles from "./kpi-val-card.module.css";
+import { Tooltip } from "@/components/ui/tooltip-wrapper";
+import styles from "@/components/home/kpi-val-card.module.css";
 
 type Props = {
   label: string;

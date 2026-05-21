@@ -1,4 +1,4 @@
-import styles from "./tooltip.module.css";
+import styles from "@/components/ui/tooltip.module.css";
 
 export function Tooltip({
   text,

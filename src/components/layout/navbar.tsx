@@ -42,7 +42,7 @@ const SERVICIOS = [
     ),
   },
   {
-    href: "/tv",
+    href: "/television",
     label: "Televisión por Suscripción",
     sub: "Accesos, penetración, ingresos",
     color: "#EEAE42",
