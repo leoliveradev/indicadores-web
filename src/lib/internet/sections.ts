@@ -1,11 +1,29 @@
-import { IInternet, IVel, IDinero } from "@/components/ui/icons";
+import { IInternet, IVelocidad, IDinero } from "@/components/ui/icons";
 import { dispValue, dispCurrencyCompact } from "@/lib/format";
 import type { InternetTecnologiaRow, Overview, InternetVelocidadMediaRow, ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { TECH_CONFIG } from "@/lib/constants/internet";
+import { TECH_CONFIG, TECH_CONFIG_KPI } from "@/lib/constants/internet";
 
 import { trendPct } from "@/lib/utilsInternet";
+
+export function getTecnologiaKPIItems(
+  response: ApiResponse<InternetTecnologiaRow>
+): KPIItem[] {
+  const rows = response.data;
+
+  if (!rows.length) return [];
+
+  const cur = rows[rows.length - 1];
+
+  return TECH_CONFIG_KPI.map((t) => ({
+    label: t.label,
+    icon: () => null, // iconos específicos
+    value: cur[t.key],
+    format: (v: number) => dispValue(v, { format: "compact" }),
+  }));
+}
+
 
 export function getInternetOverviewItems(data: Overview): KPIItem[] {
   return [
@@ -32,7 +50,7 @@ export function getInternetOverviewItems(data: Overview): KPIItem[] {
     },
     {
       label: "Velocidad media",
-      icon: IVel,
+      icon: IVelocidad,
       value: data.miscelaneas.velocidad_mbps,
       format: (v) => dispValue(v, { decimals: 1, suffix: "Mbps" }),
     },

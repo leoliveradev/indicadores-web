@@ -15,7 +15,6 @@ import {
 } from "@/lib/internet/sections";
 import { PageHero } from "@/components/layout/page-hero";
 
-
 export default async function InternetPage() {
   const data = await getOverview();
 
@@ -48,7 +47,6 @@ export default async function InternetPage() {
 
 
       {/* EXPLORATION */}
-      <InternetTabs />
-    </>
+      <InternetTabs tecnologias={tecnologias} />    </>
   );
 }

@@ -1,6 +1,9 @@
 "use client";
 
 import { useState } from "react";
+import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
+import { getInternetTecnologias } from "@/lib/api/internet";
+import { ApiResponse, InternetTecnologiaRow } from "@/lib/types";
 
 const TABS = [
   { key: "tecnologia", label: "Tecnología" },
@@ -9,7 +12,10 @@ const TABS = [
   { key: "ingresos", label: "Ingresos" },
 ];
 
-export function InternetTabs() {
+
+export function InternetTabs({ tecnologias }: {
+  tecnologias: ApiResponse<InternetTecnologiaRow>
+}) {
   const [active, setActive] = useState("tecnologia");
 
   return (
@@ -30,9 +36,14 @@ export function InternetTabs() {
 
         {/* CONTENIDO DINÁMICO */}
         <div>
-          {active === "tecnologia" && <div>Contenido tecnología</div>}
-          {active === "penetracion" && <div>Contenido penetración</div>}
+          <div>
+            {active === "tecnologia" && (
+              <InternetTecnologia data={tecnologias} />
+            )}
+          </div>
+
           {active === "velocidad" && <div>Contenido velocidad</div>}
+          {active === "penetracion" && <div>Contenido penetración</div>}
           {active === "ingresos" && <div>Contenido ingresos</div>}
         </div>
 

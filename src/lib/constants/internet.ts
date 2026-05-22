@@ -1,7 +1,7 @@
-import type { InternetAccesosTecnologia } from "@/lib/types";
+import type { InternetTecnologiaRow } from "@/lib/types";
 
 export type TechKey = keyof Omit<
-  InternetAccesosTecnologia,
+  InternetTecnologiaRow,
   "anio" | "trimestre" | "total"
 >;
 
@@ -18,3 +18,8 @@ export const TECH_CONFIG: TechConfig[] = [
   { key: "wireless",     label: "Wireless",     color: "#BA7517" },
   { key: "otros",        label: "Otros",        color: "#993C1D" },
 ];
+
+
+export const TECH_CONFIG_KPI = TECH_CONFIG.filter(
+  (t) => t.key !== "otros"
+);
