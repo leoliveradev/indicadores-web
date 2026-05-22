@@ -62,19 +62,9 @@ export interface Overview {
   };
 }
 
-export type InternetAccesosTecnologia = {
+export type InternetTecnologiaRow = {
   anio: number;
   trimestre: number;
-  total: number;
-  fibra_optica: number;
-  cablemodem: number;
-  adsl: number;
-  wireless: number;
-  otros: number;
-};
-
-export type InternetTecnologiaRow = {
-  periodo: string;
   fibra_optica: number;
   cablemodem: number;
   adsl: number;
