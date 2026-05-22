@@ -1,4 +1,4 @@
-import { IFija, IInternet, ITV, IMovil, IPort, IVel, IDinero, IPostal, } from "@/components/ui/icons";
+import { IFija, IInternet, ITV, IMovil, IDinero, IPostal, IFibra, I4G, ISatelital, IVelocidad, } from "@/components/ui/icons";
 import { dispValue, dispCurrencyCompact } from "@/lib/format";
 import { Overview } from "@/lib/types";
 
@@ -126,7 +126,7 @@ export function getMiscelaneasItems(data: Overview): KPIItem[] {
   return [
     {
       label: "Velocidad media de descarga",
-      icon: IVel,
+      icon: IVelocidad,
       format: (v: number) => dispValue(v, { decimals: 2, suffix: "Mbps" }),
       value: data.miscelaneas.velocidad_mbps,
       tooltip: "Velocidad media de descarga en Megabits por segundo (Mbps)",
@@ -134,7 +134,7 @@ export function getMiscelaneasItems(data: Overview): KPIItem[] {
     },
     {
       label: "Fibra óptica",
-      icon: IInternet,
+      icon: IFibra,
       format: (v: number) => dispValue(v, { decimals: 2, suffix: "%" }),
       value: data.miscelaneas.fibra_pct,
       tooltip: "Crecimiento anual en porcentaje de accesos de fibra óptica",
@@ -142,7 +142,7 @@ export function getMiscelaneasItems(data: Overview): KPIItem[] {
     },
     {
       label: "Internet satelital",
-      icon: IInternet,
+      icon: ISatelital,
       format: (v: number) => dispValue(v, { decimals: 2, suffix: "%" }),
       value: data.miscelaneas.satelital_pct,
       tooltip: "Crecimiento anual en porcentaje de accesos de internet satelital",
@@ -150,7 +150,7 @@ export function getMiscelaneasItems(data: Overview): KPIItem[] {
     },
     {
       label: "Radiobases 4G",
-      icon: IMovil,
+      icon: I4G,
       format: (v: number) => dispValue(v, { decimals: 0, suffix: " sitios" }),
       value: data.miscelaneas.radiobases_4g,
       tooltip: "Cantidad de sitios con tecnología 4G",
