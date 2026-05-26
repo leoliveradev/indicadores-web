@@ -1,6 +1,7 @@
 import { getOverview } from "@/lib/api/home";
 import {
   getInternetTecnologias,
+  getInternetTecnologiaProvincias,
   getInternetVelocidadMedia
 } from "@/lib/api/internet";
 import { fmtPeriod } from "@/lib/format";
@@ -10,23 +11,31 @@ import { InternetInsights } from "@/components/internet/internet-insights";
 import { InternetTabs } from "@/components/internet/internet-tabs";
 
 import {
+  getLatestTecnologiaProvinciaData,
   getTecnologiaDonutData,
   getVelocidadGaugeData
 } from "@/lib/internet/sections";
 import { PageHero } from "@/components/layout/page-hero";
 
 export default async function InternetPage() {
-  const data = await getOverview();
+  const overview = await getOverview();
 
-  const [tecnologias, velocidadMedia] = await Promise.all([
+  const [tecnologias, tecnologiasProvincias, velocidadMedia] = await Promise.all([
     getInternetTecnologias(),
+    getInternetTecnologiaProvincias(),
     getInternetVelocidadMedia(),
   ]);
 
   const donutData = getTecnologiaDonutData(tecnologias);
   const gaugeData = getVelocidadGaugeData(velocidadMedia);
 
-  const period = fmtPeriod(data.periodo);
+  const period = fmtPeriod(overview.periodo);
+
+  // console.log("provincias", tecnologiasProvincias.data.slice(0, 5));
+  // console.log(
+  //   "periodos únicos",
+  //   [...new Set(tecnologiasProvincias.data.map(d => `${d.anio}-T${d.trimestre}`))]
+  // );
 
   return (
     <>
@@ -37,7 +46,7 @@ export default async function InternetPage() {
       />
 
       {/* OVERVIEW */}
-      <InternetOverview data={data} />
+      <InternetOverview data={overview} />
 
       {/* INSIGHTS */}
       <InternetInsights
@@ -45,8 +54,12 @@ export default async function InternetPage() {
         gaugeData={gaugeData}
       />
 
-
       {/* EXPLORATION */}
-      <InternetTabs tecnologias={tecnologias} />    </>
+      <InternetTabs
+        tecnologias={tecnologias}
+        tecnologiasProvincias={tecnologiasProvincias}
+      />
+
+    </>
   );
 }

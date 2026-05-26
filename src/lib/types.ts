@@ -8,7 +8,7 @@ export interface BaseResponseAPI {
   mes: number;
 }
 
-export type AsyncState<T> = 
+export type AsyncState<T> =
   | { status: 'idle'; data: null; error: null }
   | { status: 'loading'; data: null; error: null }
   | { status: 'success'; data: T; error: null }
@@ -65,6 +65,18 @@ export interface Overview {
 export type InternetTecnologiaRow = {
   anio: number;
   trimestre: number;
+  fibra_optica: number;
+  cablemodem: number;
+  adsl: number;
+  wireless: number;
+  otros: number;
+  total: number;
+};
+
+export type InternetTecnologiaProvinciaRow = {
+  anio: number;
+  trimestre: number;
+  provincia: string;
   fibra_optica: number;
   cablemodem: number;
   adsl: number;

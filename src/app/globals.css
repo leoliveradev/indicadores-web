@@ -345,3 +345,25 @@ html, body { height: 100%; margin: 0; padding: 0; background: var(--bg); color: 
 @media (max-width: 768px) {
   .kpi-grid, .charts-container, .nav-grid { grid-template-columns: 1fr; }
 }
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 13px;
+}
+
+.data-table th {
+  text-align: left;
+  font-weight: 600;
+  padding: 8px;
+  color: var(--enacom-navy);
+}
+
+.data-table td {
+  padding: 8px;
+  border-top: 1px solid rgba(0,0,0,0.05);
+}
+
+.data-table tbody tr:hover {
+  background: rgba(0,0,0,0.03);
+}

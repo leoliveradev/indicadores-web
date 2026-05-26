@@ -1,6 +1,6 @@
 import { IInternet, IVelocidad, IDinero } from "@/components/ui/icons";
 import { dispValue, dispCurrencyCompact } from "@/lib/format";
-import type { InternetTecnologiaRow, Overview, InternetVelocidadMediaRow, ApiResponse } from "@/lib/types";
+import type {ApiResponse, Overview, InternetTecnologiaRow, InternetVelocidadMediaRow, InternetTecnologiaProvinciaRow } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
 import { TECH_CONFIG, TECH_CONFIG_KPI } from "@/lib/constants/internet";
@@ -105,4 +105,73 @@ export function getVelocidadGaugeData(
     value,
     trend: prevValue ? trendPct(value, prevValue) : null,
   };
+}
+
+export function getTecnologiaEvolutionData(
+  response: ApiResponse<InternetTecnologiaRow>
+) {
+  const rows = response.data;
+
+  return rows.map((row) => ({
+    label: `${row.anio} T${row.trimestre}`, // eje X
+    adsl: row.adsl,
+    cablemodem: row.cablemodem,
+    fibra_optica: row.fibra_optica,
+    wireless: row.wireless,
+  }));
+}
+
+export function getLatestTecnologiaProvinciaData(
+  response: ApiResponse<InternetTecnologiaProvinciaRow>
+) {
+  const rows = response.data;
+
+  if (!rows.length) return [];
+
+  const latest = rows.reduce((acc, curr) => {
+    if (
+      curr.anio > acc.anio ||
+      (curr.anio === acc.anio && curr.trimestre > acc.trimestre)
+    ) {
+      return curr;
+    }
+    return acc;
+  }, rows[0]);
+
+  return rows.filter(
+    (r) =>
+      r.anio === latest.anio &&
+      r.trimestre === latest.trimestre
+  );
+}
+
+export function getProvinciaRankingData(
+  response: ApiResponse<InternetTecnologiaProvinciaRow>
+) {
+  const rows = response.data;
+
+  if (!rows.length) return [];
+
+  // 🔥 encontrar último período robusto
+  const latest = rows.reduce((acc, curr) => {
+    const currVal = curr.anio * 10 + curr.trimestre;
+    const accVal = acc.anio * 10 + acc.trimestre;
+
+    return currVal > accVal ? curr : acc;
+  }, rows[0]);
+
+  // 🔥 filtrar solo ese período
+  const filtered = rows.filter(
+    (r) =>
+      r.anio === latest.anio &&
+      r.trimestre === latest.trimestre
+  );
+
+  // 🔥 ordenar por total DESC
+  return filtered
+    .sort((a, b) => b.total - a.total)
+    .map((r) => ({
+      provincia: r.provincia,
+      total: r.total,
+    }));
 }

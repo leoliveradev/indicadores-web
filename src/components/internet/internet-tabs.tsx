@@ -2,8 +2,7 @@
 
 import { useState } from "react";
 import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
-import { getInternetTecnologias } from "@/lib/api/internet";
-import { ApiResponse, InternetTecnologiaRow } from "@/lib/types";
+import { ApiResponse, InternetTecnologiaProvinciaRow, InternetTecnologiaRow } from "@/lib/types";
 
 const TABS = [
   { key: "tecnologia", label: "Tecnología" },
@@ -12,10 +11,12 @@ const TABS = [
   { key: "ingresos", label: "Ingresos" },
 ];
 
+type Props = {
+  tecnologias: ApiResponse<InternetTecnologiaRow>;
+  tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
+};
 
-export function InternetTabs({ tecnologias }: {
-  tecnologias: ApiResponse<InternetTecnologiaRow>
-}) {
+export function InternetTabs({ tecnologias, tecnologiasProvincias }: Props) {
   const [active, setActive] = useState("tecnologia");
 
   return (
@@ -37,9 +38,14 @@ export function InternetTabs({ tecnologias }: {
         {/* CONTENIDO DINÁMICO */}
         <div>
           <div>
+
             {active === "tecnologia" && (
-              <InternetTecnologia data={tecnologias} />
+              <InternetTecnologia
+                tecnologias={tecnologias}
+                tecnologiasProvincias={tecnologiasProvincias}
+              />
             )}
+
           </div>
 
           {active === "velocidad" && <div>Contenido velocidad</div>}
