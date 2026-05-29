@@ -19,13 +19,16 @@ function formatNumber(n: number) {
   return n.toLocaleString("es-AR");
 }
 
+
 export function TecnologiaProvinciasRanking({
   data,
 }: {
   data: Item[];
 }) {
+  const height = data.length * 30 + 40;
+  
   return (
-    <ResponsiveContainer width="100%" height={500}>
+    <ResponsiveContainer width="100%" height={height}>
       <BarChart
         data={data}
         layout="vertical"
