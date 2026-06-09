@@ -10,6 +10,7 @@ import { getTecnologiaDonutData, getTecnologiaKPIItems, getTecnologiaEvolutionDa
 // import { TecnologiaProvinciasTable } from "@/components/internet/tecnologia-provincias-table";
 
 import { TecnologiaProvinciasRanking } from "./tecnologia-provincias-ranking";
+import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
 export function InternetTecnologia({ tecnologias, tecnologiasProvincias }: {
   tecnologias: ApiResponse<InternetTecnologiaRow>;
@@ -26,6 +27,14 @@ export function InternetTecnologia({ tecnologias, tecnologiasProvincias }: {
   const evolutionData = getTecnologiaEvolutionData(tecnologias);
   // const latestProvinciaData = getLatestTecnologiaProvinciaData(tecnologiasProvincias);
   const rankingData = getProvinciaRankingData(tecnologiasProvincias);
+  const provinciaData = tecnologiasProvincias.data.map((d) => ({
+    provincia: d.provincia,
+    total: d.total,
+  }));
+  const top = provinciaData.reduce((a, b) =>
+    b.total > a.total ? b : a
+  );
+
 
   return (
     <>
@@ -73,11 +82,26 @@ export function InternetTecnologia({ tecnologias, tecnologiasProvincias }: {
             Accesos por tecnología en provincias
           </h2>
 
-          {/* <TecnologiaProvinciasTable data={tecnologiasProvincias} /> */}
+          {/* INSIGHT */}
+          <p className="chart-description">
+            La provincia con mayor cantidad de accesos es{" "}
+            <strong>{top.provincia}</strong> ({top.total}), concentrando la mayor
+            infraestructura tecnológica del país.
+          </p>
 
-          <div className="chart-card">
-            <TecnologiaProvinciasRanking data={rankingData} />
+          {/* MAPA */}
+          <div className="grid grid-cols-2 gap-6">
+
+            <div className="chart-card">
+              <ProvinciasMap data={provinciaData} />
+            </div>
+
+            <div className="chart-card">
+              <TecnologiaProvinciasRanking data={rankingData} />
+            </div>
+
           </div>
+
 
         </div>
       </section>
