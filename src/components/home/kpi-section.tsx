@@ -31,7 +31,7 @@ export function KPISection({
             icon={<Icon />}
             display={item.format(item.value)}
             tooltip={item.tooltip}
-            href={item.href}
+            // href={item.href}
           />
         );
       })}
