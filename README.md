@@ -1,36 +1,108 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 📊 Indicadores Web 🇦🇷
 
-## Getting Started
+Aplicación web para visualizar indicadores del sector TIC en Argentina, construida sobre datos abiertos de ENACOM consumidos desde una API propia.
 
-First, run the development server:
+---
 
+## 🧱 Stack
+
+- Framework: Next.js 16 (App Router)
+- Lenguaje: TypeScript
+- UI: React 19
+- Estilos: Tailwind CSS 4
+- Visualización de datos:
+  - Recharts
+  - D3-geo
+- Linting: ESLint
+
+---
+
+## 🔗 API
+
+Este proyecto consume datos desde:
+
+👉 https://github.com/leoliveradev/indicadores-api  
+
+La API centraliza y normaliza los datos abiertos de ENACOM.
+
+---
+
+## 📊 Funcionalidades
+
+- Visualización de indicadores clave del sector TIC  
+- Navegación por categorías:
+  - Internet  
+  - Comunicaciones móviles  
+  - Telefonía fija  
+  - TV  
+  - Mercado postal  
+- Indicadores agregados (accesos, penetración, etc.)
+- Gráficos dinámicos e interactivos  
+- Mapa de Argentina con datos geográficos (D3)  
+- Tooltips enriquecidos  
+- Indicadores de tendencia  
+- Interfaz responsive  
+
+---
+
+## 🧠 Arquitectura
+
+El proyecto sigue una arquitectura modular con separación clara de responsabilidades:
+
+- **app/**  
+  Manejo de rutas usando App Router de Next.js. Cada dominio tiene su propia sección.
+
+- **components/**  
+  Componentes organizados por feature.
+
+- **components/ui/**  
+  Componentes reutilizables desacoplados del dominio:
+  - mapas
+  - tooltips
+  - badges
+  - íconos
+
+- **lib/**  
+  Núcleo lógico de la aplicación:
+  - `api/` → clientes HTTP
+  - `mappers/` → normalización de datos
+  - `types/` → tipado centralizado
+  - `utils/` → helpers
+
+- **hooks/**  
+  Hooks personalizados para manejo de estado y lógica reutilizable
+
+---
+
+## ⚙️ Instalación local
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone https://github.com/leoliveradev/indicadores-web
+cd indicadores-web
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🚀 Ejecución
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 🔧 Scripts
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+|Comando         | Descripción         |
+|----------------|---------------------|
+|`npm run dev`   | Desarrollo local    |
+|`npm run build` | Build de producción |
+|`npm start`     | Ejecutar build      |
+|`npm run lint`  | Linting             |
 
-## Learn More
+## 🔐 Configuración
+Definir la URL base de la API:
+```bash
+NEXT_PUBLIC_API_URL=https://tu-api.com/api/v1
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 🎯 Objetivo
+Proveer una interfaz clara, moderna e interactiva para explorar indicadores de telecomunicaciones en Argentina, facilitando el análisis de datos públicos.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 📄 Fuente de Datos
+Los datos provienen del Portal de Datos Abiertos de ENACOM, a través de la API desarrollada para este ecosistema.
