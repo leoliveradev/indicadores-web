@@ -3,7 +3,7 @@ import { KPIValCard } from "@/components/home/kpi-val-card";
 
 export type KPIItem = {
   label: string;
-  icon: React.ComponentType;
+  icon?: React.ComponentType;
   value: number;
   format: (v: number) => string | null;
   tooltip?: string;
@@ -28,7 +28,7 @@ export function KPISection({
           <KPIValCard
             key={i}
             label={item.label}
-            icon={<Icon />}
+            icon={Icon ? <Icon /> : undefined}
             display={item.format(item.value)}
             tooltip={item.tooltip}
             // href={item.href}
