@@ -1,9 +1,12 @@
 import { IInternet, IVelocidad, IDinero } from "@/components/ui/icons";
 import { dispValue, dispCurrencyCompact } from "@/lib/format";
-import type {ApiResponse, Overview, InternetTecnologiaRow, InternetVelocidadMediaRow, InternetTecnologiaProvinciaRow } from "@/lib/types";
+import type { ApiResponse, Overview, 
+  InternetTecnologiaRow, InternetVelocidadMediaRow, 
+  InternetTecnologiaProvinciaRow, InternetVelocidadRangosRow 
+} from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { TECH_CONFIG, TECH_CONFIG_KPI } from "@/lib/constants/internet";
+import { ChartConfig, TECH_CONFIG, TECH_CONFIG_KPI, VELOCITY_CONFIG } from "@/lib/constants/internet";
 
 import { trendPct } from "@/lib/utilsInternet";
 
@@ -63,6 +66,24 @@ export function getInternetOverviewItems(data: Overview): KPIItem[] {
   ];
 }
 
+type NumericKeys<T> = {
+  [K in keyof T]: T[K] extends number | null | undefined ? K : never;
+}[keyof T] & string;
+
+function buildDonutData<
+  T,
+  K extends NumericKeys<T>
+>(
+  row: T,
+  config: ChartConfig<K>[]
+) {
+  return config.map((c) => ({
+    name: c.label,
+    value: row[c.key] ?? 0,
+    color: c.color,
+  }));
+}
+
 export function getTecnologiaDonutData(
   response: ApiResponse<InternetTecnologiaRow>
 ) {
@@ -72,11 +93,19 @@ export function getTecnologiaDonutData(
 
   const cur = rows[rows.length - 1];
 
-  return TECH_CONFIG.map((t) => ({
-    name: t.label,
-    value: cur[t.key] ?? 0,
-    color: t.color,
-  }));
+  return buildDonutData(cur, TECH_CONFIG);
+}
+
+export function getVelocidadRangosDonutData(
+  response: ApiResponse<InternetVelocidadRangosRow>
+) {
+  const rows = response.data;
+
+  if (!rows.length) return [];
+
+  const cur = rows[rows.length - 1];
+
+  return buildDonutData(cur, VELOCITY_CONFIG);
 }
 
 
