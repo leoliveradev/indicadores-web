@@ -1,7 +1,7 @@
 "use client";
 
 import { DonutChart } from "@/components/internet/donut-chart";
-import { VelocidadGauge } from "@/components/internet/velocidad-gauge";
+// import { VelocidadGauge } from "@/components/internet/velocidad-gauge";
 
 type DonutItem = {
   name: string;
@@ -9,17 +9,19 @@ type DonutItem = {
   color: string;
 };
 
-type GaugeData = {
-  value: number;
-  trend?: number | null;
-};
+// type GaugeData = {
+//   value: number;
+//   trend?: number | null;
+// };
 
 export function InternetInsights({
-  donutData,
-  gaugeData,
+  tecnologiaData,
+  // gaugeData,
+  rangosData,
 }: {
-  donutData: DonutItem[];
-  gaugeData: GaugeData | null;
+  tecnologiaData: DonutItem[];
+  // gaugeData: GaugeData | null;
+  rangosData: DonutItem[];
 }) {
   return (
     <section className="section-wrap alt">
@@ -36,10 +38,10 @@ export function InternetInsights({
               Composición por tecnología
             </h3>
 
-            <DonutChart data={donutData} />
+            <DonutChart data={tecnologiaData} />
           </div>
 
-          <div className="chart-card">
+          {/* <div className="chart-card">
             <h3 className="chart-title">
               Velocidad media de descarga (Mbps)
             </h3>
@@ -47,7 +49,15 @@ export function InternetInsights({
             {gaugeData && (
               <VelocidadGauge data={gaugeData} />
             )}
+          </div> */}
+
+          <div className="chart-card">
+            <h3 className="chart-title">
+              Distribución por rangos de velocidad
+            </h3>
+            <DonutChart data={rangosData} />
           </div>
+
 
         </div>
       </div>
