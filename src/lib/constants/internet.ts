@@ -1,25 +1,39 @@
-import type { InternetTecnologiaRow } from "@/lib/types";
+import type { InternetTecnologiaRow, InternetVelocidadRangosRow } from "@/lib/types";
 
-export type TechKey = keyof Omit<
-  InternetTecnologiaRow,
-  "anio" | "trimestre" | "total"
+export type TechKey = Extract<
+  keyof Omit<InternetTecnologiaRow, "anio" | "trimestre" | "total">,
+  string
 >;
 
-export type TechConfig = {
-  key: TechKey;
+export type VelocityKey = Extract<
+  keyof Omit<InternetVelocidadRangosRow, "anio" | "trimestre">,
+  string
+>;
+
+export type ChartConfig<K extends string> = {
+  key: K;
   label: string;
   color: string;
 };
 
-export const TECH_CONFIG: TechConfig[] = [
-  { key: "adsl",         label: "ADSL",         color: "#378ADD" },
-  { key: "cablemodem",   label: "Cablemodem",   color: "#1D9E75" },
-  { key: "fibra_optica", label: "Fibra óptica", color: "#185FA5" },
-  { key: "wireless",     label: "Wireless",     color: "#BA7517" },
-  { key: "otros",        label: "Otros",        color: "#993C1D" },
-];
-
+export const TECH_CONFIG = [
+  { key: "adsl",         label: "ADSL",         color: "var(--blue-300)" },
+  { key: "cablemodem",   label: "Cablemodem",   color: "var(--accent-green)" },
+  { key: "fibra_optica", label: "Fibra óptica", color: "var(--blue-500)" },
+  { key: "wireless",     label: "Wireless",     color: "var(--accent-amber)" },
+  { key: "otros",        label: "Otros",        color: "var(--accent-red)" },
+] satisfies ChartConfig<TechKey>[];
 
 export const TECH_CONFIG_KPI = TECH_CONFIG.filter(
   (t) => t.key !== "otros"
 );
+
+export const VELOCITY_CONFIG = [
+  { key: "hasta_512_kbps",      label: "< 512 Kbps",        color: "var(--accent-green)" },
+  { key: "entre_512_1Mbps",     label: "512K - 1 Mbps",     color: "var(--accent-amber)" },
+  { key: "entre_1Mbps_6Mbps",   label: "1 - 6 Mbps",        color: "var(--blue-200)" },
+  { key: "entre_6Mbps_10Mbps",  label: "6 - 10 Mbps",       color: "var(--blue-300)" },
+  { key: "entre_10Mbps_20Mbps", label: "10 - 20 Mbps",      color: "var(--blue-400)" },
+  { key: "entre_20Mbps_30Mbps", label: "20 - 30 Mbps",      color: "var(--blue-500)" },
+  { key: "mayor_30Mbps",        label: "> 30 Mbps",         color: "var(--accent-red)" },
+] satisfies ChartConfig<VelocityKey>[];
