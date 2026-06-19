@@ -1,8 +1,9 @@
 import { getOverview } from "@/lib/api/home";
 import {
-  getInternetTecnologias,
-  getInternetTecnologiaProvincias,
-  getInternetVelocidadMedia
+  getInternetTecnologias, getInternetTecnologiaProvincias,
+  getInternetVelocidadMedia,
+  getInternetRangosVelocidad,
+  getInternetPenetracion, getInternetPenetracionProvincias
 } from "@/lib/api/internet";
 import { fmtPeriod } from "@/lib/format";
 
@@ -11,31 +12,32 @@ import { InternetInsights } from "@/components/internet/internet-insights";
 import { InternetTabs } from "@/components/internet/internet-tabs";
 
 import {
-  getLatestTecnologiaProvinciaData,
+  // getLatestTecnologiaProvinciaData,
   getTecnologiaDonutData,
-  getVelocidadGaugeData
+  // getVelocidadGaugeData,
+  getVelocidadRangosDonutData 
 } from "@/lib/internet/sections";
 import { PageHero } from "@/components/layout/page-hero";
 
 export default async function InternetPage() {
   const overview = await getOverview();
 
-  const [tecnologias, tecnologiasProvincias, velocidadMedia] = await Promise.all([
+  const [tecnologias, tecnologiasProvincias, velocidadMedia, rangosVelocidad, penetracion, penetracionProvincias] = await Promise.all([
     getInternetTecnologias(),
     getInternetTecnologiaProvincias(),
     getInternetVelocidadMedia(),
+    getInternetRangosVelocidad(),
+    getInternetPenetracion(),
+    getInternetPenetracionProvincias(),
   ]);
 
-  const donutData = getTecnologiaDonutData(tecnologias);
-  const gaugeData = getVelocidadGaugeData(velocidadMedia);
+  const tecnologiaDonutData = getTecnologiaDonutData(tecnologias);
+  // const gaugeData = getVelocidadGaugeData(velocidadMedia);
+  const rangosDonutData = getVelocidadRangosDonutData(rangosVelocidad);
 
   const period = fmtPeriod(overview.periodo);
 
-  // console.log("provincias", tecnologiasProvincias.data.slice(0, 5));
-  // console.log(
-  //   "periodos únicos",
-  //   [...new Set(tecnologiasProvincias.data.map(d => `${d.anio}-T${d.trimestre}`))]
-  // );
+
 
   return (
     <>
@@ -50,14 +52,18 @@ export default async function InternetPage() {
 
       {/* INSIGHTS */}
       <InternetInsights
-        donutData={donutData}
-        gaugeData={gaugeData}
+        tecnologiaData={tecnologiaDonutData}
+        // gaugeData={gaugeData}
+        rangosData={rangosDonutData}
+
       />
 
       {/* EXPLORATION */}
       <InternetTabs
         tecnologias={tecnologias}
         tecnologiasProvincias={tecnologiasProvincias}
+        penetracion={penetracion}
+        penetracionProvincias={penetracionProvincias}
       />
 
     </>
