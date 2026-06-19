@@ -3,11 +3,15 @@ export function MapTooltip({
   y,
   name,
   value,
+  hogares,
+  habitantes,
 }: {
   x: number;
   y: number;
   name: string;
-  value: number;
+  value?: number;
+  hogares?: number;
+  habitantes?: number;
 }) {
   return (
     <div
@@ -25,7 +29,17 @@ export function MapTooltip({
       }}
     >
       <strong>{name}</strong>
-      <div>Total: {value}</div>
+
+      {/* Caso penetración */}
+      {hogares !== undefined && habitantes !== undefined ? (
+        <>
+          <div>Hogares: {hogares.toFixed(2)}</div>
+          <div>Habitantes: {habitantes.toFixed(2)}</div>
+        </>
+      ) : (
+        /* Caso tecnología (fallback) */
+        <div>Total: {value}</div>
+      )}
     </div>
   );
 }

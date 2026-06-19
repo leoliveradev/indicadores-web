@@ -9,7 +9,12 @@ import { MapLegend } from "@/components/ui/map/map-legend";
 import { PROVINCE_MAP } from "@/lib/maps";
 
 type Props = {
-  data: { provincia: string; total: number }[];
+  data: {
+    provincia: string;
+    total: number,
+    hogares?: number;
+    habitantes?: number;
+  }[];
   onSelect?: (provincia: string) => void;
 };
 
@@ -22,7 +27,14 @@ export function ProvinciasMap({ data, onSelect }: Props) {
   );
 
   const mapData = Object.fromEntries(
-    data.map((d) => [PROVINCE_MAP[d.provincia], d.total])
+    data.map((d) => [
+      PROVINCE_MAP[d.provincia],
+      {
+        total: d.total,
+        hogares: d.hogares,
+        habitantes: d.habitantes,
+      },
+    ])
   );
 
   const values = data.map((d) => d.total);
@@ -40,7 +52,8 @@ export function ProvinciasMap({ data, onSelect }: Props) {
 
           const geoName = feature.properties.NAME_1;
           const apiName = GEO_TO_API[geoName] || geoName;
-          const value = mapData[geoName] ?? 0;
+          const entry = mapData[geoName];
+          const value = entry?.total ?? 0;
 
           return (
             <path
@@ -50,14 +63,18 @@ export function ProvinciasMap({ data, onSelect }: Props) {
               stroke="#fff"
               strokeWidth={0.5}
               onClick={() => onSelect?.(geoName)}
-              onMouseMove={(e) =>
+              onMouseMove={(e) => {
+                const bounds = e.currentTarget.getBoundingClientRect();
+
                 setTooltip({
-                  x: e.clientX,
-                  y: e.clientY,
+                  x: e.clientX - bounds.left,
+                  y: e.clientY - bounds.top,
                   name: apiName,
                   value,
-                })
-              }
+                  hogares: entry?.hogares,
+                  habitantes: entry?.habitantes,
+                });
+              }}
               onMouseLeave={() => setTooltip(null)}
               style={{ cursor: "pointer" }}
             />
