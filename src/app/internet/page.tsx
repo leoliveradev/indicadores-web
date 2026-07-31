@@ -15,7 +15,7 @@ import {
   // getLatestTecnologiaProvinciaData,
   getTecnologiaDonutData,
   // getVelocidadGaugeData,
-  getVelocidadRangosDonutData 
+  getVelocidadRangosDonutData
 } from "@/lib/internet/sections";
 import { PageHero } from "@/components/layout/page-hero";
 
@@ -62,6 +62,7 @@ export default async function InternetPage() {
       <InternetTabs
         tecnologias={tecnologias}
         tecnologiasProvincias={tecnologiasProvincias}
+        velocidadMedia={velocidadMedia}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
       />

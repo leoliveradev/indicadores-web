@@ -3,6 +3,7 @@ import { ApiResponse,
   InternetPenetracionProvinciaRow, InternetPenetracionRow, 
   InternetTecnologiaProvinciaRow, InternetTecnologiaRow, 
   InternetVelocidadMediaRow, 
+  InternetVelocidadProvinciaRow, 
   InternetVelocidadRangosRow 
 } from "@/lib/types";
 
@@ -39,5 +40,11 @@ export function getInternetPenetracion() {
 export function getInternetPenetracionProvincias() {
   return get<ApiResponse<InternetPenetracionProvinciaRow>>(
     "/api/v1/internet/penetracion/provincias"
+  );
+}
+
+export async function getInternetVelocidadMediaProvinciasLatest() {
+  return get<ApiResponse<InternetVelocidadProvinciaRow>>(
+    "/api/v1/internet/accesos/velocidad-media/provincias/latest"
   );
 }

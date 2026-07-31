@@ -204,3 +204,22 @@ export function getProvinciaRankingData(
       total: r.total,
     }));
 }
+
+export function getVelocidadMediaKpi(
+  response: ApiResponse<InternetVelocidadMediaRow>
+) {
+  const rows = response.data;
+
+  if (!rows.length) return null;
+
+  return rows[rows.length - 1];
+}
+
+export function getVelocidadEvolutionData(
+  response: ApiResponse<InternetVelocidadMediaRow>
+) {
+  return response.data.map((row) => ({
+    label: `${row.anio} T${row.trimestre}`,
+    mbps: row.Mbps,
+  }));
+}

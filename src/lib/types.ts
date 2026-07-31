@@ -77,12 +77,6 @@ export type InternetTecnologiaProvinciaRow = InternetTecnologiaRow & {
   provincia: string;
 };
 
-export type InternetVelocidadMediaRow = {
-  anio: number;
-  trimestre: number;
-  Mbps: number;
-};
-
 export type InternetVelocidadRangosRow = {
   anio: number;
   trimestre: number;
@@ -117,3 +111,18 @@ export type InternetPenetracionEvolutionItem = {
   hogares: number;
   habitantes: number;
 };
+
+export interface InternetVelocidadMediaRow {
+  anio: number;
+  trimestre: number;
+  Mbps: number;
+}
+
+export interface InternetVelocidadProvinciaRow {
+  id: number;
+  created_at: string;
+  anio: number;
+  trimestre: number;
+  provincia: string;
+  mbps: number;
+}

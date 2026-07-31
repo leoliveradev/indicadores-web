@@ -1,12 +1,15 @@
 "use client";
 
 import { useState } from "react";
-import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
 import {
   ApiResponse,
-  InternetPenetracionProvinciaRow, InternetPenetracionRow,
-  InternetTecnologiaProvinciaRow, InternetTecnologiaRow
+  InternetTecnologiaProvinciaRow, InternetTecnologiaRow,
+  InternetVelocidadMediaRow,
+  InternetPenetracionProvinciaRow, InternetPenetracionRow
 } from "@/lib/types";
+
+import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
+import { InternetVelocidad } from "@/components/internet/internet-velocidad";
 import { InternetPenetracion } from "@/components/internet/internet-penetracion";
 
 const TABS = [
@@ -19,17 +22,19 @@ const TABS = [
 type Props = {
   tecnologias: ApiResponse<InternetTecnologiaRow>;
   tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
+  velocidadMedia: ApiResponse<InternetVelocidadMediaRow>;
   penetracion: ApiResponse<InternetPenetracionRow>;
   penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
 };
 
-export function InternetTabs({ 
-  tecnologias, 
-  tecnologiasProvincias, 
-  penetracion, 
-  penetracionProvincias 
+export function InternetTabs({
+  tecnologias,
+  tecnologiasProvincias,
+  velocidadMedia,
+  penetracion,
+  penetracionProvincias
 }: Props) {
-  
+
   const [active, setActive] = useState("tecnologia");
 
   return (
@@ -61,7 +66,11 @@ export function InternetTabs({
 
           </div>
 
-          {active === "velocidad" && <div>Contenido velocidad</div>}
+          {active === "velocidad" && (
+            <InternetVelocidad
+              data={velocidadMedia}
+            />
+          )}
 
           {active === "penetracion" && (
             <InternetPenetracion
