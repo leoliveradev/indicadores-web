@@ -1,7 +1,7 @@
 import { getOverview } from "@/lib/api/home";
 import {
   getInternetTecnologias, getInternetTecnologiaProvincias,
-  getInternetVelocidadMedia,
+  getInternetVelocidadMedia, getInternetVelocidadMediaProvinciasLatest,
   getInternetRangosVelocidad,
   getInternetPenetracion, getInternetPenetracionProvincias
 } from "@/lib/api/internet";
@@ -22,10 +22,11 @@ import { PageHero } from "@/components/layout/page-hero";
 export default async function InternetPage() {
   const overview = await getOverview();
 
-  const [tecnologias, tecnologiasProvincias, velocidadMedia, rangosVelocidad, penetracion, penetracionProvincias] = await Promise.all([
+  const [tecnologias, tecnologiasProvincias, velocidadMedia, velocidadMediaProvincias, rangosVelocidad, penetracion, penetracionProvincias] = await Promise.all([
     getInternetTecnologias(),
     getInternetTecnologiaProvincias(),
     getInternetVelocidadMedia(),
+    getInternetVelocidadMediaProvinciasLatest(),
     getInternetRangosVelocidad(),
     getInternetPenetracion(),
     getInternetPenetracionProvincias(),
@@ -63,6 +64,7 @@ export default async function InternetPage() {
         tecnologias={tecnologias}
         tecnologiasProvincias={tecnologiasProvincias}
         velocidadMedia={velocidadMedia}
+        velocidadMediaProvincias={velocidadMediaProvincias}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
       />

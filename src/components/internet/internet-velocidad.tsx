@@ -1,50 +1,45 @@
 import type {
   ApiResponse,
+  InternetVelocidadMediaProvinciasRow,
   InternetVelocidadMediaRow,
 } from "@/lib/types";
 
 import {
   getVelocidadEvolutionData,
-  getVelocidadMediaKpi,
+  getVelocidadKPIItems,
+
 } from "@/lib/internet/sections";
 
 import { VelocidadLineChart } from "./velocidad-line-chart";
 
-import { IVelocidad } from "@/components/ui/icons";
+import { KPISection } from "@/components/home/kpi-section";
 
-import { fmtNumber } from "@/lib/format";
+import { getVelocidadRankingData } from "@/lib/internet/sections";
 
-type Props = {
-  data: ApiResponse<InternetVelocidadMediaRow>;
-};
+import { VelocidadRankingChart } from "./velocidad-ranking-chart";
 
-export function InternetVelocidad({
-  data,
-}: Props) {
-  const latest = getVelocidadMediaKpi(data);
+
+export function InternetVelocidad({ velocidadMedia, provincias} : {
+  velocidadMedia : ApiResponse<InternetVelocidadMediaRow>,
+  provincias : ApiResponse<InternetVelocidadMediaProvinciasRow>,
+}) {
+  const kpiItems = getVelocidadKPIItems(velocidadMedia);
 
   const evolutionData =
-    getVelocidadEvolutionData(data);
+    getVelocidadEvolutionData(velocidadMedia);
 
-  if (!latest) return null;
+  const rankingData =
+    getVelocidadRankingData(provincias);
 
   return (
     <>
       <section className="section-wrap">
         <div className="section-inner">
-
-          <div className="kpi-card">
-            <IVelocidad />
-
-            <div>
-              <p>Velocidad media de descarga</p>
-
-              <h3>
-                {fmtNumber(latest.Mbps)} Mbps
-              </h3>
-            </div>
-          </div>
-
+          {/* KPIs */}
+          <KPISection
+            title="Velocidad media de descarga"
+            items={kpiItems}
+          />
         </div>
       </section>
 
@@ -63,6 +58,23 @@ export function InternetVelocidad({
 
         </div>
       </section>
+
+      <section className="section-wrap">
+        <div className="section-inner">
+
+          <h2 className="section-heading">
+            Ranking provincial de velocidad media
+          </h2>
+
+          <div className="chart-card">
+            <VelocidadRankingChart
+              data={rankingData}
+            />
+          </div>
+
+        </div>
+      </section>
+
     </>
   );
 }

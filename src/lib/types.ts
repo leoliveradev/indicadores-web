@@ -118,7 +118,7 @@ export interface InternetVelocidadMediaRow {
   Mbps: number;
 }
 
-export interface InternetVelocidadProvinciaRow {
+export interface InternetVelocidadMediaProvinciasRow {
   id: number;
   created_at: string;
   anio: number;

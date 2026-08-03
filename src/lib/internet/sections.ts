@@ -1,8 +1,10 @@
 import { IInternet, IVelocidad, IDinero } from "@/components/ui/icons";
-import { dispValue, dispCurrencyCompact } from "@/lib/format";
-import type { ApiResponse, Overview, 
-  InternetTecnologiaRow, InternetVelocidadMediaRow, 
-  InternetTecnologiaProvinciaRow, InternetVelocidadRangosRow 
+import { dispValue, dispCurrencyCompact, fmtPercent } from "@/lib/format";
+import type {
+  ApiResponse, Overview,
+  InternetTecnologiaRow, InternetVelocidadMediaRow,
+  InternetTecnologiaProvinciaRow, InternetVelocidadRangosRow,
+  InternetVelocidadMediaProvinciasRow
 } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
@@ -205,14 +207,51 @@ export function getProvinciaRankingData(
     }));
 }
 
-export function getVelocidadMediaKpi(
+export function getVelocidadKPIItems(
+  response: ApiResponse<InternetVelocidadMediaRow>
+): KPIItem[] {
+  const rows = response.data;
+
+  if (!rows.length) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const growthPct =
+    ((latest.Mbps - first.Mbps) / first.Mbps) * 100;
+
+  return [
+    {
+      label: "Velocidad media",
+      // icon: IVelocidad,
+      value: latest.Mbps,
+      format: (v: number) => fmtPercent(v, 2) + ` Mbps`,
+    },
+    {
+      label: "Crecimiento desde 2014",
+      // icon: IVelocidad,
+      value: growthPct,
+      format: (v: number) => fmtPercent(v, 2),
+    },
+  ];
+}
+
+export function getVelocidadStats(
   response: ApiResponse<InternetVelocidadMediaRow>
 ) {
   const rows = response.data;
 
   if (!rows.length) return null;
 
-  return rows[rows.length - 1];
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  return {
+    current: latest.Mbps,
+    growthPct:
+      ((latest.Mbps - first.Mbps) / first.Mbps) * 100,
+    period: `${latest.anio} T${latest.trimestre}`,
+  };
 }
 
 export function getVelocidadEvolutionData(
@@ -222,4 +261,16 @@ export function getVelocidadEvolutionData(
     label: `${row.anio} T${row.trimestre}`,
     mbps: row.Mbps,
   }));
+}
+
+export function getVelocidadRankingData(
+  response: ApiResponse<InternetVelocidadMediaProvinciasRow>
+) {
+  return [...response.data]
+    .sort((a, b) => b.mbps - a.mbps)
+    .slice(0, 10)
+    .map((row) => ({
+      provincia: row.provincia,
+      mbps: row.mbps,
+    }));
 }

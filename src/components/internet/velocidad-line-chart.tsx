@@ -40,6 +40,7 @@ export function VelocidadLineChart({
           stroke="var(--blue-200)"
           strokeWidth={3}
           dot={false}
+          activeDot={{ r: 5 }}
         />
       </LineChart>
     </ResponsiveContainer>

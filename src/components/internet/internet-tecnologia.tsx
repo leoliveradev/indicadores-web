@@ -1,13 +1,10 @@
 "use client";
 
 import { KPISection } from "@/components/home/kpi-section";
-// import { DonutChart } from "@/components/internet/donut-chart";
 
 import type { InternetTecnologiaRow, ApiResponse, InternetTecnologiaProvinciaRow } from "@/lib/types";
 import { TecnologiaLineChart } from "@/components/internet/tecnologia-line-chart";
-import { getTecnologiaDonutData, getTecnologiaKPIItems, getTecnologiaEvolutionData, getProvinciaRankingData, getLatestTecnologiaProvinciaData } from "@/lib/internet/sections";
-
-// import { TecnologiaProvinciasTable } from "@/components/internet/tecnologia-provincias-table";
+import { getTecnologiaKPIItems, getTecnologiaEvolutionData, getProvinciaRankingData } from "@/lib/internet/sections";
 
 import { TecnologiaProvinciasRanking } from "./tecnologia-provincias-ranking";
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
@@ -22,10 +19,8 @@ export function InternetTecnologia({ tecnologias, tecnologiasProvincias }: {
     return <div className="error-box">Sin datos disponibles</div>;
   }
 
-  // const donutData = getTecnologiaDonutData(tecnologias);
   const kpiItems = getTecnologiaKPIItems(tecnologias);
   const evolutionData = getTecnologiaEvolutionData(tecnologias);
-  // const latestProvinciaData = getLatestTecnologiaProvinciaData(tecnologiasProvincias);
   const rankingData = getProvinciaRankingData(tecnologiasProvincias);
   const provinciaData = tecnologiasProvincias.data.map((d) => ({
     provincia: d.provincia,
@@ -40,21 +35,6 @@ export function InternetTecnologia({ tecnologias, tecnologiasProvincias }: {
     <>
       {/* KPIs */}
       <KPISection title="Accesos por tecnología" items={kpiItems} />
-
-      {/* Gráfico */}
-      {/* <section className="section-wrap alt">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Distribución por tecnología
-          </h2>
-
-          <div className="chart-card">
-            <DonutChart data={donutData} />
-          </div>
-
-        </div>
-      </section> */}
 
       {/* EVOLUCIÓN */}
       <section className="section-wrap">

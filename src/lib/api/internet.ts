@@ -3,7 +3,7 @@ import { ApiResponse,
   InternetPenetracionProvinciaRow, InternetPenetracionRow, 
   InternetTecnologiaProvinciaRow, InternetTecnologiaRow, 
   InternetVelocidadMediaRow, 
-  InternetVelocidadProvinciaRow, 
+  InternetVelocidadMediaProvinciasRow, 
   InternetVelocidadRangosRow 
 } from "@/lib/types";
 
@@ -25,6 +25,12 @@ export function getInternetVelocidadMedia() {
   );
 }
 
+export function getInternetVelocidadMediaProvinciasLatest() {
+  return get<ApiResponse<InternetVelocidadMediaProvinciasRow>>(
+    "/api/v1/internet/accesos/velocidad-media/provincias/latest"
+  );
+}
+
 export function getInternetRangosVelocidad() {
   return get<ApiResponse<InternetVelocidadRangosRow>>(
     "/api/v1/internet/accesos/rangos-velocidad"
@@ -43,8 +49,3 @@ export function getInternetPenetracionProvincias() {
   );
 }
 
-export async function getInternetVelocidadMediaProvinciasLatest() {
-  return get<ApiResponse<InternetVelocidadProvinciaRow>>(
-    "/api/v1/internet/accesos/velocidad-media/provincias/latest"
-  );
-}

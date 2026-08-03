@@ -4,7 +4,7 @@ import { useState } from "react";
 import {
   ApiResponse,
   InternetTecnologiaProvinciaRow, InternetTecnologiaRow,
-  InternetVelocidadMediaRow,
+  InternetVelocidadMediaProvinciasRow, InternetVelocidadMediaRow,
   InternetPenetracionProvinciaRow, InternetPenetracionRow
 } from "@/lib/types";
 
@@ -23,6 +23,7 @@ type Props = {
   tecnologias: ApiResponse<InternetTecnologiaRow>;
   tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>;
+  velocidadMediaProvincias: ApiResponse<InternetVelocidadMediaProvinciasRow>;
   penetracion: ApiResponse<InternetPenetracionRow>;
   penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
 };
@@ -31,6 +32,7 @@ export function InternetTabs({
   tecnologias,
   tecnologiasProvincias,
   velocidadMedia,
+  velocidadMediaProvincias,
   penetracion,
   penetracionProvincias
 }: Props) {
@@ -68,7 +70,8 @@ export function InternetTabs({
 
           {active === "velocidad" && (
             <InternetVelocidad
-              data={velocidadMedia}
+              velocidadMedia={velocidadMedia}
+              provincias={velocidadMediaProvincias}
             />
           )}
 
