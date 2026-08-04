@@ -14,9 +14,8 @@ import type {
 import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
-  getPenetracionProvinciaRanking,
-  getLatestPenetracionProvinciaData,
-} from "@/lib/internet/penetracion";
+  getPenetracionProvinciaRankingData
+} from "@/lib/internet";
 
 export function InternetPenetracion({
   penetracion,
@@ -40,18 +39,14 @@ export function InternetPenetracion({
   const kpiItems = getPenetracionKPIItems(rows);
   const evolutionData = getPenetracionEvolutionData(rows);
 
-  const latestProvincias = getLatestPenetracionProvinciaData(
-    penetracionProvincias.data
-  );
+  const rankingData = getPenetracionProvinciaRankingData(penetracionProvincias);
 
-  const provinciaData = latestProvincias.map((d) => ({
+  const provinciaData = penetracionProvincias.data.map((d) => ({
     provincia: d.provincia,
-    total: d.hogares,
-    hogares: d.hogares,
-    habitantes: d.habitantes,
+    total: d.accesos_cada_100_hogares,
+    hogares: d.accesos_cada_100_hogares,
+    habitantes: d.accesos_cada_100_habitantes,
   }));
-
-  const rankingData = getPenetracionProvinciaRanking(latestProvincias);
 
   const top = provinciaData.reduce((a, b) =>
     b.hogares > a.hogares ? b : a

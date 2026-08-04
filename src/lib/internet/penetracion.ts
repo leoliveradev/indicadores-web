@@ -1,9 +1,11 @@
 import {
   InternetPenetracionRow,
   InternetPenetracionProvinciaRow,
+  ApiResponse,
 } from "@/lib/types";
 
 import { fmtNumber } from "@/lib/format";
+import { getTopN } from "./common";
 
 export function getPenetracionKPIItems(
   rows: InternetPenetracionRow[]
@@ -36,43 +38,31 @@ export function getPenetracionEvolutionData(rows: InternetPenetracionRow[]) {
   }));
 }
 
-export function getLatestPenetracionProvinciaData(rows: InternetPenetracionProvinciaRow[]) {
-  const latestMap = new Map();
-
-  rows.forEach((r) => {
-    const key = r.provincia;
-    const period = r.anio * 10 + r.trimestre;
-
-    if (
-      !latestMap.has(key) ||
-      latestMap.get(key).period < period
-    ) {
-      latestMap.set(key, {
-        provincia: r.provincia,
-        total: r.accesos_cada_100_hogares,
-        hogares: r.accesos_cada_100_hogares,
-        habitantes: r.accesos_cada_100_habitantes,
-        period,
-      });
-    }
-  });
-
-  return Array.from(latestMap.values());
+export function getPenetracionProvinciaRankingData(
+  response: ApiResponse<InternetPenetracionProvinciaRow>
+) {
+  return [...response.data]
+    .sort((a, b) => b.accesos_cada_100_hogares - a.accesos_cada_100_hogares)
+    .slice(0, 10)
+    .map((row) => ({
+      provincia: row.provincia,
+      total: row.accesos_cada_100_hogares,
+      hogares: row.accesos_cada_100_hogares,
+      habitantes: row.accesos_cada_100_habitantes
+    }));
 }
 
-export function getPenetracionProvinciaRanking(rows: {
-  provincia: string;
-  hogares: number;
-  habitantes: number;
-}[]) {
-  return rows
-    .slice()
-    .sort((a, b) => b.hogares - a.hogares)
-    .slice(0, 10)
-    .map((r) => ({
-      provincia: r.provincia,
-      value: r.hogares,
-      hogares: r.hogares,
-      habitantes: r.habitantes,
-    }));
+export function getPenetracionProvinciaRanking(
+  response: ApiResponse<InternetPenetracionProvinciaRow>
+) {
+  const topRows = getTopN(
+    response.data,
+    (r) => r.accesos_cada_100_hogares
+  );
+  return topRows.map((r) => ({
+    provincia: r.provincia,
+    value: r.accesos_cada_100_hogares,
+    hogares: r.accesos_cada_100_hogares,
+    habitantes: r.accesos_cada_100_habitantes,
+  }));
 }
