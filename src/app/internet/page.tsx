@@ -1,9 +1,9 @@
 import { getOverview } from "@/lib/api/home";
 import {
-  getInternetTecnologias, getInternetTecnologiaProvincias,
+  getInternetTecnologias, getInternetTecnologiaProvinciasLatest,
   getInternetVelocidadMedia, getInternetVelocidadMediaProvinciasLatest,
   getInternetRangosVelocidad,
-  getInternetPenetracion, getInternetPenetracionProvincias
+  getInternetPenetracion, getInternetPenetracionProvinciasLatest
 } from "@/lib/api/internet";
 import { fmtPeriod } from "@/lib/format";
 
@@ -12,32 +12,33 @@ import { InternetInsights } from "@/components/internet/internet-insights";
 import { InternetTabs } from "@/components/internet/internet-tabs";
 
 import {
-  // getLatestTecnologiaProvinciaData,
   getTecnologiaDonutData,
-  // getVelocidadGaugeData,
   getVelocidadRangosDonutData
-} from "@/lib/internet/sections";
+} from "@/lib/internet";
 import { PageHero } from "@/components/layout/page-hero";
 
 export default async function InternetPage() {
   const overview = await getOverview();
 
-  const [tecnologias, tecnologiasProvincias, velocidadMedia, velocidadMediaProvincias, rangosVelocidad, penetracion, penetracionProvincias] = await Promise.all([
+  const [
+    tecnologias, tecnologiasProvincias, 
+    velocidadMedia, velocidadMediaProvincias, 
+    rangosVelocidad, 
+    penetracion, penetracionProvincias
+  ] = await Promise.all([
     getInternetTecnologias(),
-    getInternetTecnologiaProvincias(),
+    getInternetTecnologiaProvinciasLatest(),
     getInternetVelocidadMedia(),
     getInternetVelocidadMediaProvinciasLatest(),
     getInternetRangosVelocidad(),
     getInternetPenetracion(),
-    getInternetPenetracionProvincias(),
+    getInternetPenetracionProvinciasLatest(),
   ]);
 
   const tecnologiaDonutData = getTecnologiaDonutData(tecnologias);
-  // const gaugeData = getVelocidadGaugeData(velocidadMedia);
   const rangosDonutData = getVelocidadRangosDonutData(rangosVelocidad);
 
   const period = fmtPeriod(overview.periodo);
-
 
 
   return (
@@ -54,7 +55,6 @@ export default async function InternetPage() {
       {/* INSIGHTS */}
       <InternetInsights
         tecnologiaData={tecnologiaDonutData}
-        // gaugeData={gaugeData}
         rangosData={rangosDonutData}
 
       />
