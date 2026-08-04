@@ -2,14 +2,26 @@
 
 import { KPISection } from "@/components/home/kpi-section";
 
-import type { InternetTecnologiaRow, ApiResponse, InternetTecnologiaProvinciaRow } from "@/lib/types";
+import type {
+  ApiResponse,
+  InternetTecnologiaRow,
+  InternetTecnologiaProvinciaRow
+} from "@/lib/types";
+
 import { TecnologiaLineChart } from "@/components/internet/tecnologia-line-chart";
-import { getTecnologiaKPIItems, getTecnologiaEvolutionData, getProvinciaRankingData } from "@/lib/internet/sections";
+import {
+  getTecnologiaKPIItems,
+  getTecnologiaEvolutionData,
+  getTecnologiaProvinciaRankingData
+} from "@/lib/internet";
 
 import { TecnologiaProvinciasRanking } from "./tecnologia-provincias-ranking";
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
-export function InternetTecnologia({ tecnologias, tecnologiasProvincias }: {
+export function InternetTecnologia({
+  tecnologias,
+  tecnologiasProvincias
+}: {
   tecnologias: ApiResponse<InternetTecnologiaRow>;
   tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
 }) {
@@ -21,7 +33,7 @@ export function InternetTecnologia({ tecnologias, tecnologiasProvincias }: {
 
   const kpiItems = getTecnologiaKPIItems(tecnologias);
   const evolutionData = getTecnologiaEvolutionData(tecnologias);
-  const rankingData = getProvinciaRankingData(tecnologiasProvincias);
+  const rankingData = getTecnologiaProvinciaRankingData(tecnologiasProvincias);
   const provinciaData = tecnologiasProvincias.data.map((d) => ({
     provincia: d.provincia,
     total: d.total,
