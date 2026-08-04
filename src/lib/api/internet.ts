@@ -19,6 +19,12 @@ export function getInternetTecnologiaProvincias() {
   );
 }
 
+export function getInternetTecnologiaProvinciasLatest() {
+  return get<ApiResponse<InternetTecnologiaProvinciaRow>>(
+    "/api/v1/internet/accesos/tecnologias/provincias/latest"
+  );
+}
+
 export function getInternetVelocidadMedia() {
   return get<ApiResponse<InternetVelocidadMediaRow>>(
     "/api/v1/internet/accesos/velocidad-media"
@@ -49,3 +55,8 @@ export function getInternetPenetracionProvincias() {
   );
 }
 
+export function getInternetPenetracionProvinciasLatest() {
+  return get<ApiResponse<InternetPenetracionProvinciaRow>>(
+    "/api/v1/internet/penetracion/provincias/latest"
+  );
+}
