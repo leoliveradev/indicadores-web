@@ -1,5 +1,5 @@
 import { KPISection } from "@/components/home/kpi-section";
-import { getInternetOverviewItems } from "@/lib/internet/sections";
+import { getInternetOverviewItems } from "@/lib/internet/overview";
 import { Overview } from "@/lib/types";
 
 export function InternetOverview({ data }: { data: Overview }) {
