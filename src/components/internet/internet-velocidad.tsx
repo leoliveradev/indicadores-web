@@ -7,14 +7,12 @@ import type {
 import {
   getVelocidadEvolutionData,
   getVelocidadKPIItems,
-
-} from "@/lib/internet/sections";
+  getVelocidadProvinciaRankingData
+} from "@/lib/internet";
 
 import { VelocidadLineChart } from "./velocidad-line-chart";
 
 import { KPISection } from "@/components/home/kpi-section";
-
-import { getVelocidadRankingData } from "@/lib/internet/sections";
 
 import { VelocidadRankingChart } from "./velocidad-ranking-chart";
 
@@ -29,7 +27,7 @@ export function InternetVelocidad({ velocidadMedia, provincias} : {
     getVelocidadEvolutionData(velocidadMedia);
 
   const rankingData =
-    getVelocidadRankingData(provincias);
+    getVelocidadProvinciaRankingData(provincias);
 
   return (
     <>
