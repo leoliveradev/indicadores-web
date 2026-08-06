@@ -1,6 +1,6 @@
 "use client";
 
-import { fmtPercent } from "@/lib/format";
+import { fmtDecimal } from "@/lib/format";
 import {
   ResponsiveContainer,
   BarChart,
@@ -39,7 +39,7 @@ export function VelocidadRankingChart({
 
         <XAxis
           type="number"
-          tickFormatter={(value) => `${value} Mbps`}
+          tickFormatter={(value) => `${fmtDecimal(value, 2)} Mbps`}
         />
 
         <YAxis

@@ -1,4 +1,4 @@
-import { fmtPercent } from "@/lib/format";
+import { fmtDecimal, fmtPercent } from "@/lib/format";
 import type {
   ApiResponse, 
   InternetVelocidadMediaRow,
@@ -72,7 +72,7 @@ export function getVelocidadKPIItems(
       label: "Velocidad media",
       // icon: IVelocidad,
       value: latest.Mbps,
-      format: (v: number) => fmtPercent(v, 2) + ` Mbps`,
+      format: (v: number) => `${fmtDecimal(v, 2)} Mbps`
     },
     {
       label: "Crecimiento desde 2014",

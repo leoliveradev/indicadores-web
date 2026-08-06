@@ -9,8 +9,15 @@ export const fmtNumber = (v: number, decimals = 0) =>
 export const fmtMillions = (v: number, decimals = 2) =>
   fmtNumber(v / 1e6, decimals);
 
-export const fmtPercent = (v: number, decimals = 2) =>
-  fmtNumber(v, decimals);
+export const fmtDecimal = (
+  v: number,
+  decimals = 2
+) => fmtNumber(v, decimals);
+
+export const fmtPercent = (
+  v: number,
+  decimals = 2
+) => `${fmtNumber(v, decimals)} %`;
 
 export const fmtCompact = (v: number) => {
   if (v >= 1e6) return fmtMillions(v) + " M";
@@ -35,7 +42,7 @@ export const dispValue = (
     multiline?: boolean;
   } = {}
 ) => {
-  if (value == null) return null;
+  if (value == null) return "";
 
   let formatted = "";
 
@@ -89,11 +96,17 @@ export const fmtCurrencyCompact = (v: number) => {
   return fmtCurrency(v);
 };
 
-export const dispCurrency = (v?: number) =>
-  v == null ? null : fmtCurrency(v);
+export const dispCurrency = (
+  v?: number
+): string => {
+  return v == null ? "" : fmtCurrency(v);
+};
 
-export const dispCurrencyCompact = (v?: number) =>
-  v == null ? null : fmtCurrencyCompact(v);
+export const dispCurrencyCompact = (
+  v?: number
+): string => {
+  return v == null ? "" : fmtCurrencyCompact(v);
+};
 
 export const fmtPeriod = (period?: string) => {
   if (!period) return "Último período disponible";

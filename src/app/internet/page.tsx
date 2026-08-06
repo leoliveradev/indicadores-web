@@ -3,7 +3,8 @@ import {
   getInternetTecnologias, getInternetTecnologiaProvinciasLatest,
   getInternetVelocidadMedia, getInternetVelocidadMediaProvinciasLatest,
   getInternetRangosVelocidad,
-  getInternetPenetracion, getInternetPenetracionProvinciasLatest
+  getInternetPenetracion, getInternetPenetracionProvinciasLatest,
+  getInternetIngresos
 } from "@/lib/api/internet";
 import { fmtPeriod } from "@/lib/format";
 
@@ -21,10 +22,11 @@ export default async function InternetPage() {
   const overview = await getOverview();
 
   const [
-    tecnologias, tecnologiasProvincias, 
-    velocidadMedia, velocidadMediaProvincias, 
-    rangosVelocidad, 
-    penetracion, penetracionProvincias
+    tecnologias, tecnologiasProvincias,
+    velocidadMedia, velocidadMediaProvincias,
+    rangosVelocidad,
+    penetracion, penetracionProvincias,
+    ingresos
   ] = await Promise.all([
     getInternetTecnologias(),
     getInternetTecnologiaProvinciasLatest(),
@@ -33,6 +35,7 @@ export default async function InternetPage() {
     getInternetRangosVelocidad(),
     getInternetPenetracion(),
     getInternetPenetracionProvinciasLatest(),
+    getInternetIngresos()
   ]);
 
   const tecnologiaDonutData = getTecnologiaDonutData(tecnologias);
@@ -67,6 +70,7 @@ export default async function InternetPage() {
         velocidadMediaProvincias={velocidadMediaProvincias}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
+        ingresos={ingresos}
       />
 
     </>

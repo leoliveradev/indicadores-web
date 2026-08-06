@@ -126,3 +126,9 @@ export interface InternetVelocidadMediaProvinciasRow {
   provincia: string;
   mbps: number;
 }
+
+export interface InternetIngresosRow {
+  anio: number;
+  trimestre: number;
+  ingresos: number;
+}
