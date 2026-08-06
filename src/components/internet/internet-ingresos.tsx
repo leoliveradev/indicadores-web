@@ -9,7 +9,6 @@ import {
 } from "@/lib/internet";
 
 import { KPISection } from "@/components/home/kpi-section";
-import { Section } from "@/components/home/section";
 
 import { IngresosAreaChart } from "./ingresos-area-chart";
 
@@ -26,21 +25,6 @@ export function InternetIngresos({
     getIngresosEvolutionData(data);
 
   return (
-    // <>
-    //   <KPISection
-    //     title="Ingresos por servicios de Internet"
-    //     items={kpiItems}
-    //   />
-
-    //   <Section
-    //     title="Evolución histórica de ingresos"
-    //     alt
-    //   >
-    //     <IngresosAreaChart
-    //       data={evolutionData}
-    //     />
-    //   </Section>
-    // </>
     <>
       <KPISection
         title="Ingresos por servicios de Internet"
