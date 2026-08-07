@@ -1,21 +1,66 @@
-"use client";
+import { getOverview } from "@/lib/api/home";
 
-import Link from "next/link";
+import {
+  getMovilesAccesos,
+  getMovilesPenetracion,
+  getMovilesIngresos,
+  getMovilesLlamadas,
+  getMovilesMinutos,
+  getMovilesSms,
+} from "@/lib/api/comunicaciones-moviles";
 
-export default function Page() {
+import { fmtPeriod } from "@/lib/format";
+
+import { PageHero } from "@/components/layout/page-hero";
+
+import { ComunicacionesMovilesOverview }
+  from "@/components/comunicaciones-moviles/comunicaciones-moviles-overview";
+
+import { ComunicacionesMovilesTabs }
+  from "@/components/comunicaciones-moviles/comunicaciones-moviles-tabs";
+
+export default async function ComunicacionesMovilesPage() {
+  const overview = await getOverview();
+
+  const [
+    accesos,
+    penetracion,
+    ingresos,
+    llamadas,
+    minutos,
+    sms,
+  ] = await Promise.all([
+    getMovilesAccesos(),
+    getMovilesPenetracion(),
+    getMovilesIngresos(),
+    getMovilesLlamadas(),
+    getMovilesMinutos(),
+    getMovilesSms(),
+  ]);
+
+  const period = fmtPeriod(
+    overview.periodo
+  );
+
   return (
     <>
-      <div className="svc-page-header">
-        <div className="svc-page-header-inner">
-          <p className="svc-breadcrumb"><Link href="/">Inicio</Link> / Comunicaciones Móviles</p>
-          <h1 className="svc-title">Comunicaciones Móviles</h1>
-        </div>
-      </div>
-      <div className="page">
-        <p style={{ fontSize: 13, color: "var(--text-secondary)" }}>
-          Sección en desarrollo. Pronto estará disponible con datos oficiales de ENACOM.
-        </p>
-      </div>
+      <PageHero
+        title="Comunicaciones móviles en Argentina"
+        subtitle={`${period} · Datos oficiales ENACOM`}
+      />
+
+      <ComunicacionesMovilesOverview
+        data={overview}
+      />
+
+      <ComunicacionesMovilesTabs
+        accesos={accesos}
+        penetracion={penetracion}
+        ingresos={ingresos}
+        llamadas={llamadas}
+        minutos={minutos}
+        sms={sms}
+      />
     </>
   );
 }
