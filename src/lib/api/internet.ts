@@ -1,12 +1,14 @@
 import { get } from "@/lib/api/client"; 
-import { ApiResponse, 
+
+import type { ApiResponse } from "@/lib/types";
+import type {
   InternetPenetracionProvinciaRow, InternetPenetracionRow, 
   InternetTecnologiaProvinciaRow, InternetTecnologiaRow, 
   InternetVelocidadMediaRow, 
   InternetVelocidadMediaProvinciasRow, 
   InternetVelocidadRangosRow, 
   InternetIngresosRow
-} from "@/lib/types";
+} from "@/lib/internet/types";
 
 export function getInternetTecnologias() {
   return get<ApiResponse<InternetTecnologiaRow>>(
