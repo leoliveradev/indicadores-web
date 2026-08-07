@@ -1,6 +1,6 @@
 import { IInternet, IVelocidad, IDinero } from "@/components/ui/icons";
 import { dispValue, dispCurrencyCompact } from "@/lib/format";
-import type { Overview } from "@/lib/types";
+import type { Overview } from "@/lib/home/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
 export function getInternetOverviewItems(data: Overview): KPIItem[] {

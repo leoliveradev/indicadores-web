@@ -2,11 +2,11 @@
 
 import { KPISection } from "@/components/home/kpi-section";
 
+import type {  ApiResponse } from "@/lib/types";
 import type {
-  ApiResponse,
   InternetTecnologiaRow,
   InternetTecnologiaProvinciaRow
-} from "@/lib/types";
+} from "@/lib/internet/types";
 
 import { TecnologiaLineChart } from "@/components/internet/tecnologia-line-chart";
 import {

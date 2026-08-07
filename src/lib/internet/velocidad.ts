@@ -1,10 +1,10 @@
 import { fmtDecimal, fmtPercent } from "@/lib/format";
+import {  ApiResponse } from "@/lib/types";
 import type {
-  ApiResponse, 
   InternetVelocidadMediaRow,
   InternetVelocidadMediaProvinciasRow,
   InternetVelocidadRangosRow,
-} from "@/lib/types";
+} from "@/lib/internet/types";
 
 import type { KPIItem } from "@/components/home/kpi-section";
 

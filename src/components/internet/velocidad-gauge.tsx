@@ -41,7 +41,7 @@ export function VelocidadGauge({ data }: { data: GaugeData }) {
         </ResponsiveContainer>
       </div>
 
-      <div className="text-center mt-[-30px]">
+      <div className="text-center mt-[-7.5]">
         <div style={{
           fontSize: "28px",
           fontWeight: 600,

@@ -1,9 +1,9 @@
 import { dispValue } from "@/lib/format";
+import {  ApiResponse } from "@/lib/types";
 import type {
-  ApiResponse,
   InternetTecnologiaRow,
   InternetTecnologiaProvinciaRow
-} from "@/lib/types";
+} from "@/lib/internet/types";
 
 import type { KPIItem } from "@/components/home/kpi-section";
 

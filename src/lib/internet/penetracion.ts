@@ -1,8 +1,9 @@
+import {  ApiResponse } from "@/lib/types";
+
 import {
   InternetPenetracionRow,
   InternetPenetracionProvinciaRow,
-  ApiResponse,
-} from "@/lib/types";
+} from "@/lib/internet/types";
 
 import { fmtNumber } from "@/lib/format";
 import { getTopN } from "./common";

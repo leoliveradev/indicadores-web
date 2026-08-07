@@ -9,7 +9,7 @@ import {
   CartesianGrid,
 } from "recharts";
 
-import type { InternetPenetracionEvolutionItem } from "@/lib/types"
+import type { InternetPenetracionEvolutionItem } from "@/lib/internet/types"
 
 export function PenetracionLineChart({
   data,

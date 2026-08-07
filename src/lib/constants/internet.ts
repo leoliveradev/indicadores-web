@@ -1,4 +1,7 @@
-import type { InternetTecnologiaRow, InternetVelocidadRangosRow } from "@/lib/types";
+import type { 
+  InternetTecnologiaRow, 
+  InternetVelocidadRangosRow 
+} from "@/lib/internet/types";
 
 export type TechKey = Extract<
   keyof Omit<InternetTecnologiaRow, "anio" | "trimestre" | "total">,

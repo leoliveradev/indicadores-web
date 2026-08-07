@@ -1,13 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import {  ApiResponse } from "@/lib/types";
 import {
-  ApiResponse,
   InternetTecnologiaProvinciaRow, InternetTecnologiaRow,
   InternetVelocidadMediaProvinciasRow, InternetVelocidadMediaRow,
   InternetPenetracionProvinciaRow, InternetPenetracionRow,
   InternetIngresosRow
-} from "@/lib/types";
+} from "@/lib/internet/types";
 
 import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
 import { InternetVelocidad } from "@/components/internet/internet-velocidad";

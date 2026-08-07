@@ -5,11 +5,11 @@ import { PenetracionLineChart } from "@/components/internet/penetracion-line-cha
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 import { PenetracionProvinciasRanking } from "@/components/internet/penetracion-provincias-ranking";
 
+import type { ApiResponse } from "@/lib/types";
 import type {
-  ApiResponse,
   InternetPenetracionRow,
   InternetPenetracionProvinciaRow,
-} from "@/lib/types";
+} from "@/lib/internet/types";
 
 import {
   getPenetracionKPIItems,
