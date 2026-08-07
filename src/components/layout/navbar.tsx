@@ -100,8 +100,7 @@ export function Navbar() {
     return () => document.removeEventListener("mousedown", handler);
   }, []);
 
-  // Cerrar al navegar
-  useEffect(() => { setOpen(false); }, [pathname]);
+
 
   const isServicioActive = SERVICIOS.some((s) => pathname.startsWith(s.href));
 
@@ -125,6 +124,7 @@ export function Navbar() {
           <Link
             href="/"
             className={`nav-btn ${pathname === "/" ? "active" : ""}`}
+            onClick={() => setOpen(false)}
           >
             Inicio
           </Link>
@@ -144,7 +144,11 @@ export function Navbar() {
             <div className={`dropdown ${open ? "open" : ""}`} role="menu">
               <div className="dropdown-header">Sector TIC · Argentina</div>
               {SERVICIOS.map((s) => (
-                <Link key={s.href} href={s.href} className="dropdown-item" role="menuitem">
+                <Link key={s.href}
+                  href={s.href}
+                  className="dropdown-item"
+                  role="menuitem"
+                  onClick={() => setOpen(false)}>
                   <div className="dropdown-item-icon">{s.icon}</div>
                   <div>
                     <div className="dropdown-item-label">{s.label}</div>
@@ -157,8 +161,9 @@ export function Navbar() {
 
           {/* Acerca de */}
           <Link
-            href="/acerca-de"
-            className={`nav-btn ${pathname === "/acerca-de" ? "active" : ""}`}
+            href="/about"
+            className={`nav-btn ${pathname === "/about" ? "active" : ""}`}
+            onClick={() => setOpen(false)}
           >
             Acerca de
           </Link>
