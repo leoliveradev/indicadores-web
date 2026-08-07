@@ -1,7 +1,5 @@
-import type {
-  ApiResponse,
-  InternetIngresosRow,
-} from "@/lib/types";
+import type { ApiResponse } from "@/lib/types";
+import type { InternetIngresosRow } from "@/lib/internet/types";
 
 import {
   getIngresosKPIItems,
@@ -10,7 +8,7 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
-import { IngresosAreaChart } from "./ingresos-area-chart";
+import { IngresosAreaChart } from "@/components/ui/charts/ingresos-area-chart";
 
 type Props = {
   data: ApiResponse<InternetIngresosRow>;
