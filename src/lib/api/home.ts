@@ -1,4 +1,4 @@
-import type { Overview } from "@/lib/types";
+import type { Overview } from "@/lib/home/types";
 import { get } from "./client";
 
 export function getOverview() {

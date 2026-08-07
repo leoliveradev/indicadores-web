@@ -1,6 +1,6 @@
 import { IFija, IInternet, ITV, IMovil, IDinero, IPostal, IFibra, I4G, ISatelital, IVelocidad, } from "@/components/ui/icons";
 import { dispValue, dispCurrencyCompact } from "@/lib/format";
-import { Overview } from "@/lib/types";
+import { Overview } from "@/lib/home/types";
 
 type KPIItem = {
   label: string;

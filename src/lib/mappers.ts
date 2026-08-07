@@ -1,4 +1,4 @@
-import { Overview } from "@/lib/types";
+import { Overview } from "@/lib/home/types";
 
 export function mapInternetOverview(data: Overview) {
   return {
