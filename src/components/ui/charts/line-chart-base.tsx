@@ -18,6 +18,7 @@ type Series = {
   strokeWidth?: number;
   strokeDasharray?: string;
   activeDot?: boolean;
+  hidden?: boolean;
 };
 
 type Props = {
