@@ -12,9 +12,8 @@ import {
   getSmsEvolutionData,
 } from "@/lib/comunicaciones-moviles";
 
-// import { UsoLineChart } from "./uso-line-chart";
-import { SmsLineChart } from "./sms-line-chart";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+import { dispValue } from "@/lib/format";
 
 type Props = {
   llamadas: ApiResponse<ComunicacionesMovilesLlamadasRow>;
@@ -132,8 +131,22 @@ export function ComunicacionesMovilesUso({
           </h2>
 
           <div className="chart-card">
-            <SmsLineChart
+            <LineChartBase
               data={smsData}
+              height={400}
+              series={[
+                {
+                  key: "sms",
+                  label: "SMS",
+                  color: "#dc2626",
+                  strokeWidth: 3,
+                },
+              ]}
+              yFormatter={(v) =>
+                dispValue(v, {
+                  format: "compact",
+                })
+              }
             />
           </div>
 
