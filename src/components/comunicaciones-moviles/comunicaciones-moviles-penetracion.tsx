@@ -1,4 +1,4 @@
-import {  ApiResponse } from "@/lib/types";
+import { ApiResponse } from "@/lib/types";
 
 import type {
   ComunicacionesMovilesPenetracionRow,
@@ -11,8 +11,7 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
-import { PenetracionLineChart }
-  from "./penetracion-line-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 export function ComunicacionesMovilesPenetracion({
   penetracion,
@@ -44,8 +43,17 @@ export function ComunicacionesMovilesPenetracion({
           </h2>
 
           <div className="chart-card">
-            <PenetracionLineChart
+            <LineChartBase
               data={evolutionData}
+              height={400}
+              series={[
+                {
+                  key: "accesos",
+                  label: "Accesos cada 100 habitantes",
+                  color: "#2563eb",
+                  strokeWidth: 3,
+                },
+              ]}
             />
           </div>
 
