@@ -10,7 +10,8 @@ import {
   getVelocidadProvinciaRankingData
 } from "@/lib/internet";
 
-import { VelocidadLineChart } from "./velocidad-line-chart";
+import { LineChartBase }
+  from "@/components/ui/charts/line-chart-base";
 
 import { KPISection } from "@/components/home/kpi-section";
 import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
@@ -47,8 +48,18 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
           </h2>
 
           <div className="chart-card">
-            <VelocidadLineChart
+            <LineChartBase
               data={evolutionData}
+              height={350}
+              series={[
+                {
+                  key: "mbps",
+                  label: "Velocidad media",
+                  color: "var(--blue-200)",
+                  strokeWidth: 3,
+                  activeDot: true,
+                },
+              ]}
             />
           </div>
 
