@@ -1,4 +1,4 @@
-import type {  ApiResponse } from "@/lib/types";
+import type { ApiResponse } from "@/lib/types";
 import type {
   InternetVelocidadMediaProvinciasRow,
   InternetVelocidadMediaRow,
@@ -13,13 +13,11 @@ import {
 import { VelocidadLineChart } from "./velocidad-line-chart";
 
 import { KPISection } from "@/components/home/kpi-section";
+import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
-import { VelocidadRankingChart } from "./velocidad-ranking-chart";
-
-
-export function InternetVelocidad({ velocidadMedia, provincias} : {
-  velocidadMedia : ApiResponse<InternetVelocidadMediaRow>,
-  provincias : ApiResponse<InternetVelocidadMediaProvinciasRow>,
+export function InternetVelocidad({ velocidadMedia, provincias }: {
+  velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
+  provincias: ApiResponse<InternetVelocidadMediaProvinciasRow>,
 }) {
   const kpiItems = getVelocidadKPIItems(velocidadMedia);
 
@@ -65,8 +63,13 @@ export function InternetVelocidad({ velocidadMedia, provincias} : {
           </h2>
 
           <div className="chart-card">
-            <VelocidadRankingChart
-              data={rankingData}
+            <RankingBarChart
+              data={rankingData.map((r) => ({
+                label: r.provincia,
+                value: r.mbps,
+              }))}
+              color="#E74242"
+              formatter={(v) => `${v.toFixed(1)} Mbps`}
             />
           </div>
 

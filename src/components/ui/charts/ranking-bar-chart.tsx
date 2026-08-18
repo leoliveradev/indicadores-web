@@ -1,6 +1,5 @@
 "use client";
 
-import { fmtDecimal } from "@/lib/format";
 import {
   ResponsiveContainer,
   BarChart,
@@ -11,17 +10,23 @@ import {
   CartesianGrid,
 } from "recharts";
 
-type Item = {
-  provincia: string;
-  mbps: number;
+type RankingItem = {
+  label: string;
+  value: number;
 };
 
-export function VelocidadRankingChart({
+type Props = {
+  data: RankingItem[];
+  color?: string;
+  formatter?: (value: number) => string;
+};
+
+export function RankingBarChart({
   data,
-}: {
-  data: Item[];
-}) {
-  const height = data.length * 32 + 40;
+  color = "#005297",
+  formatter = (v) => v.toLocaleString("es-AR"),
+}: Props) {
+  const height = data.length * 38 + 40;
 
   return (
     <ResponsiveContainer
@@ -31,6 +36,12 @@ export function VelocidadRankingChart({
       <BarChart
         data={data}
         layout="vertical"
+        margin={{
+          top: 10,
+          right: 20,
+          left: 20,
+          bottom: 10,
+        }}
       >
         <CartesianGrid
           strokeDasharray="3 3"
@@ -39,27 +50,24 @@ export function VelocidadRankingChart({
 
         <XAxis
           type="number"
-          tickFormatter={(value) => `${fmtDecimal(value, 2)} Mbps`}
+          tickFormatter={formatter}
         />
 
         <YAxis
           type="category"
-          dataKey="provincia"
+          dataKey="label"
           width={120}
         />
 
         <Tooltip
           formatter={(value) =>
-            `${Number(value).toLocaleString("es-AR", {
-              minimumFractionDigits: 2,
-              maximumFractionDigits: 2,
-            })} Mbps`
+            formatter(Number(value))
           }
         />
 
         <Bar
-          dataKey="mbps"
-          fill="var(--blue-200)"
+          dataKey="value"
+          fill={color}
           radius={[0, 4, 4, 0]}
         />
       </BarChart>

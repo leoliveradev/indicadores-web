@@ -3,7 +3,6 @@ import { useState } from "react";
 import { KPISection } from "@/components/home/kpi-section";
 import { PenetracionLineChart } from "@/components/internet/penetracion-line-chart";
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
-import { PenetracionProvinciasRanking } from "@/components/internet/penetracion-provincias-ranking";
 
 import type { ApiResponse } from "@/lib/types";
 import type {
@@ -16,6 +15,7 @@ import {
   getPenetracionEvolutionData,
   getPenetracionProvinciaRankingData
 } from "@/lib/internet";
+import { RankingComparisonBarChart } from "@/components/ui/charts/ranking-comparison-bar-chart";
 
 export function InternetPenetracion({
   penetracion,
@@ -119,7 +119,17 @@ export function InternetPenetracion({
             </div>
 
             <div className="chart-card">
-              <PenetracionProvinciasRanking data={rankingData} />
+              <RankingComparisonBarChart
+                data={rankingData.map((r) => ({
+                  label: r.provincia,
+                  primary: r.hogares,
+                  secondary: r.habitantes,
+                }))}
+                primaryLabel="Hogares"
+                secondaryLabel="Habitantes"
+                primaryColor="var(--blue-200)"
+                secondaryColor="var(--accent-green)"
+              />
             </div>
           </div>
         </div>

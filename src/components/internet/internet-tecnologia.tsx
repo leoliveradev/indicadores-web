@@ -2,21 +2,21 @@
 
 import { KPISection } from "@/components/home/kpi-section";
 
-import type {  ApiResponse } from "@/lib/types";
+import type { ApiResponse } from "@/lib/types";
 import type {
   InternetTecnologiaRow,
   InternetTecnologiaProvinciaRow
 } from "@/lib/internet/types";
 
-import { TecnologiaLineChart } from "@/components/internet/tecnologia-line-chart";
 import {
   getTecnologiaKPIItems,
   getTecnologiaEvolutionData,
   getTecnologiaProvinciaRankingData
 } from "@/lib/internet";
 
-import { TecnologiaProvinciasRanking } from "./tecnologia-provincias-ranking";
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
+import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 export function InternetTecnologia({
   tecnologias,
@@ -57,7 +57,36 @@ export function InternetTecnologia({
           </h2>
 
           <div className="chart-card">
-            <TecnologiaLineChart data={evolutionData} />
+            <LineChartBase
+              data={evolutionData}
+              series={[
+                {
+                  key: "fibra_optica",
+                  label: "Fibra óptica",
+                  color: "var(--accent-green)",
+                  strokeWidth: 3,
+                },
+                {
+                  key: "cablemodem",
+                  label: "Cablemódem",
+                  color: "var(--blue-400)",
+                },
+                {
+                  key: "adsl",
+                  label: "ADSL",
+                  color: "var(--blue-200)",
+                  strokeDasharray: "4 2",
+                },
+                {
+                  key: "wireless",
+                  label: "Wireless",
+                  color: "var(--accent-amber)",
+                },
+              ]}
+              yFormatter={(v) =>
+                v.toLocaleString("es-AR")
+              }
+            />
           </div>
           <p className="chart-description">
             La fibra óptica muestra un crecimiento sostenido, mientras que ADSL presenta una caída progresiva en el tiempo.
@@ -89,7 +118,12 @@ export function InternetTecnologia({
             </div>
 
             <div className="chart-card">
-              <TecnologiaProvinciasRanking data={rankingData} />
+              <RankingBarChart
+                data={rankingData.map((r) => ({
+                  label: r.provincia,
+                  value: r.total,
+                }))}
+              />
             </div>
 
           </div>
