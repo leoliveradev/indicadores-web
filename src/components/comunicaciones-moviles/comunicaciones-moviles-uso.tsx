@@ -88,9 +88,6 @@ export function ComunicacionesMovilesUso({
           </h2>
 
           <div className="chart-card">
-            {/* <UsoLineChart
-              data={minutosData}
-            /> */}
             <LineChartBase
               data={minutosData}
               series={[
