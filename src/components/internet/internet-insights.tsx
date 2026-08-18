@@ -1,6 +1,6 @@
 "use client";
 
-import { DonutChart } from "@/components/internet/donut-chart";
+import { DonutChart } from "@/components/ui/charts/donut-chart";
 
 type DonutItem = {
   name: string;
