@@ -17,6 +17,7 @@ type Series = {
   color: string;
   strokeWidth?: number;
   strokeDasharray?: string;
+  activeDot?: boolean;
 };
 
 type Props = {
@@ -72,6 +73,7 @@ export function LineChartBase({
             strokeWidth={s.strokeWidth ?? 2}
             strokeDasharray={s.strokeDasharray}
             dot={false}
+            activeDot={s.activeDot ? { r: 5 } : false}
           />
         ))}
       </LineChart>
