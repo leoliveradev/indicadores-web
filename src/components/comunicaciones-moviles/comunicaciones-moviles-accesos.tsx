@@ -1,4 +1,4 @@
-import type {  ApiResponse } from "@/lib/types";
+import type { ApiResponse } from "@/lib/types";
 import type {
   ComunicacionesMovilesAccesosRow,
 } from "@/lib/comunicaciones-moviles/types";
@@ -11,11 +11,9 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
-import { AccesosDonutChart }
-  from "./accesos-donut-chart";
-
-import { AccesosLineChart }
-  from "./accesos-line-chart";
+import { DonutChart }
+  from "@/components/ui/charts/donut-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 export function ComunicacionesMovilesAccesos({
   accesos,
@@ -46,7 +44,7 @@ export function ComunicacionesMovilesAccesos({
           </h2>
 
           <div className="chart-card">
-            <AccesosDonutChart
+            <DonutChart
               data={donutData}
             />
           </div>
@@ -62,8 +60,28 @@ export function ComunicacionesMovilesAccesos({
           </h2>
 
           <div className="chart-card">
-            <AccesosLineChart
+            <LineChartBase
               data={evolutionData}
+              series={[
+                {
+                  key: "prepago",
+                  label: "Prepago",
+                  color: "#2563eb",
+                  strokeWidth: 3,
+                },
+                {
+                  key: "pospago",
+                  label: "Pospago",
+                  color: "#16a34a",
+                  strokeWidth: 3,
+                },
+                {
+                  key: "operativos",
+                  label: "Operativos",
+                  color: "#f59e0b",
+                  strokeWidth: 3,
+                }
+              ]}
             />
           </div>
 

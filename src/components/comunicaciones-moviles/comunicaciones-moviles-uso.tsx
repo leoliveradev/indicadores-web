@@ -12,8 +12,9 @@ import {
   getSmsEvolutionData,
 } from "@/lib/comunicaciones-moviles";
 
-import { UsoLineChart } from "./uso-line-chart";
+// import { UsoLineChart } from "./uso-line-chart";
 import { SmsLineChart } from "./sms-line-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 type Props = {
   llamadas: ApiResponse<ComunicacionesMovilesLlamadasRow>;
@@ -47,8 +48,25 @@ export function ComunicacionesMovilesUso({
           </h2>
 
           <div className="chart-card">
-            <UsoLineChart
+            <LineChartBase
               data={llamadasData}
+              series={[
+                {
+                  key: "prepago",
+                  label: "Prepago",
+                  color: "#2563eb",
+                },
+                {
+                  key: "pospago",
+                  label: "Pospago",
+                  color: "#16a34a",
+                },
+                {
+                  key: "total",
+                  label: "Total",
+                  color: "#f59e0b",
+                },
+              ]}
             />
           </div>
 
@@ -71,8 +89,28 @@ export function ComunicacionesMovilesUso({
           </h2>
 
           <div className="chart-card">
-            <UsoLineChart
+            {/* <UsoLineChart
               data={minutosData}
+            /> */}
+            <LineChartBase
+              data={minutosData}
+              series={[
+                {
+                  key: "prepago",
+                  label: "Prepago",
+                  color: "#2563eb",
+                },
+                {
+                  key: "pospago",
+                  label: "Pospago",
+                  color: "#16a34a",
+                },
+                {
+                  key: "total",
+                  label: "Total",
+                  color: "#f59e0b",
+                },
+              ]}
             />
           </div>
 
