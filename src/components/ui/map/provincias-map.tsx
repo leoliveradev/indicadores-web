@@ -18,9 +18,26 @@ type Props = {
   onSelect?: (provincia: string) => void;
 };
 
+type MapTooltipData = {
+  x: number;
+  y: number;
+  name: string;
+
+  value: number;
+
+  hogares?: number;
+  habitantes?: number;
+};
+
+import type {
+  Feature,
+  Geometry,
+} from "geojson";
+
 export function ProvinciasMap({ data, onSelect }: Props) {
   const geo = useGeoData();
-  const [tooltip, setTooltip] = useState<any>(null);
+  const [tooltip, setTooltip] =
+    useState<MapTooltipData | null>(null);
 
   const GEO_TO_API = Object.fromEntries(
     Object.entries(PROVINCE_MAP).map(([api, geo]) => [geo, api])
@@ -48,9 +65,9 @@ export function ProvinciasMap({ data, onSelect }: Props) {
   return (
     <div className="chart-container" style={{ position: "relative" }}>
       <svg width="100%" viewBox="0 0 800 900">
-        {geo.features.map((feature: any) => {
+        {geo.features.map((feature: Feature<Geometry>) => {
 
-          const geoName = feature.properties.NAME_1;
+          const geoName = feature.properties?.NAME_1 ?? "";
           const apiName = GEO_TO_API[geoName] || geoName;
           const entry = mapData[geoName];
           const value = entry?.total ?? 0;
