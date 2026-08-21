@@ -1,5 +1,5 @@
 import type { ApiResponse } from "@/lib/types";
-import type { InternetIngresosRow } from "@/lib/internet/types";
+import type { InternetIngresosRow } from "@/lib/internet";
 
 import {
   getIngresosKPIItems,

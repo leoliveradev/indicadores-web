@@ -1,7 +1,7 @@
 import { IDinero } from "@/components/ui/icons";
 import { dispCurrencyCompact, fmtPercent } from "@/lib/format";
 import type { ApiResponse } from "@/lib/types";
-import type { InternetIngresosRow } from "@/lib/internet/types";
+import type { InternetIngresosRow } from "@/lib/internet";
 
 import type { KPIItem } from "@/components/home/kpi-section";
 

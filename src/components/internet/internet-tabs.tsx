@@ -7,7 +7,7 @@ import {
   InternetVelocidadMediaProvinciasRow, InternetVelocidadMediaRow,
   InternetPenetracionProvinciaRow, InternetPenetracionRow,
   InternetIngresosRow
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
 import { InternetVelocidad } from "@/components/internet/internet-velocidad";

@@ -3,7 +3,7 @@ import {  ApiResponse } from "@/lib/types";
 import {
   InternetPenetracionRow,
   InternetPenetracionProvinciaRow,
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 import { fmtNumber } from "@/lib/format";
 import { getTopN } from "./common";

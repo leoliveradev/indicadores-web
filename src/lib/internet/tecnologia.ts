@@ -3,7 +3,7 @@ import {  ApiResponse } from "@/lib/types";
 import type {
   InternetTecnologiaRow,
   InternetTecnologiaProvinciaRow
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 import type { KPIItem } from "@/components/home/kpi-section";
 

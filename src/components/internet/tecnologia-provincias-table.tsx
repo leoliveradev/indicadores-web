@@ -1,6 +1,6 @@
 "use client";
 
-import type { InternetTecnologiaProvinciaRow } from "@/lib/internet/types";
+import type { InternetTecnologiaProvinciaRow } from "@/lib/internet";
 import {fmtNumber} from "@/lib/format";
 
 export function TecnologiaProvinciasTable({

@@ -2,7 +2,7 @@ import type { ApiResponse } from "@/lib/types";
 import type {
   InternetVelocidadMediaProvinciasRow,
   InternetVelocidadMediaRow,
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 import {
   getVelocidadEvolutionData,

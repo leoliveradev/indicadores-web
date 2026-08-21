@@ -1,9 +1,9 @@
-import { LineChartBase }
-  from "@/components/ui/charts/line-chart-base";
-
 import type {
   InternetPenetracionEvolutionItem,
-} from "@/lib/internet/types";
+} from "@/lib/internet";
+
+import { LineChartBase }
+  from "@/components/ui/charts/line-chart-base";
 
 export function PenetracionLineChart({
   data,

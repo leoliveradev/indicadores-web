@@ -8,7 +8,7 @@ import type { ApiResponse } from "@/lib/types";
 import type {
   InternetPenetracionRow,
   InternetPenetracionProvinciaRow,
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 import {
   getPenetracionKPIItems,

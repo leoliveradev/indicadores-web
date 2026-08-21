@@ -6,7 +6,7 @@ import type { ApiResponse } from "@/lib/types";
 import type {
   InternetTecnologiaRow,
   InternetTecnologiaProvinciaRow
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 import {
   getTecnologiaKPIItems,
