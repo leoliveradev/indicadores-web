@@ -4,13 +4,11 @@ import type {
   InternetVelocidadMediaRow,
   InternetVelocidadMediaProvinciasRow,
   InternetVelocidadRangosRow,
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 import type { KPIItem } from "@/components/home/kpi-section";
 
 import { VELOCITY_CONFIG } from "@/lib/constants/internet";
-
-import { trendPct } from "@/lib/utilsInternet";
 
 import { buildDonutData, getTopN } from "./common";
 
@@ -25,33 +23,6 @@ export function getVelocidadRangosDonutData(
   const cur = rows[rows.length - 1];
 
   return buildDonutData(cur, VELOCITY_CONFIG);
-}
-
-export function getVelocidadGaugeData(
-  response: ApiResponse<InternetVelocidadMediaRow>
-) {
-  const rows = Array.isArray(response)
-    ? response
-    : response?.data ?? [];
-
-  if (!rows.length) return null;
-
-  const cur = rows[rows.length - 1];
-  const prev = rows.length > 1 ? rows[rows.length - 2] : null;
-
-  // 🔥 fallback robusto
-  const value =
-    cur.Mbps ??
-    0;
-
-  const prevValue =
-    prev?.Mbps ??
-    null;
-
-  return {
-    value,
-    trend: prevValue ? trendPct(value, prevValue) : null,
-  };
 }
 
 export function getVelocidadKPIItems(
