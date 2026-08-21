@@ -1,20 +1,52 @@
-"use client";
-import Link from 'next/link'
+import { PageHero }
+  from "@/components/layout/page-hero";
 
-export default function Page() {
+import {
+  MercadoPostalOverview,
+} from "@/components/mercado-postal/mercado-postal-overview";
+
+import {
+  MercadoPostalTabs,
+} from "@/components/mercado-postal/mercado-postal-tabs";
+
+import {
+  getMercadoPostalFacturacion,
+  getMercadoPostalProduccion,
+  getMercadoPostalPersonal,
+  getMercadoPostalProvinciasLatest,
+} from "@/lib/api/mercado-postal";
+
+export default async function MercadoPostalPage() {
+  const [
+    facturacion,
+    produccion,
+    personal,
+    provincias,
+  ] = await Promise.all([
+    getMercadoPostalFacturacion(),
+    getMercadoPostalProduccion(),
+    getMercadoPostalPersonal(),
+    getMercadoPostalProvinciasLatest(),
+  ]);
+
   return (
     <>
-      <div className="svc-page-header">
-        <div className="svc-page-header-inner">
-          <p className="svc-breadcrumb"><Link href="/">Inicio</Link> / Mercado Postal</p>
-          <h1 className="svc-title">Mercado Postal</h1>
-        </div>
-      </div>
-      <div className="page">
-        <p style={{ fontSize: 13, color: "var(--text-secondary)" }}>
-          Sección en desarrollo.
-        </p>
-      </div>
+      <PageHero
+        title="Mercado Postal Argentino"
+        subtitle="Facturación, producción, empleo y distribución provincial"
+      />
+
+      <MercadoPostalOverview
+        facturacion={facturacion}
+        personal={personal}
+      />
+
+      <MercadoPostalTabs
+        facturacion={facturacion}
+        produccion={produccion}
+        personal={personal}
+        provincias={provincias}
+      />
     </>
   );
 }
