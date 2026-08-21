@@ -1,0 +1,141 @@
+import type { ApiResponse } from "@/lib/types";
+
+import type {
+  TelevisionAccesosRow,
+  TelevisionAccesosProvinciaRow,
+} from "@/lib/television";
+
+import {
+  getAccesosKPIItems,
+  getAccesosDonutData,
+  getAccesosEvolutionData,
+  getAccesosProvinciaRankingData,
+} from "@/lib/television";
+
+import { KPISection } from "@/components/home/kpi-section";
+
+import { DonutChart } from "@/components/ui/charts/donut-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
+
+import { ProvinciasMap } from "@/components/ui/map/provincias-map";
+
+import { dispValue } from "@/lib/format";
+
+type Props = {
+  accesos: ApiResponse<TelevisionAccesosRow>;
+  provincias: ApiResponse<TelevisionAccesosProvinciaRow>;
+};
+
+export function TelevisionAccesos({
+  accesos,
+  provincias,
+}: Props) {
+  const kpiItems = getAccesosKPIItems(accesos);
+
+  const donutData =
+    getAccesosDonutData(accesos);
+
+  const evolutionData =
+    getAccesosEvolutionData(accesos);
+
+  const rankingData =
+    getAccesosProvinciaRankingData(provincias);
+
+  const provinciaData =
+    provincias.data.map((row) => ({
+      provincia: row.provincia,
+      total: row.tv_suscripcion,
+    }));
+
+  return (
+    <>
+      <KPISection
+        title="Accesos de televisión por suscripción"
+        items={kpiItems}
+      />
+
+      <section className="section-wrap">
+        <div className="section-inner">
+
+          <h2 className="section-heading">
+            Composición actual
+          </h2>
+
+          <div className="chart-card">
+            <DonutChart data={donutData} />
+          </div>
+
+        </div>
+      </section>
+
+      <section className="section-wrap alt">
+        <div className="section-inner">
+
+          <h2 className="section-heading">
+            Evolución histórica de accesos
+          </h2>
+
+          <div className="chart-card">
+
+            <LineChartBase
+              data={evolutionData}
+              series={[
+                {
+                  key: "tv_suscripcion",
+                  label: "TV por suscripción",
+                  color: "#005297",
+                  strokeWidth: 3,
+                },
+                {
+                  key: "tv_satelital",
+                  label: "TV satelital",
+                  color: "#EEAE42",
+                  strokeWidth: 2,
+                },
+              ]}
+              yFormatter={(v) =>
+                dispValue(v, {
+                  format: "compact",
+                })
+              }
+            />
+
+          </div>
+
+        </div>
+      </section>
+
+      <section className="section-wrap">
+        <div className="section-inner">
+
+          <h2 className="section-heading">
+            Distribución provincial
+          </h2>
+
+          <div className="grid grid-cols-2 gap-6">
+
+            <div className="chart-card">
+              <ProvinciasMap
+                data={provinciaData}
+              />
+            </div>
+
+            <div className="chart-card">
+
+              <RankingBarChart
+                data={rankingData.map((r) => ({
+                  label: r.provincia,
+                  value: r.total,
+                }))}
+              />
+
+            </div>
+
+          </div>
+
+        </div>
+      </section>
+    </>
+  );
+}
