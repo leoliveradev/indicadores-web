@@ -34,7 +34,7 @@ export function getTecnologiaKPIItems(
 
   return TECH_CONFIG_KPI.map((t) => ({
     label: t.label,
-    icon: () => null, // iconos específicos
+    icon: () => null,
     value: cur[t.key],
     format: (v: number) => dispValue(v, { format: "compact" }),
   }));
