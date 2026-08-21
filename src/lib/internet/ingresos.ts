@@ -39,7 +39,6 @@ export function getIngresosKPIItems(
 export function getIngresosEvolutionData(
   response: ApiResponse<InternetIngresosRow>
 ) {
-  console.log(response.data.length);
 
   return response.data.map((row) => ({
     label: `${row.anio} T${row.trimestre}`,
