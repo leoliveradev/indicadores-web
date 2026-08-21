@@ -1,14 +1,25 @@
+type LegendScale = {
+  range(): string[];
+  invertExtent(color: string): [
+    number | undefined,
+    number | undefined,
+  ];
+};
+
 export function MapLegend({
   scale,
 }: {
-  scale: any;
+  scale: LegendScale;
 }) {
   const range = scale.range();
 
   return (
     <div style={{ display: "flex", gap: 6, marginTop: 12 }}>
       {range.map((color: string, i: number) => {
-        const [min, max] = scale.invertExtent(color);
+        const extent =
+          scale.invertExtent(color);
+
+        const min = extent[0];
 
         return (
           <div key={i} style={{ textAlign: "center", fontSize: 10 }}>

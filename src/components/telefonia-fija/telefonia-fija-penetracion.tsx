@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 
 import type {
@@ -13,6 +17,8 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
+import { LineChartBase }
+  from "@/components/ui/charts/line-chart-base";
 import { RankingComparisonBarChart }
   from "@/components/ui/charts/ranking-comparison-bar-chart";
 import { ProvinciasMap }
@@ -32,6 +38,11 @@ export function TelefoniaFijaPenetracion({
       penetracion
     );
 
+  const evolutionData =
+    getPenetracionEvolutionData(
+      penetracion
+    );
+
   const rankingData =
     getPenetracionProvinciaRankingData(
       provincias
@@ -48,12 +59,83 @@ export function TelefoniaFijaPenetracion({
     habitantes: d.accesos_100_hab,
   }));
 
+  const [mode, setMode] = useState<
+    "hogares" | "habitantes" | "ambos"
+  >("ambos");
+
   return (
     <>
       <KPISection
         title="Penetración de telefonía fija"
         items={kpiItems}
       />
+      <div className="flex gap-2 mb-4">
+        <button
+          className={`tab-btn ${mode === "ambos" ? "active" : ""}`}
+          onClick={() => setMode("ambos")}
+        >
+          Ambos
+        </button>
+
+        <button
+          className={`tab-btn ${mode === "hogares" ? "active" : ""}`}
+          onClick={() => setMode("hogares")}
+        >
+          Hogares
+        </button>
+
+        <button
+          className={`tab-btn ${mode === "habitantes" ? "active" : ""}`}
+          onClick={() => setMode("habitantes")}
+        >
+          Habitantes
+        </button>
+      </div>
+      <section className="section-wrap alt">
+        <div className="section-inner">
+
+          <h2 className="section-heading">
+            Evolución de la penetración
+          </h2>
+
+          <div className="chart-card">
+
+            <LineChartBase
+              data={evolutionData}
+              series={[
+                ...(mode === "hogares" || mode === "ambos"
+                  ? [
+                    {
+                      key: "hogares",
+                      label: "Accesos cada 100 hogares",
+                      color: "#005297",
+                      strokeWidth: 3,
+                    },
+                  ]
+                  : []),
+
+                ...(mode === "habitantes" || mode === "ambos"
+                  ? [
+                    {
+                      key: "habitantes",
+                      label: "Accesos cada 100 habitantes",
+                      color: "#22c55e",
+                    },
+                  ]
+                  : []),
+              ]}
+            />
+
+          </div>
+
+          <p className="chart-description">
+            Evolución histórica de la penetración de la
+            telefonía fija medida sobre hogares y habitantes.
+          </p>
+
+        </div>
+      </section>
+
       <section className="section-wrap">
         <div className="section-inner">
 
@@ -80,14 +162,13 @@ export function TelefoniaFijaPenetracion({
                 secondaryLabel="Habitantes"
               />
             </div>
-
-            <p className="chart-description">
-              La penetración de telefonía fija presenta fuertes diferencias
-              entre provincias, con una mayor concentración en los distritos
-              más urbanizados del país.
-            </p>
-
           </div>
+
+          <p className="chart-description">
+            La penetración de telefonía fija presenta fuertes diferencias
+            entre provincias, con una mayor concentración en los distritos
+            más urbanizados del país.
+          </p>
 
         </div>
       </section>
