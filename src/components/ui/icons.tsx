@@ -139,22 +139,6 @@ export const IFibra = ({
     <path d="M12 15v3" />
   </svg>
 );
-// export const IFibra = ({ size = 32, color = "var(--accent-green)" }: IconProps) => (
-//   <svg
-//     width={size}
-//     height={size}
-//     viewBox="0 0 24 24"
-//     fill="none"
-//     stroke={color}
-//     strokeWidth="1.5"
-//     strokeLinecap="round"
-//     strokeLinejoin="round"
-//   >
-//     <circle cx="12" cy="7" r="4" />
-//     <path d="M12 11v7" />
-//     <path d="M8 20h8" />
-//   </svg>
-// );
 
 export const ISatelital = ({ size = 32, color = "var(--accent-green)", }: IconProps) => (
   <svg
