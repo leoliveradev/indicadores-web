@@ -1,7 +1,7 @@
 "use client";
 import { useState } from "react";
 import { KPISection } from "@/components/home/kpi-section";
-import { PenetracionLineChart } from "@/components/internet/penetracion-line-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
 import type { ApiResponse } from "@/lib/types";
@@ -88,7 +88,32 @@ export function InternetPenetracion({
           </h2>
 
           <div className="chart-card">
-            <PenetracionLineChart data={evolutionData} mode={mode} />
+            <LineChartBase
+              data={evolutionData}
+              height={320}
+              xDataKey="period"
+              series={[
+                ...(mode === "hogares" || mode === "ambos"
+                  ? [
+                    {
+                      key: "hogares",
+                      label: "Hogares",
+                      color: "var(--blue-300)",
+                    },
+                  ]
+                  : []),
+
+                ...(mode === "habitantes" || mode === "ambos"
+                  ? [
+                    {
+                      key: "habitantes",
+                      label: "Habitantes",
+                      color: "var(--accent-green)",
+                    },
+                  ]
+                  : []),
+              ]}
+            />
           </div>
 
           <p className="chart-description">
