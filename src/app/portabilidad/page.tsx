@@ -1,21 +1,35 @@
-"use client";
+import { getPortabilidadMovil }
+  from "@/lib/api/portabilidad";
 
-import Link from "next/link";
+import { PageHero }
+  from "@/components/layout/page-hero";
 
-export default function Page() {
+import {
+  PortabilidadOverview,
+} from "@/components/portabilidad/portabilidad-overview";
+
+import {
+  PortabilidadMovil,
+} from "@/components/portabilidad/portabilidad-movil";
+
+export default async function PortabilidadPage() {
+  const portabilidad =
+    await getPortabilidadMovil();
+
   return (
     <>
-      <div className="svc-page-header">
-        <div className="svc-page-header-inner">
-          <p className="svc-breadcrumb"><Link href="/">Inicio</Link> / Portabilidad</p>
-          <h1 className="svc-title">Portabilidad</h1>
-        </div>
-      </div>
-      <div className="page">
-        <p style={{ fontSize: 13, color: "var(--text-secondary)" }}>
-          Sección en desarrollo.
-        </p>
-      </div>
+      <PageHero
+        title="Portabilidad Numérica"
+        subtitle="Portabilidad móvil · Datos oficiales ENACOM"
+      />
+
+      <PortabilidadOverview
+        data={portabilidad}
+      />
+
+      <PortabilidadMovil
+        data={portabilidad}
+      />
     </>
   );
 }
