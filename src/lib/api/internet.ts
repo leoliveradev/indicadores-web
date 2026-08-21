@@ -8,7 +8,7 @@ import type {
   InternetVelocidadMediaProvinciasRow, 
   InternetVelocidadRangosRow, 
   InternetIngresosRow
-} from "@/lib/internet/types";
+} from "@/lib/internet";
 
 export function getInternetTecnologias() {
   return get<ApiResponse<InternetTecnologiaRow>>(
