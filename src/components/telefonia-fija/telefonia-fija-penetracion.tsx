@@ -91,29 +91,6 @@ export function TelefoniaFijaPenetracion({
 
         </div>
       </section>
-      {/* <section className="section-wrap alt">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Ranking provincial
-          </h2>
-
-          <div className="chart-card">
-
-            <RankingComparisonBarChart
-              data={rankingData.map((r) => ({
-                label: r.provincia,
-                primary: r.hogares,
-                secondary: r.habitantes,
-              }))}
-              primaryLabel="Hogares"
-              secondaryLabel="Habitantes"
-            />
-
-          </div>
-
-        </div>
-      </section> */}
     </>
   );
 }
