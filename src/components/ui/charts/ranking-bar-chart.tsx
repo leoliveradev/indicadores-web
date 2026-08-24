@@ -19,12 +19,14 @@ type Props = {
   data: RankingItem[];
   color?: string;
   formatter?: (value: number) => string;
+  tooltipLabel?: string;
 };
 
 export function RankingBarChart({
   data,
   color = "#005297",
   formatter = (v) => v.toLocaleString("es-AR"),
+  tooltipLabel,
 }: Props) {
   const height = data.length * 38 + 40;
 
@@ -60,9 +62,10 @@ export function RankingBarChart({
         />
 
         <Tooltip
-          formatter={(value) =>
-            formatter(Number(value))
-          }
+          formatter={(value) => [
+            formatter(Number(value)),
+            tooltipLabel ?? "Valor",
+          ]}
         />
 
         <Bar
