@@ -16,6 +16,13 @@ import { KPISection } from "@/components/home/kpi-section";
 
 import { DonutChart } from "@/components/ui/charts/donut-chart";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getAccesosInsights,
+} from "@/lib/television/insights";
+
 import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
@@ -38,7 +45,10 @@ export function TelevisionAccesos({
 
   const evolutionData =
     getAccesosEvolutionData(accesos);
-
+  const insights =
+    getAccesosInsights(
+      accesos.data
+    );
   const rankingData =
     getAccesosProvinciaRankingData(provincias);
 
@@ -102,7 +112,10 @@ export function TelevisionAccesos({
             />
 
           </div>
+          <InsightsCard
+            insights={insights}
 
+          />
         </div>
       </section>
 

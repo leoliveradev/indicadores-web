@@ -13,7 +13,12 @@ import { KPISection } from "@/components/home/kpi-section";
 
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
 
+import {
+  getIngresosInsights,
+} from "@/lib/television/insights";
 import { dispCurrencyCompact }
   from "@/lib/format";
 
@@ -29,6 +34,11 @@ export function TelevisionIngresos({
 
   const evolutionData =
     getIngresosEvolutionData(ingresos);
+
+  const insights =
+    getIngresosInsights(
+      ingresos.data
+    );
 
   return (
     <>
@@ -67,7 +77,9 @@ export function TelevisionIngresos({
             />
 
           </div>
-
+          <InsightsCard
+            insights={insights}
+          />
         </div>
       </section>
     </>
