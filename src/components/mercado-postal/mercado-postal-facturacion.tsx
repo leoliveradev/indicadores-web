@@ -18,6 +18,13 @@ import { DonutChart }
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
 
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getFacturacionInsights,
+} from "@/lib/mercado-postal/insights";
+
 import { dispCurrencyCompact }
   from "@/lib/format";
 
@@ -37,6 +44,11 @@ export function MercadoPostalFacturacion({
   const evolutionData =
     getFacturacionEvolutionData(
       facturacion
+    );
+    
+  const insights =
+    getFacturacionInsights(
+      facturacion.data
     );
 
   return (
@@ -96,11 +108,9 @@ export function MercadoPostalFacturacion({
 
           </div>
 
-          <p className="chart-description">
-            Evolución de la facturación de los
-            servicios postales, telegráficos y
-            monetarios del mercado postal argentino.
-          </p>
+          <InsightsCard
+            insights={insights}
+          />
 
         </div>
       </section>

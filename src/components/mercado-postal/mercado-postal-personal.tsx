@@ -14,6 +14,13 @@ import { KPISection } from "@/components/home/kpi-section";
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
 
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getPersonalInsights,
+} from "@/lib/mercado-postal/insights";
+
 import { dispValue }
   from "@/lib/format";
 
@@ -29,6 +36,11 @@ export function MercadoPostalPersonal({
 
   const evolutionData =
     getPersonalEvolutionData(personal);
+
+  const insights =
+    getPersonalInsights(
+      personal.data
+    );
 
   return (
     <>
@@ -64,12 +76,10 @@ export function MercadoPostalPersonal({
             />
 
           </div>
-
-          <p className="chart-description">
-            Evolución histórica del personal
-            ocupado registrado en el mercado
-            postal argentino.
-          </p>
+          
+          <InsightsCard
+            insights={insights}
+          />
 
         </div>
       </section>
