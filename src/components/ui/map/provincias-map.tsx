@@ -12,6 +12,7 @@ type Props = {
   data: {
     provincia: string;
     total: number,
+    velocidad?: number;
     hogares?: number;
     habitantes?: number;
   }[];
@@ -24,7 +25,7 @@ type MapTooltipData = {
   name: string;
 
   value: number;
-
+  velocidad?: number;
   hogares?: number;
   habitantes?: number;
 };
@@ -48,6 +49,7 @@ export function ProvinciasMap({ data, onSelect }: Props) {
       PROVINCE_MAP[d.provincia],
       {
         total: d.total,
+        velocidad: d.velocidad,
         hogares: d.hogares,
         habitantes: d.habitantes,
       },
@@ -88,6 +90,7 @@ export function ProvinciasMap({ data, onSelect }: Props) {
                   y: e.clientY - bounds.top,
                   name: apiName,
                   value,
+                  velocidad: entry?.velocidad,
                   hogares: entry?.hogares,
                   habitantes: entry?.habitantes,
                 });

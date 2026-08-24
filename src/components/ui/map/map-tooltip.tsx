@@ -3,13 +3,15 @@ export function MapTooltip({
   y,
   name,
   value,
+  velocidad,
   hogares,
   habitantes,
 }: {
   x: number;
   y: number;
   name: string;
-  value?: number;
+  value?: number | string;
+  velocidad?: number;
   hogares?: number;
   habitantes?: number;
 }) {
@@ -30,16 +32,27 @@ export function MapTooltip({
     >
       <strong>{name}</strong>
 
-      {/* Caso penetración */}
-      {hogares !== undefined && habitantes !== undefined ? (
+      {velocidad !== undefined ? (
+        <div>
+          Velocidad media: {velocidad.toFixed(1)} Mbps
+        </div>
+      ) : hogares !== undefined &&
+        habitantes !== undefined ? (
         <>
-          <div>Hogares: {hogares.toFixed(2)}</div>
-          <div>Habitantes: {habitantes.toFixed(2)}</div>
+          <div>
+            Hogares: {hogares.toFixed(2)}
+          </div>
+
+          <div>
+            Habitantes: {habitantes.toFixed(2)}
+          </div>
         </>
       ) : (
-        /* Caso tecnología (fallback) */
-        <div>Total: {value}</div>
+        <div>
+          Accesos: {value}
+        </div>
       )}
+
     </div>
   );
 }
