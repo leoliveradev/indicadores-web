@@ -14,3 +14,8 @@ export type AsyncState<T> =
   | { status: 'success'; data: T; error: null }
   | { status: 'error'; data: null; error: Error };
 
+export interface Insight {
+  title: string;
+  text: string;
+  severity?: "info" | "success" | "warning";
+}
