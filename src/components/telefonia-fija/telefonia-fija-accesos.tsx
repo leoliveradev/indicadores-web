@@ -128,7 +128,7 @@ export function TelefoniaFijaAccesos({
             Distribución provincial
           </h2>
 
-          <div className="grid grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
             <div className="chart-card">
               <ProvinciasMap
