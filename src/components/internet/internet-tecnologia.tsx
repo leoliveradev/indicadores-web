@@ -18,6 +18,13 @@ import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getTecnologiaInsights,
+} from "@/lib/internet/insights";
+
 export function InternetTecnologia({
   tecnologias,
   tecnologiasProvincias
@@ -42,6 +49,10 @@ export function InternetTecnologia({
     b.total > a.total ? b : a
   );
 
+  const insights =
+    getTecnologiaInsights(
+      tecnologias.data
+    );
 
   return (
     <>
@@ -88,9 +99,10 @@ export function InternetTecnologia({
               }
             />
           </div>
-          <p className="chart-description">
-            La fibra óptica muestra un crecimiento sostenido, mientras que ADSL presenta una caída progresiva en el tiempo.
-          </p>
+
+          <InsightsCard
+            insights={insights}
+          />
         </div>
       </section>
 

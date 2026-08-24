@@ -17,6 +17,13 @@ import {
 } from "@/lib/internet";
 import { RankingComparisonBarChart } from "@/components/ui/charts/ranking-comparison-bar-chart";
 
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getPenetracionInsights,
+} from "@/lib/internet/insights";
+
 export function InternetPenetracion({
   penetracion,
   penetracionProvincias,
@@ -35,6 +42,9 @@ export function InternetPenetracion({
   if (!rows.length) {
     return <div className="error-box">Sin datos disponibles</div>;
   }
+
+  const insights =
+    getPenetracionInsights(rows);
 
   const kpiItems = getPenetracionKPIItems(rows);
   const evolutionData = getPenetracionEvolutionData(rows);
@@ -116,13 +126,9 @@ export function InternetPenetracion({
             />
           </div>
 
-          <p className="chart-description">
-            En el último período, la penetración alcanzó{" "}
-            <strong>{latest.accesos_cada_100_hogares}</strong> accesos por cada 100 hogares
-            y <strong>{latest.accesos_cada_100_habitantes}</strong> por cada 100 habitantes.
-            Existe una brecha de <strong>{gap.toFixed(2)}</strong> puntos, lo que refleja
-            la diferencia entre disponibilidad de conexión en hogares y uso individual.
-          </p>
+          <InsightsCard
+            insights={insights}
+          />
         </div>
       </section>
 
