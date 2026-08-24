@@ -1,3 +1,6 @@
+'use client';
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 import type {
   InternetVelocidadMediaProvinciasRow,
@@ -22,16 +25,34 @@ import { InsightsCard }
 import {
   getVelocidadInsights,
 } from "@/lib/internet/insights";
-import { ProvinciasMap } from "../ui/map/provincias-map";
+
+import { ProvinciasMap } from "@/components/ui/map/provincias-map";
+
+import { filterByYears } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "../ui/filters/period-filter";
 
 export function InternetVelocidad({ velocidadMedia, provincias }: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
   provincias: ApiResponse<InternetVelocidadMediaProvinciasRow>,
 }) {
+
+  const [period, setPeriod] = useState<
+    "all" | "10y" | "5y" | "3y" | "1y"
+  >("all");
+
   const kpiItems = getVelocidadKPIItems(velocidadMedia);
 
+  const filteredRows =
+    filterByYears(
+      velocidadMedia.data,
+      period
+    );
+
   const evolutionData =
-    getVelocidadEvolutionData(velocidadMedia);
+    getVelocidadEvolutionData({
+      ...velocidadMedia,
+      data: filteredRows,
+    });
 
   const rankingData =
     getVelocidadProvinciaRankingData(provincias);
@@ -39,14 +60,17 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
 
   const insights =
     getVelocidadInsights(
-      velocidadMedia.data
+      filteredRows,
     );
+
   const provinciaData =
     provincias.data.map((d) => ({
       provincia: d.provincia,
       total: d.mbps,
       velocidad: d.mbps,
     }));
+
+
   return (
     <>
       <section className="section-wrap">
@@ -58,6 +82,11 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
           />
         </div>
       </section>
+
+      <PeriodFilter
+        value={period}
+        onChange={setPeriod}
+      />
 
       <section className="section-wrap alt">
         <div className="section-inner">
