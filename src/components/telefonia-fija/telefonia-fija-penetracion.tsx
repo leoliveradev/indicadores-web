@@ -23,6 +23,12 @@ import { RankingComparisonBarChart }
   from "@/components/ui/charts/ranking-comparison-bar-chart";
 import { ProvinciasMap }
   from "@/components/ui/map/provincias-map";
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getPenetracionInsights,
+} from "@/lib/telefonia-fija/insights";
 
 type Props = {
   penetracion: ApiResponse<TelefoniaFijaPenetracionRow>;
@@ -41,6 +47,10 @@ export function TelefoniaFijaPenetracion({
   const evolutionData =
     getPenetracionEvolutionData(
       penetracion
+    );
+  const insights =
+    getPenetracionInsights(
+      penetracion.data
     );
 
   const rankingData =
@@ -128,10 +138,9 @@ export function TelefoniaFijaPenetracion({
 
           </div>
 
-          <p className="chart-description">
-            Evolución histórica de la penetración de la
-            telefonía fija medida sobre hogares y habitantes.
-          </p>
+          <InsightsCard
+            insights={insights}
+          />
 
         </div>
       </section>
@@ -163,12 +172,6 @@ export function TelefoniaFijaPenetracion({
               />
             </div>
           </div>
-
-          <p className="chart-description">
-            La penetración de telefonía fija presenta fuertes diferencias
-            entre provincias, con una mayor concentración en los distritos
-            más urbanizados del país.
-          </p>
 
         </div>
       </section>
