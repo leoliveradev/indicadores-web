@@ -16,6 +16,14 @@ import { LineChartBase }
 import { KPISection } from "@/components/home/kpi-section";
 import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getVelocidadInsights,
+} from "@/lib/internet/insights";
+import { ProvinciasMap } from "../ui/map/provincias-map";
+
 export function InternetVelocidad({ velocidadMedia, provincias }: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
   provincias: ApiResponse<InternetVelocidadMediaProvinciasRow>,
@@ -27,7 +35,18 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
 
   const rankingData =
     getVelocidadProvinciaRankingData(provincias);
+  const top = rankingData[0];
 
+  const insights =
+    getVelocidadInsights(
+      velocidadMedia.data
+    );
+  const provinciaData =
+    provincias.data.map((d) => ({
+      provincia: d.provincia,
+      total: d.mbps,
+      velocidad: d.mbps,
+    }));
   return (
     <>
       <section className="section-wrap">
@@ -63,6 +82,9 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
             />
           </div>
 
+          <InsightsCard
+            insights={insights}
+          />
         </div>
       </section>
 
@@ -70,23 +92,39 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
         <div className="section-inner">
 
           <h2 className="section-heading">
-            Ranking provincial de velocidad media
+            Distribución provincial
           </h2>
 
-          <div className="chart-card">
-            <RankingBarChart
-              data={rankingData.map((r) => ({
-                label: r.provincia,
-                value: r.mbps,
-              }))}
-              color="#E74242"
-              formatter={(v) => `${v.toFixed(1)} Mbps`}
-            />
-          </div>
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
+            <div className="chart-card">
+              <ProvinciasMap
+                data={provinciaData}
+              />
+            </div>
+
+            <div className="chart-card">
+              <RankingBarChart
+                data={rankingData.map((r) => ({
+                  label: r.provincia,
+                  value: r.mbps,
+                }))}
+                tooltipLabel="Velocidad media"
+                formatter={(v) =>
+                  `${v.toFixed(1)} Mbps`
+                }
+              />
+            </div>
+
+          </div>
+          <p className="chart-description">
+            La provincia con mayor velocidad media es{" "}
+            <strong>{top.provincia}</strong>
+            con{" "}
+            <strong>{top.mbps.toFixed(1)} Mbps</strong>.
+          </p>
         </div>
       </section>
-
     </>
   );
 }
