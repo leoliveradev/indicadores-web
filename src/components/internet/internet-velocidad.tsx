@@ -28,8 +28,8 @@ import {
 
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
-import { filterByYears } from "@/lib/utils/filter-period";
-import { PeriodFilter } from "../ui/filters/period-filter";
+import { filterByPeriods } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
 export function InternetVelocidad({ velocidadMedia, provincias }: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
@@ -43,9 +43,10 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
   const kpiItems = getVelocidadKPIItems(velocidadMedia);
 
   const filteredRows =
-    filterByYears(
+    filterByPeriods(
       velocidadMedia.data,
-      period
+      period,
+      4
     );
 
   const evolutionData =
@@ -105,7 +106,7 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
                   label: "Velocidad media",
                   color: "var(--blue-200)",
                   strokeWidth: 3,
-                  activeDot: true,
+                  activeDot: true
                 },
               ]}
             />
