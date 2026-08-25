@@ -3,7 +3,8 @@ import type { Insight } from "@/lib/types";
 import type {
   InternetVelocidadMediaRow,
   InternetTecnologiaRow,
-  InternetPenetracionRow
+  InternetPenetracionRow,
+  InternetIngresosRow
 } from "./types";
 
 export function getVelocidadInsights(
@@ -134,6 +135,42 @@ export function getPenetracionInsights(
     insights.push({
       title: "Máximo histórico",
       text: "El último período registra la mayor penetración sobre hogares de toda la serie.",
+    });
+  }
+
+  return insights;
+}
+
+export function getIngresosInsights(
+  rows: InternetIngresosRow[]
+): Insight[] {
+  if (rows.length < 2) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const growth =
+    ((latest.ingresos - first.ingresos) /
+      first.ingresos) *
+    100;
+
+  const peak = Math.max(
+    ...rows.map((r) => r.ingresos)
+  );
+
+  const insights: Insight[] = [];
+
+  insights.push({
+    title: "Variación del período",
+    text: `Los ingresos variaron ${growth.toFixed(
+      1
+    )}% durante el período seleccionado.`,
+  });
+
+  if (latest.ingresos === peak) {
+    insights.push({
+      title: "Máximo histórico",
+      text: "El último período registra el mayor nivel de ingresos de toda la serie analizada.",
     });
   }
 
