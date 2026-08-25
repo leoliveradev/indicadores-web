@@ -12,7 +12,8 @@ import { KPISection } from "@/components/home/kpi-section";
 import {
   getTecnologiaKPIItems,
   getTecnologiaEvolutionData,
-  getTecnologiaProvinciaRankingData
+  getTecnologiaProvinciaRankingData,
+  getTecnologiaInsights
 } from "@/lib/internet";
 
 import { filterByPeriods } from "@/lib/utils/filter-period";
@@ -24,10 +25,6 @@ import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
-
-import {
-  getTecnologiaInsights,
-} from "@/lib/internet/insights";
 
 import { dispValue } from "@/lib/format";
 

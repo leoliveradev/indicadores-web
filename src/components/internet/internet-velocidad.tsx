@@ -10,17 +10,14 @@ import type {
 import {
   getVelocidadEvolutionData,
   getVelocidadKPIItems,
-  getVelocidadProvinciaRankingData
+  getVelocidadProvinciaRankingData,
+  getVelocidadInsights
 } from "@/lib/internet";
 
 import { KPISection } from "@/components/home/kpi-section";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
-
-import {
-  getVelocidadInsights,
-} from "@/lib/internet/insights";
 
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";

@@ -7,6 +7,7 @@ import type { InternetIngresosRow } from "@/lib/internet";
 import {
   getIngresosKPIItems,
   getIngresosEvolutionData,
+  getIngresosInsights
 } from "@/lib/internet";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -19,10 +20,6 @@ import { IngresosAreaChart } from "@/components/ui/charts/ingresos-area-chart";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
-
-import {
-  getIngresosInsights,
-} from "@/lib/internet/insights";
 
 type Props = {
   ingresos: ApiResponse<InternetIngresosRow>;
