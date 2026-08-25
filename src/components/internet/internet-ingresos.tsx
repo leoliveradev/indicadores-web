@@ -11,6 +11,7 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
+import type { PeriodFilterValue }  from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
@@ -32,9 +33,7 @@ export function InternetIngresos({
 }: Props) {
   const kpiItems = getIngresosKPIItems(ingresos);
 
-  const [period, setPeriod] = useState<
-    "all" | "10y" | "5y" | "3y" | "1y"
-  >("all");
+  const [period, setPeriod] = useState<PeriodFilterValue>("all");
 
   const filteredRows =
     filterByPeriods(
