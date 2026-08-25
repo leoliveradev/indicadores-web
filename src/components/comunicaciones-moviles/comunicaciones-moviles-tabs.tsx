@@ -16,20 +16,29 @@ import type {
 
 import { ComunicacionesMovilesAccesos }
   from "./comunicaciones-moviles-accesos";
-import { ComunicacionesMovilesPenetracion } from "./comunicaciones-moviles-penetracion";
+import { ComunicacionesMovilesPenetracion }
+  from "./comunicaciones-moviles-penetracion";
+import { ComunicacionesMovilesTrafico }
+  from "./comunicaciones-moviles-trafico";
+import { ComunicacionesMovilesIngresos }
+  from "./comunicaciones-moviles-ingresos";
 
-import { ComunicacionesMovilesUso }
-  from "./comunicaciones-moviles-uso";
-import {
-  ComunicacionesMovilesIngresos
-} from "./comunicaciones-moviles-ingresos";
+type TabKey =
+  | "accesos"
+  | "penetracion"
+  | "trafico"
+  | "ingresos";
 
-const TABS = [
-  { key: "accesos", label: "Accesos", },
-  { key: "penetracion", label: "Penetración", },
-  { key: "uso", label: "Uso", },
-  { key: "ingresos", label: "Ingresos", },
-];
+const TABS: {
+  key: TabKey;
+  label: string;
+}[] = [
+    { key: "accesos", label: "Accesos", },
+    { key: "penetracion", label: "Penetración", },
+    { key: "trafico", label: "Tráfico" },
+    { key: "ingresos", label: "Ingresos", },
+  ];
+
 
 type Props = {
   accesos: ApiResponse<ComunicacionesMovilesAccesosRow>;
@@ -48,8 +57,9 @@ export function ComunicacionesMovilesTabs({
   minutos,
   sms,
 }: Props) {
+
   const [active, setActive] =
-    useState("accesos");
+    useState<TabKey>("accesos");
 
   return (
     <>
@@ -89,8 +99,8 @@ export function ComunicacionesMovilesTabs({
         </div>
       )}
 
-      {active === "uso" && (
-        <ComunicacionesMovilesUso
+      {active === "trafico" && (
+        <ComunicacionesMovilesTrafico
           llamadas={llamadas}
           minutos={minutos}
           sms={sms}
