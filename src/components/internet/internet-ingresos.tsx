@@ -1,3 +1,6 @@
+'use client';
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 import type { InternetIngresosRow } from "@/lib/internet";
 
@@ -8,25 +11,59 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
+import { filterByPeriods } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "@/components/ui/filters/period-filter";
+
 import { IngresosAreaChart } from "@/components/ui/charts/ingresos-area-chart";
 
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getIngresosInsights,
+} from "@/lib/internet/insights";
+
 type Props = {
-  data: ApiResponse<InternetIngresosRow>;
+  ingresos: ApiResponse<InternetIngresosRow>;
 };
 
 export function InternetIngresos({
-  data,
+  ingresos,
 }: Props) {
-  const kpiItems = getIngresosKPIItems(data);
+  const kpiItems = getIngresosKPIItems(ingresos);
+
+  const [period, setPeriod] = useState<
+    "all" | "10y" | "5y" | "3y" | "1y"
+  >("all");
+
+  const filteredRows =
+    filterByPeriods(
+      ingresos.data,
+      period,
+      4
+    );
 
   const evolutionData =
-    getIngresosEvolutionData(data);
+    getIngresosEvolutionData({
+      ...ingresos,
+      data: filteredRows,
+    });
+
+  const insights =
+    getIngresosInsights(
+      filteredRows
+    );
 
   return (
     <>
       <KPISection
         title="Ingresos por servicios de Internet"
         items={kpiItems}
+      />
+
+      <PeriodFilter
+        value={period}
+        onChange={setPeriod}
       />
 
       <section className="section-wrap alt">
@@ -42,6 +79,8 @@ export function InternetIngresos({
             />
           </div>
 
+          <InsightsCard insights={insights} />
+          
         </div>
       </section>
     </>

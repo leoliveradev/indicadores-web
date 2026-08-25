@@ -88,7 +88,7 @@ export function InternetTabs({
           {active === "ingresos" && 
           (
             <InternetIngresos
-              data={ingresos}
+              ingresos={ingresos}
             />
           )}
         </div>
