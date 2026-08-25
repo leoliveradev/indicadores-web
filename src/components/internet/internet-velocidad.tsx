@@ -13,11 +13,7 @@ import {
   getVelocidadProvinciaRankingData
 } from "@/lib/internet";
 
-import { LineChartBase }
-  from "@/components/ui/charts/line-chart-base";
-
 import { KPISection } from "@/components/home/kpi-section";
-import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
@@ -26,21 +22,24 @@ import {
   getVelocidadInsights,
 } from "@/lib/internet/insights";
 
-import { ProvinciasMap } from "@/components/ui/map/provincias-map";
-
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
+import { LineChartBase }
+  from "@/components/ui/charts/line-chart-base";
+
+import { ProvinciasMap } from "@/components/ui/map/provincias-map";
+import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
 export function InternetVelocidad({ velocidadMedia, provincias }: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
   provincias: ApiResponse<InternetVelocidadMediaProvinciasRow>,
 }) {
 
+  const kpiItems = getVelocidadKPIItems(velocidadMedia);
+
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
-
-  const kpiItems = getVelocidadKPIItems(velocidadMedia);
 
   const filteredRows =
     filterByPeriods(
@@ -109,6 +108,9 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
                   activeDot: true
                 },
               ]}
+              tooltipFormatter={(v) =>
+                `${v.toFixed(2)} Mbps`
+              }
             />
           </div>
 
