@@ -1,5 +1,15 @@
 import { MONTHS } from "@/lib/constants/dates";
 
+export const fmtPeriod = (period?: string) => {
+  if (!period) return "Último período disponible";
+
+  const [anio, mes] = period.split("-");
+
+  const mesLabel = MONTHS[mes] ?? "Período";
+
+  return `${mesLabel} ${anio}`;
+}
+
 export const fmtNumber = (v: number, decimals = 0) =>
   new Intl.NumberFormat("es-AR", {
     minimumFractionDigits: decimals,
@@ -19,10 +29,50 @@ export const fmtPercent = (
   decimals = 2
 ) => `${fmtNumber(v, decimals)} %`;
 
-export const fmtCompact = (v: number) => {
-  if (v >= 1e6) return fmtMillions(v) + " M";
-  if (v >= 1e3) return fmtNumber(v / 1e3, 1) + " K";
+export const fmtCompact = (
+  v: number
+) => {
+  if (v >= 1e6) {
+    const millions = v / 1e6;
+
+    return Number.isInteger(millions)
+      ? `${fmtNumber(millions, 0)} M`
+      : `${fmtNumber(millions, 1)} M`;
+  }
+
+  if (v >= 1e3) {
+    return `${fmtNumber(v / 1e3, 1)} K`;
+  }
+
   return fmtNumber(v);
+};
+
+export const fmtCurrency = (v: number) =>
+  new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0,
+  }).format(v);
+
+
+export const fmtCurrencyMillions = (v: number, decimals = 1) =>
+  `${fmtNumber(v / 1e6, decimals)} M`;
+
+
+export const fmtCurrencyCompact = (v: number) => {
+  if (v >= 1e12) {
+    return `$ ${fmtNumber(v / 1e12, 2)} B`; // billones
+  }
+
+  if (v >= 1e9) {
+    return `$ ${fmtNumber(v / 1e9, 2)} M`; // miles de millones
+  }
+
+  if (v >= 1e6) {
+    return `$ ${fmtNumber(v / 1e6, 2)} M`;
+  }
+
+  return fmtCurrency(v);
 };
 
 
@@ -68,34 +118,6 @@ export const dispValue = (
 };
 
 
-export const fmtCurrency = (v: number) =>
-  new Intl.NumberFormat("es-AR", {
-    style: "currency",
-    currency: "ARS",
-    maximumFractionDigits: 0,
-  }).format(v);
-
-
-export const fmtCurrencyMillions = (v: number, decimals = 1) =>
-  `${fmtNumber(v / 1e6, decimals)} M`;
-
-
-export const fmtCurrencyCompact = (v: number) => {
-  if (v >= 1e12) {
-    return `$ ${fmtNumber(v / 1e12, 2)} B`; // billones
-  }
-
-  if (v >= 1e9) {
-    return `$ ${fmtNumber(v / 1e9, 2)} M`; // miles de millones
-  }
-
-  if (v >= 1e6) {
-    return `$ ${fmtNumber(v / 1e6, 2)} M`;
-  }
-
-  return fmtCurrency(v);
-};
-
 export const dispCurrency = (
   v?: number
 ): string => {
@@ -108,12 +130,3 @@ export const dispCurrencyCompact = (
   return v == null ? "" : fmtCurrencyCompact(v);
 };
 
-export const fmtPeriod = (period?: string) => {
-  if (!period) return "Último período disponible";
-
-  const [anio, mes] = period.split("-");
-
-  const mesLabel = MONTHS[mes] ?? "Período";
-
-  return `${mesLabel} ${anio}`;
-}
