@@ -26,6 +26,10 @@ type Props = {
   series: Series[];
   height?: number;
   yFormatter?: (value: number) => string;
+  tooltipFormatter?: (
+    value: number,
+    name: string
+  ) => string;
   xDataKey?: string;
 };
 
@@ -34,7 +38,8 @@ export function LineChartBase({
   series,
   height = 400,
   yFormatter,
-  xDataKey
+  tooltipFormatter,
+  xDataKey,
 }: Props) {
   return (
     <ResponsiveContainer
@@ -68,7 +73,18 @@ export function LineChartBase({
           }
         />
 
-        <Tooltip />
+        <Tooltip
+          formatter={(value, name) =>
+            tooltipFormatter
+              ? tooltipFormatter(
+                Number(value),
+                String(name)
+              )
+              : Number(value).toLocaleString(
+                "es-AR"
+              )
+          }
+        />
 
         <Legend />
 
