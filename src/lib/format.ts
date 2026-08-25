@@ -32,6 +32,10 @@ export const fmtPercent = (
 export const fmtCompact = (
   v: number
 ) => {
+  if (v >= 1e9) {
+    return `${fmtNumber(v / 1e9, 0)} B`;
+  }
+  
   if (v >= 1e6) {
     const millions = v / 1e6;
 
