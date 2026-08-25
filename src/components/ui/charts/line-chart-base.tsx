@@ -41,7 +41,10 @@ export function LineChartBase({
       width="100%"
       height={height}
     >
-      <LineChart data={data}>
+      <LineChart
+        key={data.length}
+        data={data}
+      >
         <CartesianGrid
           strokeDasharray="3 3"
           stroke="rgba(0,0,0,.08)"
@@ -50,9 +53,14 @@ export function LineChartBase({
         <XAxis
           dataKey={xDataKey ?? "label"}
           minTickGap={50}
+          padding={{
+            left: 0,
+            right: 20,
+          }}
         />
 
         <YAxis
+          domain={[0, "auto"]}
           tickFormatter={(value) =>
             yFormatter
               ? yFormatter(Number(value))
@@ -67,7 +75,7 @@ export function LineChartBase({
         {series.map((s) => (
           <Line
             key={s.key}
-            type="monotone"
+            type="linear"
             dataKey={s.key}
             name={s.label}
             stroke={s.color}
