@@ -1,7 +1,6 @@
 'use client';
 import { useState } from "react";
 
-import { KPISection } from "@/components/home/kpi-section";
 
 import type { ApiResponse } from "@/lib/types";
 import type {
@@ -9,6 +8,7 @@ import type {
   InternetTecnologiaProvinciaRow
 } from "@/lib/internet";
 
+import { KPISection } from "@/components/home/kpi-section";
 import {
   getTecnologiaKPIItems,
   getTecnologiaEvolutionData,
