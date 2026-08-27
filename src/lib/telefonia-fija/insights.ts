@@ -3,6 +3,7 @@ import type { Insight } from "@/lib/types";
 import type {
   TelefoniaFijaAccesosRow,
   TelefoniaFijaPenetracionRow,
+  TelefoniaFijaIngresosRow
 } from "./types";
 
 export function getAccesosInsights(
@@ -84,4 +85,42 @@ export function getPenetracionInsights(
       )} puntos.`,
     },
   ];
+}
+
+export function getIngresosInsights(
+  rows: TelefoniaFijaIngresosRow[]
+): Insight[] {
+  if (rows.length < 2) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    ((latest.ingresos - first.ingresos) /
+      first.ingresos) *
+    100;
+
+  const peak = Math.max(
+    ...rows.map((r) => r.ingresos)
+  );
+
+  const insights: Insight[] = [];
+
+  insights.push({
+    type: "trend",
+    title: "Variación de ingresos",
+    text: `Los ingresos variaron ${variation.toFixed(
+      1
+    )}% durante el período seleccionado.`,
+  });
+
+  if (latest.ingresos === peak) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico",
+      text: "El último período registra el mayor nivel de ingresos de la serie analizada.",
+    });
+  }
+
+  return insights;
 }
