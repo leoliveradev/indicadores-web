@@ -67,12 +67,12 @@ export function getAccesosDonutData(
     {
       name: "TV Suscripción",
       value: latest.tv_suscripcion,
-      color: "#005297",
+      color: "var(--accent-green)",
     },
     {
       name: "TV Satelital",
       value: latest.tv_satelital,
-      color: "#EEAE42",
+      color: "var(--accent-amber)",
     },
   ];
 }

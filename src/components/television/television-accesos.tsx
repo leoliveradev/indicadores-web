@@ -1,3 +1,8 @@
+"use client";
+
+import { useState } from "react";
+
+
 import type { ApiResponse } from "@/lib/types";
 
 import type {
@@ -9,19 +14,22 @@ import {
   getAccesosKPIItems,
   getAccesosDonutData,
   getAccesosEvolutionData,
+  getAccesosInsights,
   getAccesosProvinciaRankingData,
 } from "@/lib/television";
 
 import { KPISection } from "@/components/home/kpi-section";
 
 import { DonutChart } from "@/components/ui/charts/donut-chart";
-import { LineChartBase } from "@/components/ui/charts/line-chart-base";
-import { InsightsCard }
-  from "@/components/ui/insights/insights-card";
 
-import {
-  getAccesosInsights,
-} from "@/lib/television/insights";
+
+import type { PeriodFilterValue } from "@/lib/utils/filter-period";
+import { filterByPeriods } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "@/components/ui/filters/period-filter";
+
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+
+import { InsightsCard } from "@/components/ui/insights/insights-card";
 
 import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
@@ -38,17 +46,30 @@ export function TelevisionAccesos({
   accesos,
   provincias,
 }: Props) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+  const filteredRows =
+    filterByPeriods(
+      accesos.data,
+      period,
+      4
+    );
   const kpiItems = getAccesosKPIItems(accesos);
 
   const donutData =
     getAccesosDonutData(accesos);
 
   const evolutionData =
-    getAccesosEvolutionData(accesos);
+    getAccesosEvolutionData({
+      ...accesos,
+      data: filteredRows,
+    });
+
   const insights =
     getAccesosInsights(
-      accesos.data
+      filteredRows
     );
+
   const rankingData =
     getAccesosProvinciaRankingData(provincias);
 
@@ -86,6 +107,11 @@ export function TelevisionAccesos({
             Evolución histórica de accesos
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
 
             <LineChartBase
@@ -94,13 +120,13 @@ export function TelevisionAccesos({
                 {
                   key: "tv_suscripcion",
                   label: "TV por suscripción",
-                  color: "#005297",
+                  color: "var(--accent-green)",
                   strokeWidth: 3,
                 },
                 {
                   key: "tv_satelital",
                   label: "TV satelital",
-                  color: "#EEAE42",
+                  color: "var(--accent-amber)",
                   strokeWidth: 2,
                 },
               ]}
