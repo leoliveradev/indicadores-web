@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 
 import type {
@@ -7,24 +11,60 @@ import type {
 import {
   getIngresosKPIItems,
   getIngresosEvolutionData,
+  getIngresosInsights
 } from "@/lib/comunicaciones-moviles";
 
 import { KPISection }
   from "@/components/home/kpi-section";
 
-import { IngresosAreaChart }
-  from "@/components/ui/charts/ingresos-area-chart";
+import type {
+  PeriodFilterValue,
+} from "@/lib/utils/filter-period";
+
+import {
+  filterByPeriods,
+} from "@/lib/utils/filter-period";
+
+import {
+  PeriodFilter,
+} from "@/components/ui/filters/period-filter";
+
+import {
+  InsightsCard,
+} from "@/components/ui/insights/insights-card";
+
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+
+import { dispCurrency, dispCurrencyCompact } from "@/lib/format";
 
 export function ComunicacionesMovilesIngresos({
   ingresos,
 }: {
   ingresos: ApiResponse<ComunicacionesMovilesIngresosRow>;
 }) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
   const kpiItems =
     getIngresosKPIItems(ingresos);
 
+  const filteredRows =
+    filterByPeriods(
+      ingresos.data,
+      period,
+      4
+    );
+
   const evolutionData =
-    getIngresosEvolutionData(ingresos);
+    getIngresosEvolutionData({
+      ...ingresos,
+      data: filteredRows,
+    });
+
+  const insights =
+    getIngresosInsights(
+      filteredRows
+    );
 
   return (
     <>
@@ -40,11 +80,35 @@ export function ComunicacionesMovilesIngresos({
             Evolución histórica de ingresos
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
-            <IngresosAreaChart
+            <LineChartBase
               data={evolutionData}
+              series={[
+                {
+                  key: "ingresos",
+                  label: "Ingresos",
+                  color: "var(--color-money, #16a34a)",
+                  strokeWidth: 3,
+                  activeDot: true,
+                },
+              ]}
+              yFormatter={(v) =>
+                dispCurrencyCompact(v)
+              }
+              tooltipFormatter={(v) =>
+                dispCurrency(v)
+              }
             />
           </div>
+
+          <InsightsCard
+            insights={insights}
+          />
 
         </div>
       </section>

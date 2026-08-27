@@ -6,7 +6,8 @@ import type {
   ComunicacionesMovilesPenetracionRow,
   ComunicacionesMovilesLlamadasRow,
   ComunicacionesMovilesMinutosRow,
-  ComunicacionesMovilesSmsRow
+  ComunicacionesMovilesSmsRow,
+  ComunicacionesMovilesIngresosRow
 } from "./types";
 
 
@@ -183,4 +184,40 @@ export function getSmsInsights(
       )}% respecto de su máximo histórico.`,
     },
   ];
+}
+
+export function getIngresosInsights(
+  rows: ComunicacionesMovilesIngresosRow[]
+): Insight[] {
+  if (rows.length < 2) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    ((latest.ingresos - first.ingresos) /
+      first.ingresos) *
+    100;
+
+  const peak = Math.max(
+    ...rows.map((r) => r.ingresos)
+  );
+
+  const insights: Insight[] = [];
+
+  insights.push({
+    title: "Variación de ingresos",
+    text: `Los ingresos variaron ${variation.toFixed(
+      1
+    )}% durante el período seleccionado.`,
+  });
+
+  if (latest.ingresos === peak) {
+    insights.push({
+      title: "Máximo histórico",
+      text: "El último período registra el mayor nivel de ingresos de la serie analizada.",
+    });
+  }
+
+  return insights;
 }
