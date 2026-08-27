@@ -63,17 +63,29 @@ export const fmtCurrencyMillions = (v: number, decimals = 1) =>
   `${fmtNumber(v / 1e6, decimals)} M`;
 
 
-export const fmtCurrencyCompact = (v: number) => {
+export const fmtCurrencyCompact = (
+  v: number
+) => {
+
   if (v >= 1e12) {
-    return `$ ${fmtNumber(v / 1e12, 2)} B`; // billones
+    return `$ ${fmtNumber(
+      v / 1e12,
+      0
+    )} T`;
   }
 
   if (v >= 1e9) {
-    return `$ ${fmtNumber(v / 1e9, 2)} M`; // miles de millones
+    return `$ ${fmtNumber(
+      v / 1e9,
+      0
+    )} B`;
   }
 
   if (v >= 1e6) {
-    return `$ ${fmtNumber(v / 1e6, 2)} M`;
+    return `$ ${fmtNumber(
+      v / 1e6,
+      0
+    )} M`;
   }
 
   return fmtCurrency(v);
