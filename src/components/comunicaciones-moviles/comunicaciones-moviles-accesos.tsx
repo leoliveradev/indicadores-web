@@ -1,3 +1,6 @@
+'use client';
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 import type {
   ComunicacionesMovilesAccesosRow,
@@ -11,15 +14,38 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
+import type { PeriodFilterValue } from "@/lib/utils/filter-period";
+import { filterByPeriods } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "@/components/ui/filters/period-filter";
+
 import { DonutChart }
   from "@/components/ui/charts/donut-chart";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
+
+import {
+  getAccesosInsights,
+} from "@/lib/comunicaciones-moviles/insights";
+
+import { dispValue } from "@/lib/format";
 
 export function ComunicacionesMovilesAccesos({
   accesos,
 }: {
   accesos: ApiResponse<ComunicacionesMovilesAccesosRow>;
 }) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
+  const filteredRows =
+    filterByPeriods(
+      accesos.data,
+      period,
+      4
+    );
+
   const kpiItems =
     getAccesosKPIItems(accesos);
 
@@ -27,7 +53,15 @@ export function ComunicacionesMovilesAccesos({
     getAccesosDonutData(accesos);
 
   const evolutionData =
-    getAccesosEvolutionData(accesos);
+    getAccesosEvolutionData({
+      ...accesos,
+      data: filteredRows,
+    });
+
+  const insights =
+    getAccesosInsights(
+      filteredRows
+    );
 
   return (
     <>
@@ -59,6 +93,11 @@ export function ComunicacionesMovilesAccesos({
             Evolución de líneas móviles
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
             <LineChartBase
               data={evolutionData}
@@ -82,14 +121,20 @@ export function ComunicacionesMovilesAccesos({
                   strokeWidth: 3,
                 }
               ]}
+              yFormatter={(v) =>
+                dispValue(v, {
+                  format: "compact",
+                })
+              }
+              tooltipFormatter={(v) =>
+                v.toLocaleString("es-AR")
+              }
             />
           </div>
 
-          <p className="chart-description">
-            Comparativa histórica entre
-            líneas prepagas, pospagas y
-            el total de líneas operativas.
-          </p>
+          <InsightsCard
+            insights={insights}
+          />
 
         </div>
       </section>

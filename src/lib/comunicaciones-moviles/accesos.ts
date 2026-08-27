@@ -1,6 +1,6 @@
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+import { IMovil } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 import type { ApiResponse } from "@/lib/types";
@@ -21,7 +21,7 @@ export function getAccesosKPIItems(
   return [
     {
       label: "Líneas operativas",
-      icon: IInternet,
+      icon: IMovil,
       value: latest.operativos,
       format: (v) =>
         dispValue(v, {
@@ -30,7 +30,7 @@ export function getAccesosKPIItems(
     },
     {
       label: "Prepago",
-      icon: IInternet,
+      icon: IMovil,
       value: latest.prepago,
       format: (v) =>
         dispValue(v, {
@@ -39,7 +39,7 @@ export function getAccesosKPIItems(
     },
     {
       label: "Pospago",
-      icon: IInternet,
+      icon: IMovil,
       value: latest.pospago,
       format: (v) =>
         dispValue(v, {
