@@ -82,20 +82,23 @@ export function InternetTecnologia({
   return (
     <>
       {/* KPIs */}
-      <KPISection title="Accesos por tecnología" items={kpiItems} />
-
-      <PeriodFilter
-        value={period}
-        onChange={setPeriod}
+      <KPISection
+        title="Accesos por tecnología"
+        items={kpiItems}
       />
 
       {/* EVOLUCIÓN */}
-      <section className="section-wrap">
+      <section className="section-wrap alt">
         <div className="section-inner">
 
           <h2 className="section-heading">
             Evolución de accesos por tecnología
           </h2>
+
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
 
           <div className="chart-card">
             <LineChartBase

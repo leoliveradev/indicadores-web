@@ -12,7 +12,7 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
-import type { PeriodFilterValue }  from "@/lib/utils/filter-period";
+import type { PeriodFilterValue } from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
@@ -57,17 +57,17 @@ export function InternetIngresos({
         items={kpiItems}
       />
 
-      <PeriodFilter
-        value={period}
-        onChange={setPeriod}
-      />
-
       <section className="section-wrap alt">
         <div className="section-inner">
 
           <h2 className="section-heading">
             Evolución histórica de ingresos
           </h2>
+
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
 
           <div className="chart-card">
             <IngresosAreaChart
@@ -76,7 +76,7 @@ export function InternetIngresos({
           </div>
 
           <InsightsCard insights={insights} />
-          
+
         </div>
       </section>
     </>

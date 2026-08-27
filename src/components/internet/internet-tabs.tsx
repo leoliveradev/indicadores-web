@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import {  ApiResponse } from "@/lib/types";
+import { ApiResponse } from "@/lib/types";
 import {
   InternetTecnologiaProvinciaRow, InternetTecnologiaRow,
   InternetVelocidadMediaProvinciasRow, InternetVelocidadMediaRow,
@@ -61,16 +61,13 @@ export function InternetTabs({
 
         {/* CONTENIDO DINÁMICO */}
         <div>
-          <div>
 
-            {active === "tecnologia" && (
-              <InternetTecnologia
-                tecnologias={tecnologias}
-                tecnologiasProvincias={tecnologiasProvincias}
-              />
-            )}
-
-          </div>
+          {active === "tecnologia" && (
+            <InternetTecnologia
+              tecnologias={tecnologias}
+              tecnologiasProvincias={tecnologiasProvincias}
+            />
+          )}
 
           {active === "velocidad" && (
             <InternetVelocidad
@@ -85,8 +82,8 @@ export function InternetTabs({
               penetracionProvincias={penetracionProvincias}
             />
           )}
-          {active === "ingresos" && 
-          (
+
+          {active === "ingresos" && (
             <InternetIngresos
               ingresos={ingresos}
             />

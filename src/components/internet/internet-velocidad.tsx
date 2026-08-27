@@ -70,19 +70,10 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
 
   return (
     <>
-      <section className="section-wrap">
-        <div className="section-inner">
-          {/* KPIs */}
-          <KPISection
-            title="Velocidad media de descarga"
-            items={kpiItems}
-          />
-        </div>
-      </section>
-
-      <PeriodFilter
-        value={period}
-        onChange={setPeriod}
+      {/* KPIs */}
+      <KPISection
+        title="Velocidad media de descarga"
+        items={kpiItems}
       />
 
       <section className="section-wrap alt">
@@ -91,6 +82,11 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
           <h2 className="section-heading">
             Evolución histórica de la velocidad media
           </h2>
+
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
 
           <div className="chart-card">
             <LineChartBase
