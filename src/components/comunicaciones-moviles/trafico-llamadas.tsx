@@ -58,11 +58,12 @@ export function TraficoLlamadas({
 
   return (
     <div className="chart-card">
+
       <PeriodFilter
         value={period}
         onChange={setPeriod}
       />
-
+      
       <LineChartBase
         data={evolutionData}
         series={[
@@ -96,6 +97,7 @@ export function TraficoLlamadas({
       />
 
       <InsightsCard insights={insights} />
+      
     </div>
   );
 }

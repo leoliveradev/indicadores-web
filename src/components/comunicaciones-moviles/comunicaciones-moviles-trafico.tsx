@@ -60,14 +60,13 @@ export function ComunicacionesMovilesTrafico({
 
   return (
     <>
+      <KPISection
+        title="Tráfico móvil"
+        items={kpiItems}
+      />
+
       <section className="section-wrap">
         <div className="section-inner">
-
-          <KPISection
-            title="Tráfico móvil"
-            items={kpiItems}
-          />
-
           <div className="tab-bar">
 
             {TABS.map((tab) => (
@@ -84,29 +83,31 @@ export function ComunicacionesMovilesTrafico({
                 {tab.label}
               </button>
             ))}
-
           </div>
 
-          {activeTab === "llamadas" && (
-            <TraficoLlamadas
-              llamadas={llamadas}
-            />
-          )}
+          <div>
 
-          {activeTab === "minutos" && (
-            <TraficoMinutos
-              minutos={minutos}
-            />
-          )}
+            {activeTab === "llamadas" && (
+              <TraficoLlamadas
+                llamadas={llamadas}
+              />
+            )}
 
-          {activeTab === "sms" && (
-            <TraficoSms
-              sms={sms}
-            />
-          )}
+            {activeTab === "minutos" && (
+              <TraficoMinutos
+                minutos={minutos}
+              />
+            )}
 
+            {activeTab === "sms" && (
+              <TraficoSms
+                sms={sms}
+              />
+            )}
+
+          </div>
         </div>
-      </section>
+      </section >
 
     </>
   );

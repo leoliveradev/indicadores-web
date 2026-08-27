@@ -78,44 +78,39 @@ export function ComunicacionesMovilesTabs({
             ))}
           </div>
 
+          {/* CONTENIDO DINÁMICO */}
+          <div>
+
+            {active === "accesos" && (
+              <ComunicacionesMovilesAccesos
+                accesos={accesos}
+              />
+            )}
+
+            {active === "penetracion" && (
+              <ComunicacionesMovilesPenetracion
+                penetracion={penetracion}
+              />
+            )}
+
+            {active === "trafico" && (
+              <ComunicacionesMovilesTrafico
+                llamadas={llamadas}
+                minutos={minutos}
+                sms={sms}
+              />
+            )}
+
+            {active === "ingresos" && (
+              <ComunicacionesMovilesIngresos
+                ingresos={ingresos}
+              />
+            )}
+            
+          </div>
+
         </div>
       </section>
-
-      {active === "accesos" && (
-        <ComunicacionesMovilesAccesos
-          accesos={accesos}
-        />
-      )}
-
-      {/* Próximos componentes */}
-
-      {active === "penetracion" && (
-        <div className="section-wrap">
-          <div className="section-inner">
-            <ComunicacionesMovilesPenetracion
-              penetracion={penetracion}
-            />
-          </div>
-        </div>
-      )}
-
-      {active === "trafico" && (
-        <ComunicacionesMovilesTrafico
-          llamadas={llamadas}
-          minutos={minutos}
-          sms={sms}
-        />
-      )}
-
-      {active === "ingresos" && (
-        <div className="section-wrap">
-          <div className="section-inner">
-            <ComunicacionesMovilesIngresos
-              ingresos={ingresos}
-            />
-          </div>
-        </div>
-      )}
     </>
   );
 }
