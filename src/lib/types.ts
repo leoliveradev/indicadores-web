@@ -18,4 +18,5 @@ export interface Insight {
   title: string;
   text: string;
   severity?: "info" | "success" | "warning";
+  type?: | "trend"  | "record"  | "highlight"  | "warning";
 }
