@@ -12,6 +12,7 @@ import {
   getAccesosKPIItems,
   getAccesosDonutData,
   getAccesosEvolutionData,
+  getAccesosInsights,
   getAccesosProvinciaRankingData,
 } from "@/lib/telefonia-fija";
 
@@ -21,13 +22,17 @@ import { DonutChart } from "@/components/ui/charts/donut-chart";
 
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
-import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
-import { LineChartBase } from "@/components/ui/charts/line-chart-base";
-import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
-import { dispValue } from "@/lib/format";
-import { InsightsCard } from "../ui/insights/insights-card";
+import type { PeriodFilterValue } from "@/lib/utils/filter-period";
+import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "../ui/filters/period-filter";
-import { getAccesosInsights } from "@/lib/telefonia-fija/insights";
+
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+
+import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
+
+import { InsightsCard } from "../ui/insights/insights-card";
+
+import { dispValue } from "@/lib/format";
 
 type Props = {
   accesos: ApiResponse<TelefoniaFijaAccesosRow>;
