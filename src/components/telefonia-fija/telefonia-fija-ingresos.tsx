@@ -11,8 +11,9 @@ import {
 
 import { KPISection } from "@/components/home/kpi-section";
 
-import { IngresosAreaChart }
-  from "@/components/ui/charts/ingresos-area-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
+
+import { dispCurrency, dispCurrencyCompact } from "@/lib/format";
 
 type Props = {
   ingresos: ApiResponse<TelefoniaFijaIngresosRow>;
@@ -44,8 +45,23 @@ export function TelefoniaFijaIngresos({
           </h2>
 
           <div className="chart-card">
-            <IngresosAreaChart
+            <LineChartBase
               data={evolutionData}
+              series={[
+                {
+                  key: "ingresos",
+                  label: "Ingresos",
+                  color: "var(--color-money, #16a34a)",
+                  strokeWidth: 3,
+                  activeDot: true,
+                },
+              ]}
+              yFormatter={(v) =>
+                dispCurrencyCompact(v)
+              }
+              tooltipFormatter={(v) =>
+                dispCurrency(v)
+              }
             />
           </div>
 
