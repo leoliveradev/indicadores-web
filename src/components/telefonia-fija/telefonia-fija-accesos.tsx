@@ -1,3 +1,6 @@
+'use client';
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 
 import type {
@@ -18,9 +21,13 @@ import { DonutChart } from "@/components/ui/charts/donut-chart";
 
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
+import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 import { dispValue } from "@/lib/format";
+import { InsightsCard } from "../ui/insights/insights-card";
+import { PeriodFilter } from "../ui/filters/period-filter";
+import { getAccesosInsights } from "@/lib/telefonia-fija/insights";
 
 type Props = {
   accesos: ApiResponse<TelefoniaFijaAccesosRow>;
@@ -31,6 +38,16 @@ export function TelefoniaFijaAccesos({
   accesos,
   provincias,
 }: Props) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
+  const filteredRows =
+    filterByPeriods(
+      accesos.data,
+      period,
+      4
+    );
+
   const kpiItems =
     getAccesosKPIItems(accesos);
 
@@ -38,7 +55,15 @@ export function TelefoniaFijaAccesos({
     getAccesosDonutData(accesos);
 
   const evolutionData =
-    getAccesosEvolutionData(accesos);
+    getAccesosEvolutionData({
+      ...accesos,
+      data: filteredRows,
+    });
+
+  const insights =
+    getAccesosInsights(
+      filteredRows
+    );
 
   const rankingData =
     getAccesosProvinciaRankingData(
@@ -79,45 +104,52 @@ export function TelefoniaFijaAccesos({
             Evolución histórica de accesos
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
             <LineChartBase
               data={evolutionData}
               series={[
                 {
-                  key: "total",
-                  label: "Total",
-                  color: "#003667",
-                  strokeWidth: 3,
-                },
-                {
                   key: "hogares",
                   label: "Hogares",
-                  color: "#005297",
+                  color: "var(--accent-amber)",
                 },
                 {
                   key: "comercial",
                   label: "Comercial",
-                  color: "#E74242",
+                  color: "var(--accent-red)",
                 },
                 {
-                  key: "gobiernos",
+                  key: "gobierno",
                   label: "Gobiernos",
-                  color: "#005297",
+                  color: "var(--accent-green)",
                 },
                 {
                   key: "otros",
                   label: "Otros",
-                  color: "#E74242",
+                  color: "var(--blue-500)",
                 },
               ]}
+
               yFormatter={(v) =>
                 dispValue(v, {
                   format: "compact",
                 })
               }
+              tooltipFormatter={(v) =>
+                v.toLocaleString("es-AR")
+              }
             />
           </div>
-
+          
+          <InsightsCard
+            insights={insights}
+          />
+        
         </div>
       </section>
 

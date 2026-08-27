@@ -64,22 +64,22 @@ export function getAccesosDonutData(
     {
       name: "Hogares",
       value: latest.hogares,
-      color: "#005297",
+      color: "var(--accent-amber)",
     },
     {
       name: "Comercial",
       value: latest.comercial,
-      color: "#E74242",
+      color: "var(--accent-red)",
     },
     {
       name: "Gobierno",
       value: latest.gobierno,
-      color: "#ACAE22",
+      color: "var(--accent-green)",
     },
     {
       name: "Otros",
       value: latest.otros,
-      color: "#9CA3AF",
+      color: "var(--blue-500)",
     },
   ];
 }
