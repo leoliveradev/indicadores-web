@@ -16,10 +16,12 @@ import type { PeriodFilterValue } from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
-import { IngresosAreaChart } from "@/components/ui/charts/ingresos-area-chart";
+import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
+
+import { dispCurrency, dispCurrencyCompact } from "@/lib/format";
 
 type Props = {
   ingresos: ApiResponse<InternetIngresosRow>;
@@ -70,8 +72,23 @@ export function InternetIngresos({
           />
 
           <div className="chart-card">
-            <IngresosAreaChart
+            <LineChartBase
               data={evolutionData}
+              series={[
+                {
+                  key: "ingresos",
+                  label: "Ingresos",
+                  color: "var(--color-money, #16a34a)",
+                  strokeWidth: 3,
+                  activeDot: true,
+                },
+              ]}
+              yFormatter={(v) =>
+                dispCurrencyCompact(v)
+              }
+              tooltipFormatter={(v) =>
+                dispCurrency(v)
+              }
             />
           </div>
 
