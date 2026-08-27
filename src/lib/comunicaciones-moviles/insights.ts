@@ -3,6 +3,7 @@ import type { Insight }
 
 import type {
   ComunicacionesMovilesAccesosRow,
+  ComunicacionesMovilesPenetracionRow,
   ComunicacionesMovilesLlamadasRow,
   ComunicacionesMovilesMinutosRow,
   ComunicacionesMovilesSmsRow
@@ -51,6 +52,53 @@ export function getAccesosInsights(
       )} millones más de líneas prepagas que pospagas.`,
     },
   ];
+}
+
+export function getPenetracionInsights(
+  rows: ComunicacionesMovilesPenetracionRow[]
+): Insight[] {
+  if (rows.length < 2) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    ((latest.accesos_100_hab - first.accesos_100_hab) /
+      first.accesos_100_hab) *
+    100;
+
+  const peak = Math.max(
+    ...rows.map(
+      (r) => r.accesos_100_hab
+    )
+  );
+
+  const insights: Insight[] = [];
+
+  insights.push({
+    title: "Variación de la penetración",
+    text: `La penetración móvil varió ${variation.toFixed(
+      1
+    )}% durante el período seleccionado.`,
+  });
+
+  insights.push({
+    title: "Nivel actual",
+    text: `La penetración alcanzó ${latest.accesos_100_hab.toFixed(
+      2
+    )} accesos cada 100 habitantes.`,
+  });
+
+  if (
+    latest.accesos_100_hab === peak
+  ) {
+    insights.push({
+      title: "Máximo histórico",
+      text: "El último período registra el nivel más alto de penetración de toda la serie.",
+    });
+  }
+
+  return insights;
 }
 
 export function getLlamadasInsights(
