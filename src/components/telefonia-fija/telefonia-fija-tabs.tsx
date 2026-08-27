@@ -25,10 +25,8 @@ const TABS = [
 type Props = {
   accesos: ApiResponse<TelefoniaFijaAccesosRow>;
   accesosProvincias: ApiResponse<TelefoniaFijaAccesosProvinciaRow>;
-
   penetracion: ApiResponse<TelefoniaFijaPenetracionRow>;
   penetracionProvincias: ApiResponse<TelefoniaFijaPenetracionProvinciaRow>;
-
   ingresos: ApiResponse<TelefoniaFijaIngresosRow>;
 };
 
