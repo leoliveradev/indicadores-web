@@ -122,18 +122,23 @@ export function TelevisionAccesos({
                   label: "TV por suscripción",
                   color: "var(--accent-green)",
                   strokeWidth: 3,
+                  activeDot: true,
                 },
                 {
                   key: "tv_satelital",
                   label: "TV satelital",
                   color: "var(--accent-amber)",
                   strokeWidth: 2,
+                  activeDot: true,
                 },
               ]}
               yFormatter={(v) =>
                 dispValue(v, {
                   format: "compact",
                 })
+              }
+              tooltipFormatter={(v) =>
+                v.toLocaleString("es-AR")
               }
             />
 
