@@ -58,10 +58,9 @@ export function ComunicacionesMovilesPenetracion({
     );
 
   const evolutionData =
-    getPenetracionEvolutionData({
-      ...penetracion,
-      data: filteredRows,
-    });
+    getPenetracionEvolutionData(
+      filteredRows
+    );
 
   const insights =
     getPenetracionInsights(
