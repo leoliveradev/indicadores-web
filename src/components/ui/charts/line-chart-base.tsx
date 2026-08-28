@@ -1,4 +1,5 @@
 "use client";
+import { useState } from "react";
 
 import {
   ResponsiveContainer,
@@ -41,6 +42,19 @@ export function LineChartBase({
   tooltipFormatter,
   xDataKey,
 }: Props) {
+  const [hiddenSeries, setHiddenSeries] =
+    useState<string[]>([]);
+
+  const toggleSeries = (
+    key: string
+  ) => {
+    setHiddenSeries((prev) =>
+      prev.includes(key)
+        ? prev.filter((k) => k !== key)
+        : [...prev, key]
+    );
+  };
+
   return (
     <ResponsiveContainer
       width="100%"
@@ -86,7 +100,18 @@ export function LineChartBase({
           }
         />
 
-        <Legend />
+        <Legend
+          onClick={(payload) => {
+            if (
+              payload &&
+              "dataKey" in payload
+            ) {
+              toggleSeries(
+                String(payload.dataKey)
+              );
+            }
+          }}
+        />
 
         {series.map((s) => (
           <Line
@@ -98,10 +123,17 @@ export function LineChartBase({
             strokeWidth={s.strokeWidth ?? 2}
             strokeDasharray={s.strokeDasharray}
             dot={false}
-            activeDot={s.activeDot ? { r: 5 } : false}
+            activeDot={
+              s.activeDot
+                ? { r: 5 }
+                : false
+            }
+            hide={hiddenSeries.includes(s.key)}
           />
         ))}
+
       </LineChart>
+
     </ResponsiveContainer>
   );
 }
