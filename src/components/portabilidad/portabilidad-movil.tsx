@@ -14,7 +14,7 @@ import {
   getPortabilidadInsights
 } from "@/lib/portabilidad";
 
-import { KPISection } from "@/components/home/kpi-section";
+// import { KPISection } from "@/components/home/kpi-section";
 
 import type { PeriodFilterValue } from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
