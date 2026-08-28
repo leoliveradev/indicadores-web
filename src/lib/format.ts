@@ -35,7 +35,7 @@ export const fmtCompact = (
   if (v >= 1e9) {
     return `${fmtNumber(v / 1e9, 0)} B`;
   }
-  
+
   if (v >= 1e6) {
     const millions = v / 1e6;
 
@@ -45,7 +45,11 @@ export const fmtCompact = (
   }
 
   if (v >= 1e3) {
-    return `${fmtNumber(v / 1e3, 1)} K`;
+    const thousands = v / 1e3;
+
+    return Number.isInteger(thousands)
+      ? `${fmtNumber(thousands, 0)} K`
+      : `${fmtNumber(thousands, 1)} K`;
   }
 
   return fmtNumber(v);
