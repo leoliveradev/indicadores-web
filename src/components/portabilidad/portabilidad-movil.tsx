@@ -37,6 +37,8 @@ import {
 
 import { dispValue }
   from "@/lib/format";
+import { filterSeasonalityData, SeasonalityPeriodValue } from "@/lib/utils/seasonality-period";
+import { SeasonalityFilter } from "../ui/filters/seasonality-filter";
 
 type Props = {
   data: ApiResponse<PortabilidadMovilRow>;
@@ -47,6 +49,11 @@ export function PortabilidadMovil({
 }: Props) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
+
+  const [seasonalityPeriod, setSeasonalityPeriod,] =
+    useState<SeasonalityPeriodValue>(
+      "all"
+    );
 
   const filteredRows =
     filterByPeriods(
@@ -69,9 +76,15 @@ export function PortabilidadMovil({
       filteredRows
     );
 
+  const seasonalityRows =
+    filterSeasonalityData(
+      data.data,
+      seasonalityPeriod
+    );
+
   const seasonalityData =
     getPortabilidadSeasonalityData(
-      data.data
+      seasonalityRows
     );
 
   const seasonalityInsights =
@@ -137,21 +150,28 @@ export function PortabilidadMovil({
             Estacionalidad mensual
           </h2>
 
+          <SeasonalityFilter
+            value={seasonalityPeriod}
+            onChange={setSeasonalityPeriod}
+          />
+
           <div className="chart-card">
 
             <BarChartBase
               data={seasonalityData}
               dataKey="promedio"
-              label="Promedio histórico"
+              label="Promedio"
               color="var(--blue-400)"
-              xDataKey="mes"
+              xDataKey="mesCompleto"
               yFormatter={(v) =>
                 dispValue(v, {
                   format: "compact",
                 })
               }
               tooltipFormatter={(v) =>
-                v.toLocaleString("es-AR")
+                v.toLocaleString("es-AR", {
+                  maximumFractionDigits: 0,
+                })
               }
             />
 
