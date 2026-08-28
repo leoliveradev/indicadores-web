@@ -12,10 +12,14 @@ import type {
 import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
+  getPenetracionInsights,
   getPenetracionProvinciaRankingData,
 } from "@/lib/telefonia-fija";
 
 import { KPISection } from "@/components/home/kpi-section";
+
+import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
@@ -23,12 +27,9 @@ import { RankingComparisonBarChart }
   from "@/components/ui/charts/ranking-comparison-bar-chart";
 import { ProvinciasMap }
   from "@/components/ui/map/provincias-map";
+
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
-
-import {
-  getPenetracionInsights,
-} from "@/lib/telefonia-fija/insights";
 
 type Props = {
   penetracion: ApiResponse<TelefoniaFijaPenetracionRow>;
@@ -39,6 +40,16 @@ export function TelefoniaFijaPenetracion({
   penetracion,
   provincias,
 }: Props) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
+  const filteredRows =
+    filterByPeriods(
+      penetracion.data,
+      period,
+      4
+    );
+
   const kpiItems =
     getPenetracionKPIItems(
       penetracion
@@ -46,11 +57,12 @@ export function TelefoniaFijaPenetracion({
 
   const evolutionData =
     getPenetracionEvolutionData(
-      penetracion
+      filteredRows
     );
+
   const insights =
     getPenetracionInsights(
-      penetracion.data
+      filteredRows
     );
 
   const rankingData =
@@ -69,38 +81,13 @@ export function TelefoniaFijaPenetracion({
     habitantes: d.accesos_100_hab,
   }));
 
-  const [mode, setMode] = useState<
-    "hogares" | "habitantes" | "ambos"
-  >("ambos");
-
   return (
     <>
       <KPISection
         title="Penetración de telefonía fija"
         items={kpiItems}
       />
-      <div className="flex gap-2 mb-4">
-        <button
-          className={`tab-btn ${mode === "ambos" ? "active" : ""}`}
-          onClick={() => setMode("ambos")}
-        >
-          Ambos
-        </button>
 
-        <button
-          className={`tab-btn ${mode === "hogares" ? "active" : ""}`}
-          onClick={() => setMode("hogares")}
-        >
-          Hogares
-        </button>
-
-        <button
-          className={`tab-btn ${mode === "habitantes" ? "active" : ""}`}
-          onClick={() => setMode("habitantes")}
-        >
-          Habitantes
-        </button>
-      </div>
       <section className="section-wrap alt">
         <div className="section-inner">
 
@@ -108,31 +95,27 @@ export function TelefoniaFijaPenetracion({
             Evolución de la penetración
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
 
             <LineChartBase
               data={evolutionData}
               series={[
-                ...(mode === "hogares" || mode === "ambos"
-                  ? [
-                    {
-                      key: "hogares",
-                      label: "Accesos cada 100 hogares",
-                      color: "#005297",
-                      strokeWidth: 3,
-                    },
-                  ]
-                  : []),
-
-                ...(mode === "habitantes" || mode === "ambos"
-                  ? [
-                    {
-                      key: "habitantes",
-                      label: "Accesos cada 100 habitantes",
-                      color: "#22c55e",
-                    },
-                  ]
-                  : []),
+                {
+                  key: "hogares",
+                  label: "Accesos cada 100 hogares",
+                  color: "#005297",
+                  strokeWidth: 3,
+                },
+                {
+                  key: "habitantes",
+                  label: "Accesos cada 100 habitantes",
+                  color: "#22c55e",
+                },
               ]}
             />
 
