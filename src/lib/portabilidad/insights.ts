@@ -3,7 +3,9 @@ import type { Insight }
 
 import type {
   PortabilidadMovilRow,
+  PortabilidadSeasonalityPoint
 } from "./types";
+import { MONTH_NAMES } from "./seasonality";
 
 export function getPortabilidadInsights(
   rows: PortabilidadMovilRow[]
@@ -53,6 +55,64 @@ export function getPortabilidadInsights(
       text: `El valor más alto registrado fue de ${pico.total.toLocaleString(
         "es-AR"
       )} portaciones.`,
+    },
+  ];
+}
+
+export function getPortabilidadSeasonalityInsights(
+  rows: PortabilidadSeasonalityPoint[]
+): Insight[] {
+
+  if (!rows.length) return [];
+
+  const maxMonth =
+    rows.reduce((max, row) =>
+      row.promedio > max.promedio
+        ? row
+        : max
+    );
+
+  const minMonth =
+    rows.reduce((min, row) =>
+      row.promedio < min.promedio
+        ? row
+        : min
+    );
+
+  const firstSemester =
+    rows
+      .slice(0, 6)
+      .reduce(
+        (acc, row) => acc + row.promedio,
+        0
+      );
+
+  const secondSemester =
+    rows
+      .slice(6)
+      .reduce(
+        (acc, row) => acc + row.promedio,
+        0
+      );
+
+  return [
+    {
+      type: "record",
+      title: "Mes de mayor actividad",
+      text: `${MONTH_NAMES[maxMonth.mesNumero]} registra el promedio histórico más alto de portaciones.`,
+    },
+    {
+      type: "warning",
+      title: "Mes de menor actividad",
+      text: `${MONTH_NAMES[minMonth.mesNumero]} presenta el promedio histórico más bajo.`,
+    },
+    {
+      type: "highlight",
+      title: "Concentración temporal",
+      text:
+        secondSemester > firstSemester
+          ? "El segundo semestre concentra más portaciones que el primero."
+          : "El primer semestre concentra más portaciones que el segundo.",
     },
   ];
 }

@@ -9,9 +9,10 @@ import type {
 } from "@/lib/portabilidad";
 
 import {
-  getPortabilidadKPIItems,
+  // getPortabilidadKPIItems,
   getPortabilidadEvolutionData,
-  getPortabilidadInsights
+  getPortabilidadInsights,
+  getPortabilidadSeasonalityInsights
 } from "@/lib/portabilidad";
 
 // import { KPISection } from "@/components/home/kpi-section";
@@ -71,6 +72,11 @@ export function PortabilidadMovil({
   const seasonalityData =
     getPortabilidadSeasonalityData(
       data.data
+    );
+
+  const seasonalityInsights =
+    getPortabilidadSeasonalityInsights(
+      seasonalityData
     );
 
   return (
@@ -150,6 +156,10 @@ export function PortabilidadMovil({
             />
 
           </div>
+
+          <InsightsCard
+            insights={seasonalityInsights}
+          />
 
         </div>
       </section>
