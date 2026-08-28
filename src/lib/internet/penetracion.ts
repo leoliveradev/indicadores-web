@@ -31,7 +31,9 @@ export function getPenetracionKPIItems(
   ];
 }
 
-export function getPenetracionEvolutionData(rows: InternetPenetracionRow[]) {
+export function getPenetracionEvolutionData(
+  rows: InternetPenetracionRow[]
+) {
   return rows.map((r) => ({
     period: `${r.anio} T${r.trimestre}`,
     hogares: Number(r.accesos_cada_100_hogares),
