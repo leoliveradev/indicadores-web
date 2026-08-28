@@ -15,6 +15,7 @@ import {
   getPenetracionEvolutionData,
   getPenetracionProvinciaRankingData
 } from "@/lib/internet";
+
 import { RankingComparisonBarChart } from "@/components/ui/charts/ranking-comparison-bar-chart";
 
 import { InsightsCard }
@@ -23,6 +24,8 @@ import { InsightsCard }
 import {
   getPenetracionInsights,
 } from "@/lib/internet/insights";
+import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
 export function InternetPenetracion({
   penetracion,
@@ -31,23 +34,33 @@ export function InternetPenetracion({
   penetracion: ApiResponse<InternetPenetracionRow>;
   penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
 }) {
-  const [mode, setMode] = useState<"hogares" | "habitantes" | "ambos">("ambos");
-  const rows = penetracion.data;
-  const latest = rows[rows.length - 1];
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
 
-  const gap =
-    latest.accesos_cada_100_hogares -
-    latest.accesos_cada_100_habitantes;
+  const rows = penetracion.data;
 
   if (!rows.length) {
     return <div className="error-box">Sin datos disponibles</div>;
   }
 
-  const insights =
-    getPenetracionInsights(rows);
+  const kpiItems = getPenetracionKPIItems(penetracion.data);
 
-  const kpiItems = getPenetracionKPIItems(rows);
-  const evolutionData = getPenetracionEvolutionData(rows);
+  const filteredRows =
+    filterByPeriods(
+      penetracion.data,
+      period,
+      4
+    );
+
+  const evolutionData =
+    getPenetracionEvolutionData(
+      filteredRows
+    );
+
+  const insights =
+    getPenetracionInsights(
+      filteredRows
+    );
 
   const rankingData = getPenetracionProvinciaRankingData(penetracionProvincias);
 
@@ -65,30 +78,10 @@ export function InternetPenetracion({
   return (
     <>
       {/* KPIs */}
-      <KPISection title="Penetración de Internet" items={kpiItems} />
-
-      <div className="flex gap-2 mb-4">
-        <button
-          className={`tab-btn ${mode === "ambos" ? "active" : ""}`}
-          onClick={() => setMode("ambos")}
-        >
-          Ambos
-        </button>
-
-        <button
-          className={`tab-btn ${mode === "hogares" ? "active" : ""}`}
-          onClick={() => setMode("hogares")}
-        >
-          Hogares
-        </button>
-
-        <button
-          className={`tab-btn ${mode === "habitantes" ? "active" : ""}`}
-          onClick={() => setMode("habitantes")}
-        >
-          Habitantes
-        </button>
-      </div>
+      <KPISection
+        title="Penetración de Internet"
+        items={kpiItems}
+      />
 
       {/* EVOLUCIÓN */}
       <section className="section-wrap">
@@ -97,33 +90,30 @@ export function InternetPenetracion({
             Evolución de penetración
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
             <LineChartBase
               data={evolutionData}
               height={320}
               xDataKey="period"
               series={[
-                ...(mode === "hogares" || mode === "ambos"
-                  ? [
-                    {
-                      key: "hogares",
-                      label: "Hogares",
-                      color: "var(--blue-300)",
-                    },
-                  ]
-                  : []),
-
-                ...(mode === "habitantes" || mode === "ambos"
-                  ? [
-                    {
-                      key: "habitantes",
-                      label: "Habitantes",
-                      color: "var(--accent-green)",
-                    },
-                  ]
-                  : []),
+                {
+                  key: "hogares",
+                  label: "Hogares",
+                  color: "var(--blue-300)",
+                },
+                {
+                  key: "habitantes",
+                  label: "Habitantes",
+                  color: "var(--accent-green)",
+                },
               ]}
             />
+
           </div>
 
           <InsightsCard
