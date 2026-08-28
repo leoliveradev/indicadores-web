@@ -1,4 +1,7 @@
-import type { PortabilidadMovilRow } from "./types";
+import type {
+  PortabilidadMovilRow,
+  PortabilidadSeasonalityPoint
+} from "./types";
 
 const MONTHS = [
   "Ene",
@@ -15,10 +18,21 @@ const MONTHS = [
   "Dic",
 ];
 
-export type PortabilidadSeasonalityPoint = {
-  mes: string;
-  promedio: number;
-};
+export const MONTH_NAMES = [
+  "",
+  "Enero",
+  "Febrero",
+  "Marzo",
+  "Abril",
+  "Mayo",
+  "Junio",
+  "Julio",
+  "Agosto",
+  "Septiembre",
+  "Octubre",
+  "Noviembre",
+  "Diciembre",
+];
 
 export function getPortabilidadSeasonalityData(
   rows: PortabilidadMovilRow[]
@@ -53,14 +67,15 @@ export function getPortabilidadSeasonalityData(
       const promedio =
         values.length
           ? values.reduce(
-              (sum, value) =>
-                sum + value,
-              0
-            ) / values.length
+            (sum, value) =>
+              sum + value,
+            0
+          ) / values.length
           : 0;
 
       return {
         mes: MONTHS[index],
+        mesNumero: month,
         promedio,
       };
     }

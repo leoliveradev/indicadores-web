@@ -4,3 +4,9 @@ export interface PortabilidadMovilRow {
 
   total: number;
 }
+
+export type PortabilidadSeasonalityPoint = {
+  mes: string;
+  mesNumero: number;
+  promedio: number;
+};
