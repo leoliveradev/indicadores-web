@@ -42,9 +42,9 @@ export function getPenetracionKPIItems(
 }
 
 export function getPenetracionEvolutionData(
-  response: ApiResponse<TelevisionPenetracionRow>
+  rows: TelevisionPenetracionRow[]
 ) {
-  return response.data.map((row) => ({
+  return rows.map((row) => ({
     label: `${row.anio} T${row.trimestre}`,
 
     suscripcion_hogares:

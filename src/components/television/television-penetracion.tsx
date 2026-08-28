@@ -13,12 +13,19 @@ import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
   getPenetracionProvinciaRankingData,
+  getPenetracionInsights,
 } from "@/lib/television";
 
 import { KPISection } from "@/components/home/kpi-section";
 
+import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
+import { PeriodFilter } from "@/components/ui/filters/period-filter";
+
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
+
+import { InsightsCard }
+  from "@/components/ui/insights/insights-card";
 
 import { RankingComparisonBarChart }
   from "@/components/ui/charts/ranking-comparison-bar-chart";
@@ -35,9 +42,15 @@ export function TelevisionPenetracion({
   penetracion,
   provincias,
 }: Props) {
-  const [mode, setMode] = useState<
-    "hogares" | "habitantes"
-  >("hogares");
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
+  const filteredRows =
+    filterByPeriods(
+      penetracion.data,
+      period,
+      4
+    );
 
   const kpiItems =
     getPenetracionKPIItems(
@@ -46,7 +59,12 @@ export function TelevisionPenetracion({
 
   const evolutionData =
     getPenetracionEvolutionData(
-      penetracion
+      filteredRows
+    );
+
+  const insights =
+    getPenetracionInsights(
+      filteredRows
     );
 
   const rankingData =
@@ -75,34 +93,6 @@ export function TelevisionPenetracion({
         items={kpiItems}
       />
 
-      <div className="flex gap-2 mb-4">
-        <button
-          className={`tab-btn ${
-            mode === "hogares"
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            setMode("hogares")
-          }
-        >
-          Hogares
-        </button>
-
-        <button
-          className={`tab-btn ${
-            mode === "habitantes"
-              ? "active"
-              : ""
-          }`}
-          onClick={() =>
-            setMode("habitantes")
-          }
-        >
-          Habitantes
-        </button>
-      </div>
-
       <section className="section-wrap">
         <div className="section-inner">
 
@@ -110,44 +100,36 @@ export function TelevisionPenetracion({
             Evolución de penetración
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
 
             <LineChartBase
               data={evolutionData}
-              series={
-                mode === "hogares"
-                  ? [
-                      {
-                        key: "suscripcion_hogares",
-                        label:
-                          "TV Suscripción",
-                        color: "#005297",
-                      },
-                      {
-                        key: "satelital_hogares",
-                        label:
-                          "TV Satelital",
-                        color: "#EEAE42",
-                      },
-                    ]
-                  : [
-                      {
-                        key: "suscripcion_habitantes",
-                        label:
-                          "TV Suscripción",
-                        color: "#005297",
-                      },
-                      {
-                        key: "satelital_habitantes",
-                        label:
-                          "TV Satelital",
-                        color: "#EEAE42",
-                      },
-                    ]
-              }
+              series={[
+                {
+                  key: "suscripcion_hogares",
+                  label:
+                    "TV Suscripción",
+                  color: "#005297",
+                },
+                {
+                  key: "satelital_hogares",
+                  label:
+                    "TV Satelital",
+                  color: "#EEAE42",
+                },
+              ]}
             />
 
           </div>
+
+          <InsightsCard
+            insights={insights}
+          />
 
         </div>
       </section>
