@@ -99,12 +99,12 @@ export function getPortabilidadSeasonalityInsights(
     {
       type: "record",
       title: "Mes de mayor actividad",
-      text: `${MONTH_NAMES[maxMonth.mesNumero]} registra el promedio histórico más alto de portaciones.`,
+      text: `${MONTH_NAMES[maxMonth.mesNumero]} registra el promedio del período analizado más alto de portaciones.`,
     },
     {
       type: "warning",
       title: "Mes de menor actividad",
-      text: `${MONTH_NAMES[minMonth.mesNumero]} presenta el promedio histórico más bajo.`,
+      text: `${MONTH_NAMES[minMonth.mesNumero]} presenta el promedio del período analizado más bajo.`,
     },
     {
       type: "highlight",
