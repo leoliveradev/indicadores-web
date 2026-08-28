@@ -26,7 +26,16 @@ import { LineChartBase }
 import {
   InsightsCard,
 } from "@/components/ui/insights/insights-card";
-import { dispValue } from "@/lib/format";
+
+import { BarChartBase }
+  from "@/components/ui/charts/bar-chart-base";
+
+import {
+  getPortabilidadSeasonalityData,
+} from "@/lib/portabilidad/seasonality";
+
+import { dispValue }
+  from "@/lib/format";
 
 type Props = {
   data: ApiResponse<PortabilidadMovilRow>;
@@ -45,8 +54,8 @@ export function PortabilidadMovil({
       12
     );
 
-  const kpiItems =
-    getPortabilidadKPIItems(data);
+  // const kpiItems =
+  //   getPortabilidadKPIItems(data);
 
   const evolutionData =
     getPortabilidadEvolutionData({
@@ -57,6 +66,11 @@ export function PortabilidadMovil({
   const insights =
     getPortabilidadInsights(
       filteredRows
+    );
+
+  const seasonalityData =
+    getPortabilidadSeasonalityData(
+      data.data
     );
 
   return (
@@ -109,6 +123,37 @@ export function PortabilidadMovil({
 
         </div>
       </section>
+
+      <section className="section-wrap">
+        <div className="section-inner">
+
+          <h2 className="section-heading">
+            Estacionalidad mensual
+          </h2>
+
+          <div className="chart-card">
+
+            <BarChartBase
+              data={seasonalityData}
+              dataKey="promedio"
+              label="Promedio histórico"
+              color="var(--blue-400)"
+              xDataKey="mes"
+              yFormatter={(v) =>
+                dispValue(v, {
+                  format: "compact",
+                })
+              }
+              tooltipFormatter={(v) =>
+                v.toLocaleString("es-AR")
+              }
+            />
+
+          </div>
+
+        </div>
+      </section>
+
     </>
   );
 }
