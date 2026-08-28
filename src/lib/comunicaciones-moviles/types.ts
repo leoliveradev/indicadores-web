@@ -9,7 +9,7 @@ export interface ComunicacionesMovilesAccesosRow {
   created_at: string;
 }
 
-export interface ComunicacionesMovilesPenetracionRow {
+export type ComunicacionesMovilesPenetracionRow = {
   anio: number;
   trimestre: number;
 

@@ -29,9 +29,9 @@ export function getPenetracionKPIItems(
 }
 
 export function getPenetracionEvolutionData(
-  response: ApiResponse<ComunicacionesMovilesPenetracionRow>
+  rows: ComunicacionesMovilesPenetracionRow[]
 ) {
-  return response.data.map((row) => ({
+  return rows.map((row) => ({
     label: `${row.anio} T${row.trimestre}`,
     accesos: row.accesos_100_hab,
   }));
