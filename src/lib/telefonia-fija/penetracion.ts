@@ -40,9 +40,9 @@ export function getPenetracionKPIItems(
 }
 
 export function getPenetracionEvolutionData(
-  response: ApiResponse<TelefoniaFijaPenetracionRow>
+  rows: TelefoniaFijaPenetracionRow[]
 ) {
-  return response.data.map((row) => ({
+  return rows.map((row) => ({
     label: `${row.anio} T${row.trimestre}`,
     habitantes: row.accesos_100_hab,
     hogares: row.accesos_100_hog,
