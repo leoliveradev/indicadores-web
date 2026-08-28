@@ -75,6 +75,7 @@ export function getPortabilidadSeasonalityData(
 
       return {
         mes: MONTHS[index],
+        mesCompleto: MONTH_NAMES[month],
         mesNumero: month,
         promedio,
       };
