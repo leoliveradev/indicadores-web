@@ -2,7 +2,8 @@ import type { Insight } from "@/lib/types";
 
 import type {
   TelevisionAccesosRow,
-  TelevisionIngresosRow
+  TelevisionPenetracionRow,
+  TelevisionIngresosRow,
 } from "./types";
 
 export function getAccesosInsights(
@@ -61,4 +62,70 @@ export function getIngresosInsights(
       )}% de los ingresos actuales del sector.`,
     },
   ];
+}
+
+export function getPenetracionInsights(
+  rows: TelevisionPenetracionRow[]
+): Insight[] {
+  if (!rows.length) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    ((latest.tv_suscripcion_100_hogares -
+      first.tv_suscripcion_100_hogares) /
+      first.tv_suscripcion_100_hogares) *
+    100;
+
+  const gap =
+    latest.tv_suscripcion_100_hogares -
+    latest.tv_suscripcion_100_habitantes;
+
+  const peakHogares = Math.max(
+    ...rows.map(
+      (r) => r.tv_suscripcion_100_hogares
+    )
+  );
+
+
+
+  const insights: Insight[] = [];
+  
+  insights.push({
+    type: "trend",
+    title: "Variación del período",
+    text: `La penetración varió ${variation.toFixed(
+      1
+    )}% durante el período seleccionado.`,
+  });
+
+  insights.push({
+    type: "highlight",
+    title: "Penetración actual",
+    text: `La TV por suscripción alcanzó ${latest.tv_suscripcion_100_hogares.toFixed(
+      2
+    )} accesos cada 100 hogares.`,
+  });
+
+  insights.push({
+    type: "highlight",
+    title: "Brecha hogares vs habitantes",
+    text: `La diferencia actual es de ${gap.toFixed(
+      2
+    )} puntos entre ambos indicadores.`,
+  });
+
+  if (
+    latest.tv_suscripcion_100_hogares ===
+    peakHogares
+  ) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico",
+      text: "El último período registra la mayor penetración sobre hogares de toda la serie.",
+    });
+  }
+
+  return insights;
 }
