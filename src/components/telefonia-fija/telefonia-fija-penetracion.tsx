@@ -23,6 +23,7 @@ import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
+  
 import { RankingComparisonBarChart }
   from "@/components/ui/charts/ranking-comparison-bar-chart";
 import { ProvinciasMap }

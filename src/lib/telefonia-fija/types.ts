@@ -25,7 +25,7 @@ export interface TelefoniaFijaAccesosProvinciaRow {
   total: number;
 }
 
-export interface TelefoniaFijaPenetracionRow {
+export type TelefoniaFijaPenetracionRow = {
   anio: number;
   trimestre: number;
 
