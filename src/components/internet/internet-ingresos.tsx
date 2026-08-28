@@ -30,9 +30,9 @@ type Props = {
 export function InternetIngresos({
   ingresos,
 }: Props) {
-  const kpiItems = getIngresosKPIItems(ingresos);
-
   const [period, setPeriod] = useState<PeriodFilterValue>("all");
+
+  const kpiItems = getIngresosKPIItems(ingresos);
 
   const filteredRows =
     filterByPeriods(
