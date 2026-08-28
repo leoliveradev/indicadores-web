@@ -44,7 +44,7 @@ export function getPortabilidadOverviewItems(
   return [
     {
       label: "Portaciones (último mes)",
-      icon: IInternet,
+      icon: () => null,
       value: latest.total,
       format: (v) =>
         dispValue(v, {
