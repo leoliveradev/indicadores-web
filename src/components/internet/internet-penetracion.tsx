@@ -24,6 +24,7 @@ import { InsightsCard }
 import {
   getPenetracionInsights,
 } from "@/lib/internet/insights";
+
 import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
