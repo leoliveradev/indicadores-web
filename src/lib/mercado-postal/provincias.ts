@@ -4,6 +4,10 @@ import type {
   MercadoPostalProvinciaRow,
 } from "./types";
 
+import {
+  dispCurrency,
+} from "@/lib/format";
+
 export function getProvinciaRankingData(
   response: ApiResponse<MercadoPostalProvinciaRow>
 ) {
@@ -20,12 +24,40 @@ export function getProvinciaRankingData(
 export function getProvinciaMapData(
   response: ApiResponse<MercadoPostalProvinciaRow>
 ) {
-  return response.data.map((row) => ({
-    provincia: row.provincia,
+  return response.data.map(
+    (row) => ({
+      provincia:
+        row.provincia,
 
-    total: row.pesos,
+      total:
+        row.pesos,
 
-    pesos: row.pesos,
-    unidades: row.unidades,
-  }));
+      tooltipData: [
+        {
+          label:
+            "Facturación",
+
+          value:
+            dispCurrency(
+              row.pesos
+            ),
+
+          color:
+            "#005297",
+        },
+        {
+          label:
+            "Producción",
+
+          value:
+            row.unidades.toLocaleString(
+              "es-AR"
+            ),
+
+          color:
+            "#22c55e",
+        },
+      ],
+    })
+  );
 }
