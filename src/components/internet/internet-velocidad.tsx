@@ -64,7 +64,14 @@ export function InternetVelocidad({ velocidadMedia, provincias }: {
     provincias.data.map((d) => ({
       provincia: d.provincia,
       total: d.mbps,
-      velocidad: d.mbps,
+
+      tooltipData: [
+        {
+          label: "Velocidad media",
+          value: `${d.mbps.toFixed(1)} Mbps`,
+          color: "#005297",
+        },
+      ],
     }));
 
 
