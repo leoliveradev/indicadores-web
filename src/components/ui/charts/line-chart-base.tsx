@@ -26,6 +26,8 @@ type Props = {
   data: Record<string, unknown>[];
   series: Series[];
   height?: number;
+  yDomain?: [number | string, number | string];
+  yAxisWidth?: number;
   yFormatter?: (value: number) => string;
   tooltipFormatter?: (
     value: number,
@@ -38,6 +40,8 @@ export function LineChartBase({
   data,
   series,
   height = 400,
+  yDomain,
+  yAxisWidth = 70,
   yFormatter,
   tooltipFormatter,
   xDataKey,
@@ -79,7 +83,9 @@ export function LineChartBase({
         />
 
         <YAxis
-          domain={[0, "auto"]}
+          domain={yDomain ?? [0, "auto"]}
+          // tickCount={5}
+          width={yAxisWidth}
           tickFormatter={(value) =>
             yFormatter
               ? yFormatter(Number(value))
