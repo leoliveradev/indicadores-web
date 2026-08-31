@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 
 import type {
@@ -8,6 +12,7 @@ import {
   getProduccionKPIItems,
   getProduccionDonutData,
   getProduccionEvolutionData,
+  getProduccionInsights
 } from "@/lib/mercado-postal";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -15,8 +20,22 @@ import { KPISection } from "@/components/home/kpi-section";
 import { DonutChart }
   from "@/components/ui/charts/donut-chart";
 
+import type {
+  PeriodFilterValue,
+} from "@/lib/utils/filter-period";
+
+import {
+  filterByPeriods,
+} from "@/lib/utils/filter-period";
+
+import {
+  PeriodFilter,
+} from "@/components/ui/filters/period-filter";
+
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
+
+import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue }
   from "@/lib/format";
@@ -28,6 +47,16 @@ type Props = {
 export function MercadoPostalProduccion({
   produccion,
 }: Props) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
+  const filteredRows =
+    filterByPeriods(
+      produccion.data,
+      period,
+      12
+    );
+
   const kpiItems =
     getProduccionKPIItems(produccion);
 
@@ -36,8 +65,13 @@ export function MercadoPostalProduccion({
 
   const evolutionData =
     getProduccionEvolutionData(
-      produccion
+      filteredRows
     );
+
+  const insights =
+    getProduccionInsights(
+      filteredRows
+    )
 
   return (
     <>
@@ -67,6 +101,11 @@ export function MercadoPostalProduccion({
             Evolución histórica de producción
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
 
             <LineChartBase
@@ -75,20 +114,23 @@ export function MercadoPostalProduccion({
                 {
                   key: "postales",
                   label: "Postales",
-                  color: "#005297",
+                  color: "var(--blue-300)",
                   strokeWidth: 3,
                 },
                 {
                   key: "telegraficas",
                   label: "Telegráficas",
-                  color: "#EEAE42",
+                  color: "var(--accent-green)",
                 },
                 {
                   key: "monetarios",
                   label: "Monetarios",
-                  color: "#22c55e",
+                  color: "var(--accent-amber)",
                 },
               ]}
+              tooltipFormatter={(v) =>
+                v.toLocaleString("es-AR")
+              }
               yFormatter={(v) =>
                 dispValue(v, {
                   format: "compact",
@@ -98,11 +140,9 @@ export function MercadoPostalProduccion({
 
           </div>
 
-          <p className="chart-description">
-            Evolución de la producción de
-            servicios postales, telegráficos y
-            monetarios en unidades.
-          </p>
+          <InsightsCard
+            insights={insights}
+          />
 
         </div>
       </section>
