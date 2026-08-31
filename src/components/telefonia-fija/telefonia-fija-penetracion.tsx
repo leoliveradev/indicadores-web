@@ -23,7 +23,7 @@ import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
-  
+
 import { RankingComparisonBarChart }
   from "@/components/ui/charts/ranking-comparison-bar-chart";
 import { ProvinciasMap }
@@ -73,14 +73,22 @@ export function TelefoniaFijaPenetracion({
 
   const provinciaData = provincias.data.map((d) => ({
     provincia: d.provincia,
-
-    // Escala del mapa
     total: d.accesos_100_hog,
 
-    // Tooltip
-    hogares: d.accesos_100_hog,
-    habitantes: d.accesos_100_hab,
+    tooltipData: [
+      {
+        label: "Hogares",
+        value: d.accesos_100_hog.toFixed(2),
+        color: "var(--blue-500)",
+      },
+      {
+        label: "Habitantes",
+        value: d.accesos_100_hab.toFixed(2),
+        color: "var(--accent-green)",
+      },
+    ],
   }));
+
 
   return (
     <>
@@ -109,13 +117,13 @@ export function TelefoniaFijaPenetracion({
                 {
                   key: "hogares",
                   label: "Accesos cada 100 hogares",
-                  color: "#005297",
+                  color: "var(--blue-500)",
                   strokeWidth: 3,
                 },
                 {
                   key: "habitantes",
                   label: "Accesos cada 100 habitantes",
-                  color: "#22c55e",
+                  color: "var(--accent-green)",
                 },
               ]}
             />
