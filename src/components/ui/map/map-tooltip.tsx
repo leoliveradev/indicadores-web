@@ -1,20 +1,25 @@
+import type {
+  TooltipItem,
+} from "@/lib/maps/types";
+
+type Props = {
+  x: number;
+  y: number;
+
+  name: string;
+
+  value: number;
+
+  tooltipData?: TooltipItem[];
+};
+
 export function MapTooltip({
   x,
   y,
   name,
   value,
-  velocidad,
-  hogares,
-  habitantes,
-}: {
-  x: number;
-  y: number;
-  name: string;
-  value?: number | string;
-  velocidad?: number;
-  hogares?: number;
-  habitantes?: number;
-}) {
+  tooltipData,
+}: Props) {
   return (
     <div
       style={{
@@ -32,27 +37,34 @@ export function MapTooltip({
     >
       <strong>{name}</strong>
 
-      {velocidad !== undefined ? (
-        <div>
-          Velocidad media: {velocidad.toFixed(1)} Mbps
+      {tooltipData?.length ? (
+        <div
+          style={{
+            marginTop: 6,
+          }}
+        >
+          {tooltipData.map((item) => (
+            <div key={item.label}>
+              <span
+                style={{
+                  color: item.color,
+                  fontWeight: 600,
+                }}
+              >
+                {item.label}:
+              </span>{" "}
+              {item.value}
+            </div>
+          ))}
         </div>
-      ) : hogares !== undefined &&
-        habitantes !== undefined ? (
-        <>
-          <div>
-            Hogares: {hogares.toFixed(2)}
-          </div>
-
-          <div>
-            Habitantes: {habitantes.toFixed(2)}
-          </div>
-        </>
       ) : (
         <div>
-          Accesos: {value}
+          Valor:{" "}
+          {value.toLocaleString(
+            "es-AR"
+          )}
         </div>
       )}
-
     </div>
   );
 }
