@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 
 import type {
@@ -10,6 +14,19 @@ import {
 } from "@/lib/mercado-postal";
 
 import { KPISection } from "@/components/home/kpi-section";
+
+
+import type {
+  PeriodFilterValue,
+} from "@/lib/utils/filter-period";
+
+import {
+  filterByPeriods,
+} from "@/lib/utils/filter-period";
+
+import {
+  PeriodFilter,
+} from "@/components/ui/filters/period-filter";
 
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
@@ -31,15 +48,27 @@ type Props = {
 export function MercadoPostalPersonal({
   personal,
 }: Props) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
+  const filteredRows =
+    filterByPeriods(
+      personal.data,
+      period,
+      12
+    );
+
   const kpiItems =
     getPersonalKPIItems(personal);
 
   const evolutionData =
-    getPersonalEvolutionData(personal);
+    getPersonalEvolutionData(
+      filteredRows
+    );
 
   const insights =
     getPersonalInsights(
-      personal.data
+      filteredRows
     );
 
   return (
@@ -55,6 +84,11 @@ export function MercadoPostalPersonal({
           <h2 className="section-heading">
             Evolución del empleo
           </h2>
+
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
 
           <div className="chart-card">
 
@@ -73,10 +107,13 @@ export function MercadoPostalPersonal({
                   format: "compact",
                 })
               }
+              tooltipFormatter={(v) =>
+                v.toLocaleString("es-AR")
+              }
             />
 
           </div>
-          
+
           <InsightsCard
             insights={insights}
           />
