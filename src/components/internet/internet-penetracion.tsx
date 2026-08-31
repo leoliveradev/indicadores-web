@@ -68,13 +68,29 @@ export function InternetPenetracion({
   const provinciaData = penetracionProvincias.data.map((d) => ({
     provincia: d.provincia,
     total: d.accesos_cada_100_hogares,
-    hogares: d.accesos_cada_100_hogares,
-    habitantes: d.accesos_cada_100_habitantes,
+
+    tooltipData: [
+      {
+        label: "Hogares",
+        value: d.accesos_cada_100_hogares.toFixed(2),
+        color: "var(--blue-300)",
+      },
+      {
+        label: "Habitantes",
+        value: d.accesos_cada_100_habitantes.toFixed(2),
+        color: "var(--accent-green)",
+      },
+    ],
   }));
 
-  const top = provinciaData.reduce((a, b) =>
-    b.hogares > a.hogares ? b : a
-  );
+  const top =
+    penetracionProvincias.data.reduce(
+      (a, b) =>
+        b.accesos_cada_100_hogares >
+          a.accesos_cada_100_hogares
+          ? b
+          : a
+    );
 
   return (
     <>
@@ -131,8 +147,11 @@ export function InternetPenetracion({
           </h2>
 
           <p className="chart-description">
-            La mayor penetración es{" "}
-            <strong>{top.provincia}</strong> ({top.hogares} accesos cada 100 hogares).
+            La mayor penetración corresponde a{" "}
+            <strong>{top.provincia}</strong>{" "}
+            con{" "}
+            {top.accesos_cada_100_hogares.toFixed(2)}
+            {" "}accesos cada 100 hogares.
           </p>
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
