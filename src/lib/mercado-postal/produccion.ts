@@ -92,9 +92,9 @@ export function getProduccionDonutData(
 }
 
 export function getProduccionEvolutionData(
-  response: ApiResponse<MercadoPostalProduccionRow>
+  rows: MercadoPostalProduccionRow[]
 ) {
-  return response.data.map((row) => ({
+  return rows.map((row) => ({
     label: `${row.anio}-${String(row.mes).padStart(2, "0")}`,
 
     postales: row.postales,
