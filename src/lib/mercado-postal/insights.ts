@@ -223,17 +223,52 @@ export function getPersonalInsights(
   const latest = rows[rows.length - 1];
 
   const variation =
-    ((latest.personal_ocupado -
-      first.personal_ocupado) /
-      first.personal_ocupado) *
-    100;
+    first.personal_ocupado > 0
+      ? (
+          (latest.personal_ocupado -
+            first.personal_ocupado) /
+          first.personal_ocupado
+        ) * 100
+      : null;
 
-  return [
-    {
-      title: "Evolución del empleo",
+  const peak = Math.max(
+    ...rows.map(
+      (r) => r.personal_ocupado
+    )
+  );
+
+  const insights: Insight[] = [];
+
+  if (
+    variation !== null &&
+    Math.abs(variation) < 1000
+  ) {
+    insights.push({
+      type: "trend",
+      title: "Variación del período",
       text: `El personal ocupado varió ${variation.toFixed(
         1
-      )}% respecto del inicio de la serie.`,
-    },
-  ];
+      )}% durante el período seleccionado.`,
+    });
+  }
+
+  insights.push({
+    type: "highlight",
+    title: "Dotación actual",
+    text: `El sector registra actualmente ${latest.personal_ocupado.toLocaleString(
+      "es-AR"
+    )} personas ocupadas.`,
+  });
+
+  if (
+    latest.personal_ocupado === peak
+  ) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico",
+      text: "El último período registra el mayor nivel de empleo de toda la serie.",
+    });
+  }
+
+  return insights;
 }
