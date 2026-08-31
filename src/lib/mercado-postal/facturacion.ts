@@ -70,25 +70,25 @@ export function getFacturacionDonutData(
     {
       name: "Postales",
       value: latest.postales,
-      color: "#005297",
+      color: "var(--blue-300)",
     },
     {
       name: "Telegráficas",
       value: latest.telegraficas,
-      color: "#EEAE42",
+      color: "var(--accent-green)",
     },
     {
       name: "Monetarios",
       value: latest.monetarios,
-      color: "#22c55e",
+      color: "var(--accent-amber)",
     },
   ];
 }
 
 export function getFacturacionEvolutionData(
-  response: ApiResponse<MercadoPostalFacturacionRow>
+  rows: MercadoPostalFacturacionRow[]
 ) {
-  return response.data.map((row) => ({
+  return rows.map((row) => ({
     label: `${row.anio}-${String(row.mes).padStart(2, "0")}`,
 
     postales: row.postales,
