@@ -7,27 +7,29 @@ import { useColorScale } from "@/hooks/useColorScale";
 import { MapTooltip } from "@/components/ui/map/map-tooltip";
 import { MapLegend } from "@/components/ui/map/map-legend";
 import { PROVINCE_MAP } from "@/lib/maps";
+import type { TooltipItem }
+  from "@/lib/maps/types";
 
 type Props = {
   data: {
     provincia: string;
-    total: number,
-    velocidad?: number;
-    hogares?: number;
-    habitantes?: number;
+    total: number;
+    tooltipData?: TooltipItem[];
   }[];
-  onSelect?: (provincia: string) => void;
+
+  onSelect?: (
+    provincia: string
+  ) => void;
 };
 
 type MapTooltipData = {
   x: number;
   y: number;
-  name: string;
 
+  name: string;
   value: number;
-  velocidad?: number;
-  hogares?: number;
-  habitantes?: number;
+
+  tooltipData?: TooltipItem[];
 };
 
 import type {
@@ -49,10 +51,8 @@ export function ProvinciasMap({ data, onSelect }: Props) {
       PROVINCE_MAP[d.provincia],
       {
         total: d.total,
-        velocidad: d.velocidad,
-        hogares: d.hogares,
-        habitantes: d.habitantes,
-      },
+        tooltipData: d.tooltipData,
+      }
     ])
   );
 
@@ -90,9 +90,8 @@ export function ProvinciasMap({ data, onSelect }: Props) {
                   y: e.clientY - bounds.top,
                   name: apiName,
                   value,
-                  velocidad: entry?.velocidad,
-                  hogares: entry?.hogares,
-                  habitantes: entry?.habitantes,
+                  tooltipData:
+                    entry?.tooltipData,
                 });
               }}
               onMouseLeave={() => setTooltip(null)}
