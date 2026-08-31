@@ -70,6 +70,9 @@ export const fmtCurrencyMillions = (v: number, decimals = 1) =>
 export const fmtCurrencyCompact = (
   v: number
 ) => {
+  if (v === 0) {
+    return "$ 0";
+  }
 
   if (v >= 1e12) {
     return `$ ${fmtNumber(
