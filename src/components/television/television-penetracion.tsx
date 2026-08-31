@@ -75,15 +75,20 @@ export function TelevisionPenetracion({
   const provinciaData =
     provincias.data.map((d) => ({
       provincia: d.provincia,
+      total: d.tv_suscripcion_100hogares,
 
-      total:
-        d.tv_suscripcion_100hogares,
-
-      hogares:
-        d.tv_suscripcion_100hogares,
-
-      habitantes:
-        d.tv_suscripcion_100habitantes,
+      tooltipData: [
+        {
+          label: "Hogares",
+          value: d.tv_suscripcion_100hogares.toFixed(2),
+          color: "var(--accent-green)",
+        },
+        {
+          label: "Habitantes",
+          value: d.tv_suscripcion_100habitantes.toFixed(2),
+          color: "var(--accent-amber)",
+        },
+      ],
     }));
 
   return (
@@ -112,15 +117,13 @@ export function TelevisionPenetracion({
               series={[
                 {
                   key: "suscripcion_hogares",
-                  label:
-                    "TV Suscripción",
-                  color: "#005297",
+                  label: "TV Suscripción",
+                  color: "var(--accent-green)",
                 },
                 {
                   key: "satelital_hogares",
-                  label:
-                    "TV Satelital",
-                  color: "#EEAE42",
+                  label: "TV Satelital",
+                  color: "var(--accent-amber)",
                 },
               ]}
             />
