@@ -1,3 +1,7 @@
+"use client";
+
+import { useState } from "react";
+
 import type { ApiResponse } from "@/lib/types";
 
 import type {
@@ -15,6 +19,18 @@ import { KPISection } from "@/components/home/kpi-section";
 import { DonutChart }
   from "@/components/ui/charts/donut-chart";
 
+import type {
+  PeriodFilterValue,
+} from "@/lib/utils/filter-period";
+
+import {
+  filterByPeriods,
+} from "@/lib/utils/filter-period";
+
+import {
+  PeriodFilter,
+} from "@/components/ui/filters/period-filter";
+
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
 
@@ -25,7 +41,7 @@ import {
   getFacturacionInsights,
 } from "@/lib/mercado-postal/insights";
 
-import { dispCurrencyCompact }
+import { dispCurrency, dispCurrencyCompact }
   from "@/lib/format";
 
 type Props = {
@@ -35,6 +51,16 @@ type Props = {
 export function MercadoPostalFacturacion({
   facturacion,
 }: Props) {
+  const [period, setPeriod] =
+    useState<PeriodFilterValue>("all");
+
+  const filteredRows =
+    filterByPeriods(
+      facturacion.data,
+      period,
+      12
+    );
+
   const kpiItems =
     getFacturacionKPIItems(facturacion);
 
@@ -43,12 +69,12 @@ export function MercadoPostalFacturacion({
 
   const evolutionData =
     getFacturacionEvolutionData(
-      facturacion
+      filteredRows
     );
-    
+
   const insights =
     getFacturacionInsights(
-      facturacion.data
+      filteredRows
     );
 
   return (
@@ -79,30 +105,39 @@ export function MercadoPostalFacturacion({
             Evolución histórica de facturación
           </h2>
 
+          <PeriodFilter
+            value={period}
+            onChange={setPeriod}
+          />
+
           <div className="chart-card">
 
             <LineChartBase
               data={evolutionData}
+              yDomain={[0, "dataMax"]}
               series={[
                 {
                   key: "postales",
                   label: "Postales",
-                  color: "#005297",
+                  color: "var(--blue-300)",
                   strokeWidth: 3,
                 },
                 {
                   key: "telegraficas",
                   label: "Telegráficas",
-                  color: "#EEAE42",
+                  color: "var(--accent-green)",
                 },
                 {
                   key: "monetarios",
                   label: "Monetarios",
-                  color: "#22c55e",
+                  color: "var(--accent-amber)",
                 },
               ]}
               yFormatter={(v) =>
                 dispCurrencyCompact(v)
+              }
+              tooltipFormatter={(v) =>
+                dispCurrency(v)
               }
             />
 
