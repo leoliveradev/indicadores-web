@@ -29,8 +29,8 @@ export function RankingComparisonBarChart({
   data,
   primaryLabel,
   secondaryLabel,
-  primaryColor = "#005297",
-  secondaryColor = "#22c55e",
+  primaryColor = "var(--blue-500)",
+  secondaryColor = "var(--accent-green)",
   formatter = (v) => v.toLocaleString("es-AR"),
 }: Props) {
   const height = data.length * 30 + 40;
