@@ -32,9 +32,9 @@ export function getPersonalKPIItems(
 }
 
 export function getPersonalEvolutionData(
-  response: ApiResponse<MercadoPostalPersonalRow>
+  rows: MercadoPostalPersonalRow[]
 ) {
-  return response.data.map((row) => ({
+  return rows.map((row) => ({
     label: `${row.anio} T${row.trimestre}`,
     personal_ocupado: row.personal_ocupado,
   }));
