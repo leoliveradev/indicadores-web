@@ -59,10 +59,8 @@ export function MapTooltip({
         </div>
       ) : (
         <div>
-          Valor:{" "}
-          {value.toLocaleString(
-            "es-AR"
-          )}
+          Accesos:{" "}
+          {value.toLocaleString("es-AR")}
         </div>
       )}
     </div>
