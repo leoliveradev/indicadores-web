@@ -27,7 +27,7 @@ import { LineChartBase }
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
-export function InternetVelocidad({ velocidadMedia, provincias }: {
+export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
   provincias: ApiResponse<InternetVelocidadMediaProvinciasRow>,
 }) {

@@ -10,14 +10,14 @@ import {
 } from "@/lib/internet";
 
 import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
-import { InternetVelocidad } from "@/components/internet/internet-velocidad";
+import { InternetVelocidadMedia } from "@/components/internet/internet-velocidad-media";
 import { InternetPenetracion } from "@/components/internet/internet-penetracion";
 import { InternetIngresos } from "./internet-ingresos";
 
 const TABS = [
   { key: "tecnologia", label: "Tecnología" },
   { key: "penetracion", label: "Penetración" },
-  { key: "velocidad", label: "Velocidad" },
+  { key: "velocidad", label: "Velocidad Media" },
   { key: "ingresos", label: "Ingresos" },
 ];
 
@@ -70,7 +70,7 @@ export function InternetTabs({
           )}
 
           {active === "velocidad" && (
-            <InternetVelocidad
+            <InternetVelocidadMedia
               velocidadMedia={velocidadMedia}
               provincias={velocidadMediaProvincias}
             />
