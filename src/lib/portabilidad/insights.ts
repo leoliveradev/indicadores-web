@@ -6,6 +6,7 @@ import type {
   PortabilidadSeasonalityPoint
 } from "./types";
 import { MONTH_NAMES } from "./seasonality";
+import { fmtDecimal, fmtNumber, fmtPercent } from "@/lib/format";
 
 export function getPortabilidadInsights(
   rows: PortabilidadMovilRow[]
@@ -37,24 +38,17 @@ export function getPortabilidadInsights(
     {
       type: "trend",
       title: "Variación del período",
-      text: `Las portaciones variaron ${variation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `Las portaciones variaron ${fmtPercent(variation,0)} durante el período seleccionado.`,
     },
     {
       type: "highlight",
       title: "Promedio mensual",
-      text: `El promedio fue de ${promedio.toLocaleString(
-        "es-AR",
-        { maximumFractionDigits: 0 }
-      )} portaciones mensuales.`,
+      text: `El promedio fue de ${fmtNumber(promedio, 0)} portaciones mensuales.`,
     },
     {
       type: "record",
       title: "Máximo del período",
-      text: `El valor más alto registrado fue de ${pico.total.toLocaleString(
-        "es-AR"
-      )} portaciones.`,
+      text: `El valor más alto registrado fue de ${fmtNumber(pico.total, 0)} portaciones.`,
     },
   ];
 }
