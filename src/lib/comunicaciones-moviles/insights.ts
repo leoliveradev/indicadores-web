@@ -9,7 +9,7 @@ import type {
   ComunicacionesMovilesSmsRow,
   ComunicacionesMovilesIngresosRow
 } from "./types";
-import { fmtCompact, fmtDecimal, fmtPercent } from "../format";
+import { fmtDecimal, fmtPercent } from "@/lib/format";
 
 
 export function getAccesosInsights(
