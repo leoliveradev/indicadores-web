@@ -49,7 +49,7 @@ export function getVelocidadKPIItems(
       label: "Crecimiento desde 2014",
       // icon: IVelocidad,
       value: growthPct,
-      format: (v: number) => fmtPercent(v, 2),
+      format: (v: number) => fmtPercent(v, 0),
     },
   ];
 }
