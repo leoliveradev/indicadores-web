@@ -4,6 +4,7 @@ import type {
   MercadoPostalProduccionRow,
   MercadoPostalPersonalRow
 } from "./types";
+import { fmtNumber, fmtPercent } from "@/lib/format";
 
 export function getFacturacionInsights(
   rows: MercadoPostalFacturacionRow[]
@@ -73,9 +74,7 @@ export function getFacturacionInsights(
     {
       type: "highlight",
       title: "Participación postal",
-      text: `Los servicios postales representan ${postalShare.toFixed(
-        1
-      )}% de la facturación total actual.`,
+      text: `Los servicios postales representan ${fmtPercent(postalShare)} de la facturación total actual.`,
     },
     {
       type: "highlight",
@@ -91,9 +90,7 @@ export function getFacturacionInsights(
     insights.push({
       type: "trend",
       title: "Variación del período",
-      text: `La facturación total varió ${variation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `La facturación total varió ${fmtPercent(variation, 0)} durante el período seleccionado.`,
     });
   }
 
@@ -129,7 +126,7 @@ export function getProduccionInsights(
   const variation =
     firstTotal > 0
       ? ((latestTotal - firstTotal) /
-          firstTotal) * 100
+        firstTotal) * 100
       : null;
 
   const total =
@@ -183,18 +180,14 @@ export function getProduccionInsights(
     insights.push({
       type: "trend",
       title: "Variación del período",
-      text: `La producción total varió ${variation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `La producción total varió ${fmtPercent(variation)} durante el período seleccionado.`,
     });
   }
 
   insights.push({
     type: "highlight",
     title: "Participación postal",
-    text: `Los servicios postales representan ${postalShare.toFixed(
-      1
-    )}% de la producción total actual.`,
+    text: `Los servicios postales representan ${fmtPercent(postalShare)} de la producción total actual.`,
   });
 
   insights.push({
@@ -225,10 +218,10 @@ export function getPersonalInsights(
   const variation =
     first.personal_ocupado > 0
       ? (
-          (latest.personal_ocupado -
-            first.personal_ocupado) /
-          first.personal_ocupado
-        ) * 100
+        (latest.personal_ocupado -
+          first.personal_ocupado) /
+        first.personal_ocupado
+      ) * 100
       : null;
 
   const peak = Math.max(
@@ -246,18 +239,14 @@ export function getPersonalInsights(
     insights.push({
       type: "trend",
       title: "Variación del período",
-      text: `El personal ocupado varió ${variation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `El personal ocupado varió ${fmtPercent(variation, 0)} durante el período seleccionado.`,
     });
   }
 
   insights.push({
     type: "highlight",
     title: "Dotación actual",
-    text: `El sector registra actualmente ${latest.personal_ocupado.toLocaleString(
-      "es-AR"
-    )} personas ocupadas.`,
+    text: `El sector registra actualmente ${fmtNumber(latest.personal_ocupado, 0)} personas ocupadas.`,
   });
 
   if (
