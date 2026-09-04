@@ -9,6 +9,7 @@ import type {
   ComunicacionesMovilesSmsRow,
   ComunicacionesMovilesIngresosRow
 } from "./types";
+import { fmtCompact, fmtDecimal, fmtPercent } from "../format";
 
 
 export function getAccesosInsights(
@@ -36,21 +37,15 @@ export function getAccesosInsights(
   return [
     {
       title: "Variación de accesos",
-      text: `Las líneas móviles variaron ${totalVariation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `Las líneas móviles variaron ${fmtPercent(totalVariation)} durante el período seleccionado.`,
     },
     {
       title: "Participación prepaga",
-      text: `Las líneas prepagas representan ${prepagoShare.toFixed(
-        1
-      )}% de los accesos operativos actuales.`,
+      text: `Las líneas prepagas representan ${fmtPercent(prepagoShare)} de los accesos operativos actuales.`,
     },
     {
       title: "Brecha prepago-pospago",
-      text: `Existen ${(gap / 1e6).toFixed(
-        1
-      )} millones más de líneas prepagas que pospagas.`,
+      text: `Existen ${fmtDecimal(gap / 1e6)} millones más de líneas prepagas que pospagas.`,
     },
   ];
 }
@@ -78,16 +73,12 @@ export function getPenetracionInsights(
 
   insights.push({
     title: "Variación de la penetración",
-    text: `La penetración móvil varió ${variation.toFixed(
-      1
-    )}% durante el período seleccionado.`,
+    text: `La penetración móvil varió ${fmtPercent(variation)} durante el período seleccionado.`,
   });
 
   insights.push({
     title: "Nivel actual",
-    text: `La penetración alcanzó ${latest.accesos_100_hab.toFixed(
-      2
-    )} accesos cada 100 habitantes.`,
+    text: `La penetración alcanzó ${fmtDecimal(latest.accesos_100_hab)} accesos cada 100 habitantes.`,
   });
 
   if (
@@ -118,9 +109,7 @@ export function getLlamadasInsights(
   return [
     {
       title: "Variación del tráfico",
-      text: `Las llamadas variaron ${variation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `Las llamadas variaron ${fmtPercent(variation)} durante el período seleccionado.`,
     },
   ];
 }
@@ -141,9 +130,7 @@ export function getMinutosInsights(
   return [
     {
       title: "Variación del tráfico",
-      text: `Los minutos cursados variaron ${variation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `Los minutos cursados variaron ${fmtPercent(variation)} durante el período seleccionado.`,
     },
   ];
 }
@@ -173,15 +160,11 @@ export function getSmsInsights(
   return [
     {
       title: "Variación del período",
-      text: `El envío de SMS varió ${variation.toFixed(
-        1
-      )}% durante el período seleccionado.`,
+      text: `El envío de SMS varió ${fmtPercent(variation)} durante el período seleccionado.`,
     },
     {
       title: "Cambio estructural",
-      text: `Los SMS disminuyeron ${drop.toFixed(
-        1
-      )}% respecto de su máximo histórico.`,
+      text: `Los SMS disminuyeron ${fmtPercent(drop)} respecto de su máximo histórico.`,
     },
   ];
 }
@@ -207,9 +190,7 @@ export function getIngresosInsights(
 
   insights.push({
     title: "Variación de ingresos",
-    text: `Los ingresos variaron ${variation.toFixed(
-      1
-    )}% durante el período seleccionado.`,
+    text: `Los ingresos variaron ${fmtPercent(variation, 0)} durante el período seleccionado.`,
   });
 
   if (latest.ingresos === peak) {
