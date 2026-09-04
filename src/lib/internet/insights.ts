@@ -6,6 +6,7 @@ import type {
   InternetPenetracionRow,
   InternetIngresosRow
 } from "./types";
+import { fmtDecimal, fmtPercent } from "@/lib/format";
 
 export function getVelocidadInsights(
   rows: InternetVelocidadMediaRow[]
@@ -28,9 +29,7 @@ export function getVelocidadInsights(
 
   insights.push({
     title: "Crecimiento histórico",
-    text: `La velocidad media aumentó ${growth.toFixed(
-      1
-    )}% respecto del inicio de la serie.`,
+    text: `La velocidad media aumentó ${fmtPercent(growth,0)} respecto del inicio de la serie.`,
   });
 
   if (latest.Mbps === peak) {
@@ -65,9 +64,7 @@ export function getTecnologiaInsights(
 
   insights.push({
     title: "Predominio de la fibra óptica",
-    text: `La fibra óptica representa ${fibraShare.toFixed(
-      1
-    )}% de los accesos actuales.`,
+    text: `La fibra óptica representa ${fmtPercent(fibraShare)} de los accesos actuales.`,
   });
 
   if (
@@ -88,9 +85,7 @@ export function getTecnologiaInsights(
   if (adslDrop > 50) {
     insights.push({
       title: "Retroceso del ADSL",
-      text: `Los accesos ADSL disminuyeron ${adslDrop.toFixed(
-        1
-      )}% respecto del inicio de la serie.`,
+      text: `Los accesos ADSL disminuyeron ${fmtPercent(adslDrop)} respecto del inicio de la serie.`,
     });
   }
 
@@ -116,16 +111,12 @@ export function getPenetracionInsights(
 
   insights.push({
     title: "Penetración actual",
-    text: `La penetración alcanzó ${latest.accesos_cada_100_hogares.toFixed(
-      2
-    )} accesos cada 100 hogares.`,
+    text: `La penetración alcanzó ${fmtDecimal(latest.accesos_cada_100_hogares)} accesos cada 100 hogares.`,
   });
 
   insights.push({
     title: "Brecha hogares vs habitantes",
-    text: `La diferencia actual es de ${gap.toFixed(
-      2
-    )} puntos entre ambos indicadores.`,
+    text: `La diferencia actual es de ${fmtDecimal(gap)} puntos entre ambos indicadores.`,
   });
 
   if (
@@ -162,9 +153,7 @@ export function getIngresosInsights(
 
   insights.push({
     title: "Variación del período",
-    text: `Los ingresos variaron ${growth.toFixed(
-      1
-    )}% durante el período seleccionado.`,
+    text: `Los ingresos variaron ${fmtPercent(growth)} durante el período seleccionado.`,
   });
 
   if (latest.ingresos === peak) {
@@ -211,28 +200,26 @@ export function getAccesosVelocidadInsights(
         0
       );
 
+  const concentration = (top3 / total) * 100
+
   return [
     {
       type: "record",
-      title:
-        "Velocidad predominante",
+      title: "Velocidad predominante",
       text: `${top.velocidad} concentra la mayor cantidad de accesos registrados.`,
     },
 
     {
       type: "highlight",
-      title:
-        "Segunda velocidad más utilizada",
+      title: "Segunda velocidad más utilizada",
       text: `${second.velocidad} ocupa el segundo lugar en cantidad de accesos.`,
     },
 
     {
       type: "highlight",
       title: "Concentración",
-      text: `Las tres velocidades más utilizadas representan ${(
-        (top3 / total) *
-        100
-      ).toFixed(1)}% del total de accesos.`,
+      text: `Las tres velocidades más utilizadas representan ${fmtPercent(concentration)
+        } del total de accesos.`,
     },
   ];
 }
@@ -265,11 +252,11 @@ export function getAccesosVelocidadRangosInsights(
       .filter(
         (r) =>
           r.rango ===
-            "100-300 Mbps" ||
+          "100-300 Mbps" ||
           r.rango ===
-            "300-1000 Mbps" ||
+          "300-1000 Mbps" ||
           r.rango ===
-            "1000+ Mbps"
+          "1000+ Mbps"
       )
       .reduce(
         (acc, row) =>
@@ -280,19 +267,17 @@ export function getAccesosVelocidadRangosInsights(
   return [
     {
       type: "record",
-      title:
-        "Rango predominante",
+      title: "Rango predominante",
       text: `${top.rango} concentra la mayor cantidad de accesos registrados.`,
     },
 
     {
       type: "trend",
-      title:
-        "Banda ancha avanzada",
-      text: `${(
+      title: "Banda ancha avanzada",
+      text: `${fmtPercent(
         (highSpeed / total) *
         100
-      ).toFixed(1)}% de los accesos corresponde a velocidades iguales o superiores a 100 Mbps.`,
+      )} de los accesos corresponde a velocidades iguales o superiores a 100 Mbps.`,
     },
 
     {
