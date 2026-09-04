@@ -20,7 +20,7 @@ export const PROVINCE_MAP: Record<string, string> = {
   "San Luis": "SanLuis",
   "Santa Cruz": "SantaCruz",
   "Santa Fe": "SantaFe",
-  "Santiago Del Estero": "SantiagodelEstero",
-  "Tierra Del Fuego": "TierradelFuego",
+  "Santiago del Estero": "SantiagodelEstero",
+  "Tierra del Fuego": "TierradelFuego",
   "Tucumán": "Tucumán",
 };
