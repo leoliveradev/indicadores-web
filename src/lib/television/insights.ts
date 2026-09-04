@@ -6,6 +6,8 @@ import type {
   TelevisionIngresosRow,
 } from "./types";
 
+import { fmtDecimal, fmtPercent } from "@/lib/format";
+
 export function getAccesosInsights(
   rows: TelevisionAccesosRow[]
 ): Insight[] {
@@ -26,15 +28,11 @@ export function getAccesosInsights(
   return [
     {
       title: "Participación de mercado",
-      text: `La TV por suscripción representa ${shareSuscripcion.toFixed(
-        1
-      )}% de los accesos actuales.`,
+      text: `La TV por suscripción representa ${fmtPercent(shareSuscripcion)} de los accesos actuales.`,
     },
     {
       title: "TV satelital",
-      text: `La TV satelital concentra ${shareSatelital.toFixed(
-        1
-      )}% del total de accesos.`,
+      text: `La TV satelital concentra ${fmtPercent(shareSatelital)} del total de accesos.`,
     },
   ];
 }
@@ -57,9 +55,7 @@ export function getIngresosInsights(
   return [
     {
       title: "Principal fuente de ingresos",
-      text: `La TV por suscripción genera ${share.toFixed(
-        1
-      )}% de los ingresos actuales del sector.`,
+      text: `La TV por suscripción genera ${fmtPercent(share)} de los ingresos actuales del sector.`,
     },
   ];
 }
@@ -91,29 +87,23 @@ export function getPenetracionInsights(
 
 
   const insights: Insight[] = [];
-  
+
   insights.push({
     type: "trend",
     title: "Variación del período",
-    text: `La penetración varió ${variation.toFixed(
-      1
-    )}% durante el período seleccionado.`,
+    text: `La penetración varió ${fmtPercent(variation)} durante el período seleccionado.`,
   });
 
   insights.push({
     type: "highlight",
     title: "Penetración actual",
-    text: `La TV por suscripción alcanzó ${latest.tv_suscripcion_100_hogares.toFixed(
-      2
-    )} accesos cada 100 hogares.`,
+    text: `La TV por suscripción alcanzó ${fmtDecimal(latest.tv_suscripcion_100_hogares)} accesos cada 100 hogares.`,
   });
 
   insights.push({
     type: "highlight",
     title: "Brecha hogares vs habitantes",
-    text: `La diferencia actual es de ${gap.toFixed(
-      2
-    )} puntos entre ambos indicadores.`,
+    text: `La diferencia actual es de ${fmtDecimal(gap)} puntos entre ambos indicadores.`,
   });
 
   if (
