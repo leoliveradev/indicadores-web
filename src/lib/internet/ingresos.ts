@@ -31,7 +31,7 @@ export function getIngresosKPIItems(
       label: "Crecimiento desde 2014",
       icon: IDinero,
       value: growthPct,
-      format: (v) => fmtPercent(v, 2),
+      format: (v) => fmtPercent(v, 0),
     },
   ];
 }
