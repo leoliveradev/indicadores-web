@@ -69,3 +69,28 @@ export interface InternetIngresosRow {
   trimestre: number;
   ingresos: number;
 }
+
+export type InternetVelocidadProvinciaLatestRow = {
+  id: number;
+
+  anio: number;
+  trimestre: number;
+
+  provincia: string;
+
+  velocidad: number;
+  accesos: number;
+};
+
+export type InternetAccesosVelocidadRow = {
+  id: number;
+  created_at: string;
+
+  anio: number;
+  trimestre: number;
+
+  provincia: string;
+
+  velocidad: number;
+  accesos: number;
+};

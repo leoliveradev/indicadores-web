@@ -6,3 +6,4 @@ export * from "./velocidad";
 export * from "./penetracion";
 export * from "./ingresos";
 export * from "./insights";
+export * from "./accesos-velocidad";

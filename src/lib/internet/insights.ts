@@ -176,3 +176,130 @@ export function getIngresosInsights(
 
   return insights;
 }
+
+export function getAccesosVelocidadInsights(
+  rows: {
+    velocidad: string;
+    accesos: number;
+  }[]
+): Insight[] {
+
+  if (!rows.length) return [];
+
+  const sorted =
+    [...rows].sort(
+      (a, b) =>
+        b.accesos - a.accesos
+    );
+
+  const top = sorted[0];
+  const second = sorted[1];
+
+  const total =
+    rows.reduce(
+      (acc, row) =>
+        acc + row.accesos,
+      0
+    );
+
+  const top3 =
+    sorted
+      .slice(0, 3)
+      .reduce(
+        (acc, row) =>
+          acc + row.accesos,
+        0
+      );
+
+  return [
+    {
+      type: "record",
+      title:
+        "Velocidad predominante",
+      text: `${top.velocidad} concentra la mayor cantidad de accesos registrados.`,
+    },
+
+    {
+      type: "highlight",
+      title:
+        "Segunda velocidad más utilizada",
+      text: `${second.velocidad} ocupa el segundo lugar en cantidad de accesos.`,
+    },
+
+    {
+      type: "highlight",
+      title: "Concentración",
+      text: `Las tres velocidades más utilizadas representan ${(
+        (top3 / total) *
+        100
+      ).toFixed(1)}% del total de accesos.`,
+    },
+  ];
+}
+
+export function getAccesosVelocidadRangosInsights(
+  rows: {
+    rango: string;
+    accesos: number;
+  }[]
+): Insight[] {
+
+  if (!rows.length) return [];
+
+  const total =
+    rows.reduce(
+      (acc, row) =>
+        acc + row.accesos,
+      0
+    );
+
+  const top =
+    rows.reduce((a, b) =>
+      b.accesos > a.accesos
+        ? b
+        : a
+    );
+
+  const highSpeed =
+    rows
+      .filter(
+        (r) =>
+          r.rango ===
+            "100-300 Mbps" ||
+          r.rango ===
+            "300-1000 Mbps" ||
+          r.rango ===
+            "1000+ Mbps"
+      )
+      .reduce(
+        (acc, row) =>
+          acc + row.accesos,
+        0
+      );
+
+  return [
+    {
+      type: "record",
+      title:
+        "Rango predominante",
+      text: `${top.rango} concentra la mayor cantidad de accesos registrados.`,
+    },
+
+    {
+      type: "trend",
+      title:
+        "Banda ancha avanzada",
+      text: `${(
+        (highSpeed / total) *
+        100
+      ).toFixed(1)}% de los accesos corresponde a velocidades iguales o superiores a 100 Mbps.`,
+    },
+
+    {
+      type: "highlight",
+      title:
+        "Alta velocidad",
+      text: "Las velocidades superiores a 100 Mbps concentran la mayor parte del mercado.",
+    },
+  ];
+}

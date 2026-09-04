@@ -1,12 +1,12 @@
 import { getOverview } from "@/lib/api/home";
 import {
   getInternetTecnologias, getInternetTecnologiaProvinciasLatest,
+  getInternetAccesosVelocidad,
   getInternetVelocidadMedia, getInternetVelocidadMediaProvinciasLatest,
   getInternetRangosVelocidad,
   getInternetPenetracion, getInternetPenetracionProvinciasLatest,
   getInternetIngresos
 } from "@/lib/api/internet";
-import { fmtPeriod } from "@/lib/format";
 
 import { InternetOverview } from "@/components/internet/internet-overview";
 import { InternetInsights } from "@/components/internet/internet-insights";
@@ -17,12 +17,14 @@ import {
   getVelocidadRangosDonutData
 } from "@/lib/internet";
 import { PageHero } from "@/components/layout/page-hero";
+import { fmtPeriod } from "@/lib/format";
 
 export default async function InternetPage() {
   const overview = await getOverview();
 
   const [
     tecnologias, tecnologiasProvincias,
+    accesosVelocidad,
     velocidadMedia, velocidadMediaProvincias,
     rangosVelocidad,
     penetracion, penetracionProvincias,
@@ -30,6 +32,7 @@ export default async function InternetPage() {
   ] = await Promise.all([
     getInternetTecnologias(),
     getInternetTecnologiaProvinciasLatest(),
+    getInternetAccesosVelocidad(),
     getInternetVelocidadMedia(),
     getInternetVelocidadMediaProvinciasLatest(),
     getInternetRangosVelocidad(),
@@ -66,6 +69,7 @@ export default async function InternetPage() {
       <InternetTabs
         tecnologias={tecnologias}
         tecnologiasProvincias={tecnologiasProvincias}
+        accesosVelocidad={accesosVelocidad}
         velocidadMedia={velocidadMedia}
         velocidadMediaProvincias={velocidadMediaProvincias}
         penetracion={penetracion}
