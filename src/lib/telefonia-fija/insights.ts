@@ -6,6 +6,8 @@ import type {
   TelefoniaFijaIngresosRow
 } from "./types";
 
+import { fmtDecimal } from "@/lib/format";
+
 export function getAccesosInsights(
   rows: TelefoniaFijaAccesosRow[]
 ): Insight[] {
@@ -29,17 +31,13 @@ export function getAccesosInsights(
   insights.push({
     type: "trend",
     title: "Variación de accesos",
-    text: `Los accesos de telefonía fija variaron ${variation.toFixed(
-      1
-    )}% durante el período seleccionado.`,
+    text: `Los accesos de telefonía fija variaron ${fmtDecimal(variation)}% durante el período seleccionado.`,
   });
 
   insights.push({
     type: "highlight",
     title: "Participación residencial",
-    text: `Los hogares representan ${hogaresShare.toFixed(
-      1
-    )}% de los accesos actuales.`,
+    text: `Los hogares representan ${fmtDecimal(hogaresShare)}% de los accesos actuales.`,
   });
 
   if (variation < 0) {
@@ -74,15 +72,11 @@ export function getPenetracionInsights(
   return [
     {
       title: "Variación histórica",
-      text: `La penetración cambió ${variation.toFixed(
-        1
-      )}% desde el inicio de la serie.`,
+      text: `La penetración cambió ${fmtDecimal(variation)}% desde el inicio de la serie.`,
     },
     {
       title: "Brecha hogares vs habitantes",
-      text: `La diferencia actual es de ${gap.toFixed(
-        2
-      )} puntos.`,
+      text: `La diferencia actual es de ${fmtDecimal(gap)} puntos.`,
     },
   ];
 }
@@ -109,9 +103,7 @@ export function getIngresosInsights(
   insights.push({
     type: "trend",
     title: "Variación de ingresos",
-    text: `Los ingresos variaron ${variation.toFixed(
-      1
-    )}% durante el período seleccionado.`,
+    text: `Los ingresos variaron ${fmtDecimal(variation,0)}% durante el período seleccionado.`,
   });
 
   if (latest.ingresos === peak) {
