@@ -6,7 +6,7 @@ import type {
   TelefoniaFijaIngresosRow
 } from "./types";
 
-import { fmtDecimal } from "@/lib/format";
+import { fmtDecimal, fmtPercent } from "@/lib/format";
 
 export function getAccesosInsights(
   rows: TelefoniaFijaAccesosRow[]
@@ -31,13 +31,13 @@ export function getAccesosInsights(
   insights.push({
     type: "trend",
     title: "Variación de accesos",
-    text: `Los accesos de telefonía fija variaron ${fmtDecimal(variation)}% durante el período seleccionado.`,
+    text: `Los accesos de telefonía fija variaron ${fmtPercent(variation)} durante el período seleccionado.`,
   });
 
   insights.push({
     type: "highlight",
     title: "Participación residencial",
-    text: `Los hogares representan ${fmtDecimal(hogaresShare)}% de los accesos actuales.`,
+    text: `Los hogares representan ${fmtPercent(hogaresShare)} de los accesos actuales.`,
   });
 
   if (variation < 0) {
@@ -72,7 +72,7 @@ export function getPenetracionInsights(
   return [
     {
       title: "Variación histórica",
-      text: `La penetración cambió ${fmtDecimal(variation)}% desde el inicio de la serie.`,
+      text: `La penetración cambió ${fmtPercent(variation)} desde el inicio de la serie.`,
     },
     {
       title: "Brecha hogares vs habitantes",
