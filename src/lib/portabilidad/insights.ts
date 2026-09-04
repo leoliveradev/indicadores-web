@@ -6,7 +6,7 @@ import type {
   PortabilidadSeasonalityPoint
 } from "./types";
 import { MONTH_NAMES } from "./seasonality";
-import { fmtDecimal, fmtNumber, fmtPercent } from "@/lib/format";
+import { fmtNumber, fmtPercent } from "@/lib/format";
 
 export function getPortabilidadInsights(
   rows: PortabilidadMovilRow[]
