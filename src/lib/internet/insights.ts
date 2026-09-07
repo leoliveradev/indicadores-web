@@ -4,8 +4,10 @@ import type {
   InternetVelocidadMediaRow,
   InternetTecnologiaRow,
   InternetPenetracionRow,
-  InternetIngresosRow
+  InternetIngresosRow,
+  InternetAccesosVelocidadRangoItem
 } from "./types";
+
 import { fmtDecimal, fmtPercent } from "@/lib/format";
 
 export function getVelocidadInsights(
@@ -29,7 +31,7 @@ export function getVelocidadInsights(
 
   insights.push({
     title: "Crecimiento histórico",
-    text: `La velocidad media aumentó ${fmtPercent(growth,0)} respecto del inicio de la serie.`,
+    text: `La velocidad media aumentó ${fmtPercent(growth, 0)} respecto del inicio de la serie.`,
   });
 
   if (latest.Mbps === peak) {
@@ -225,10 +227,8 @@ export function getAccesosVelocidadInsights(
 }
 
 export function getAccesosVelocidadRangosInsights(
-  rows: {
-    rango: string;
-    accesos: number;
-  }[]
+  rows: InternetAccesosVelocidadRangoItem[],
+  provincia: string
 ): Insight[] {
 
   if (!rows.length) return [];
@@ -267,10 +267,12 @@ export function getAccesosVelocidadRangosInsights(
   return [
     {
       type: "record",
-      title: "Rango predominante",
+      title:
+        provincia === "all"
+          ? "Rango predominante"
+          : `Rango predominante en ${provincia}`,
       text: `${top.rango} concentra la mayor cantidad de accesos registrados.`,
     },
-
     {
       type: "trend",
       title: "Banda ancha avanzada",
