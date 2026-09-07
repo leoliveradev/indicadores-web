@@ -82,6 +82,11 @@ export type InternetVelocidadProvinciaLatestRow = {
   accesos: number;
 };
 
+export type InternetAccesosVelocidadRangoItem = {
+  rango: string;
+  accesos: number;
+};
+
 export type InternetAccesosVelocidadRow = {
   id: number;
   created_at: string;
