@@ -3,6 +3,7 @@ import type {
 } from "@/lib/types";
 
 import type {
+  InternetAccesosVelocidadRangoItem,
   InternetAccesosVelocidadRow,
 } from "./types";
 
@@ -12,17 +13,17 @@ export type InternetAccesosVelocidadItem = {
 };
 
 export function getAccesosVelocidadData(
-  response: ApiResponse<InternetAccesosVelocidadRow>
+  rows: InternetAccesosVelocidadRow[]
 ): InternetAccesosVelocidadItem[] {
 
   const grouped =
     new Map<number, number>();
 
-  response.data.forEach((row) => {
+  rows.forEach((row) => {
     grouped.set(
       row.velocidad,
       (grouped.get(row.velocidad) ?? 0)
-        + row.accesos
+      + row.accesos
     );
   });
 
@@ -37,13 +38,8 @@ export function getAccesosVelocidadData(
     }));
 }
 
-export type InternetAccesosVelocidadRangoItem = {
-  rango: string;
-  accesos: number;
-};
-
 export function getAccesosVelocidadRangosData(
-  response: ApiResponse<InternetAccesosVelocidadRow>
+  rows: InternetAccesosVelocidadRow[]
 ): InternetAccesosVelocidadRangoItem[] {
 
   const ranges = [
@@ -85,7 +81,7 @@ export function getAccesosVelocidadRangosData(
     totals.set(range.label, 0);
   });
 
-  response.data.forEach((row) => {
+  rows.forEach((row) => {
 
     const range = ranges.find((r) => {
       if (r.max === Infinity) {
@@ -103,7 +99,7 @@ export function getAccesosVelocidadRangosData(
     totals.set(
       range.label,
       (totals.get(range.label) ?? 0) +
-        row.accesos
+      row.accesos
     );
   });
 
@@ -112,4 +108,28 @@ export function getAccesosVelocidadRangosData(
     accesos:
       totals.get(range.label) ?? 0,
   }));
+}
+
+export function filterAccesosVelocidadByProvincia(
+  rows: InternetAccesosVelocidadRow[],
+  provincia: string
+) {
+  if (provincia === "all") {
+    return rows;
+  }
+
+  return rows.filter(
+    (row) =>
+      row.provincia === provincia
+  );
+}
+
+export function getAccesosVelocidadProvincias(
+  rows: InternetAccesosVelocidadRow[]
+) {
+  return [...new Set(
+    rows.map(
+      (row) => row.provincia
+    )
+  )].sort();
 }
