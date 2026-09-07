@@ -9,6 +9,8 @@ import type {
 } from "@/lib/internet";
 
 import {
+  filterAccesosVelocidadByProvincia,
+  getAccesosVelocidadProvincias,
   getAccesosVelocidadData,
   getAccesosVelocidadRangosData,
 } from "@/lib/internet/accesos-velocidad";
@@ -39,20 +41,43 @@ export function InternetAccesosVelocidad({
       "rangos"
     );
 
-  const detalleData = useMemo(
+  const [provincia, setProvincia] =
+    useState("all");
+
+  const provincias = useMemo(
     () =>
-      getAccesosVelocidadData(
-        velocidades
+      getAccesosVelocidadProvincias(
+        velocidades.data
       ),
-    [velocidades]
+    [velocidades.data]
+  );
+
+  const filteredRows = useMemo(
+    () =>
+      filterAccesosVelocidadByProvincia(
+        velocidades.data,
+        provincia
+      ),
+    [
+      velocidades.data,
+      provincia,
+    ]
   );
 
   const rangosData = useMemo(
     () =>
       getAccesosVelocidadRangosData(
-        velocidades
+        filteredRows
       ),
-    [velocidades]
+    [filteredRows]
+  );
+
+  const detalleData = useMemo(
+    () =>
+      getAccesosVelocidadData(
+        filteredRows
+      ),
+    [filteredRows]
   );
 
   const chartData = useMemo(
@@ -67,17 +92,29 @@ export function InternetAccesosVelocidad({
     ]
   );
 
+  const totalAccesos = useMemo(
+    () =>
+      filteredRows.reduce(
+        (acc, row) =>
+          acc + row.accesos,
+        0
+      ),
+    [filteredRows]
+  );
+
   const insights = useMemo(
     () =>
       view === "rangos"
         ? getAccesosVelocidadRangosInsights(
-            rangosData
-          )
+          rangosData,
+          provincia
+        )
         : getAccesosVelocidadInsights(
-            detalleData
-          ),
+          detalleData
+        ),
     [
       view,
+      provincia,
       rangosData,
       detalleData,
     ]
@@ -87,17 +124,58 @@ export function InternetAccesosVelocidad({
     <section className="section-wrap">
       <div className="section-inner">
 
+
         <h2 className="section-heading">
           Accesos por velocidad
         </h2>
 
+        <div className="mb-4">
+          <label
+            className="block text-sm font-medium mb-2"
+          >
+            Provincia
+          </label>
+
+          <select
+            value={provincia}
+            onChange={(e) =>
+              setProvincia(
+                e.target.value
+              )
+            }
+            className="border rounded-md px-3 py-2"
+          >
+            <option value="all">
+              Todas las provincias
+            </option>
+
+            {provincias.map((p) => (
+              <option
+                key={p}
+                value={p}
+              >
+                {p}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <p className="chart-description">
+          Accesos relevados:{" "}
+          <strong>
+            {dispValue(totalAccesos, {
+              format: "number",
+              decimals: 0,
+            })}
+          </strong>
+        </p>
+
         <div className="flex gap-2 mb-4">
           <button
-            className={`tab-btn ${
-              view === "rangos"
-                ? "active"
-                : ""
-            }`}
+            className={`tab-btn ${view === "rangos"
+              ? "active"
+              : ""
+              }`}
             onClick={() =>
               setView("rangos")
             }
@@ -106,11 +184,10 @@ export function InternetAccesosVelocidad({
           </button>
 
           <button
-            className={`tab-btn ${
-              view === "detalle"
-                ? "active"
-                : ""
-            }`}
+            className={`tab-btn ${view === "detalle"
+              ? "active"
+              : ""
+              }`}
             onClick={() =>
               setView("detalle")
             }
