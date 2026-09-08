@@ -1,8 +1,4 @@
 import type {
-  ApiResponse,
-} from "@/lib/types";
-
-import type {
   InternetAccesosVelocidadRangoItem,
   InternetAccesosVelocidadRow,
 } from "./types";
