@@ -3,6 +3,7 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { IHamburger } from "@/components/ui/icons";
 
 const SERVICIOS = [
   {
@@ -90,6 +91,8 @@ export function Navbar() {
   const pathname = usePathname();
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
+  const [mobileOpen, setMobileOpen] =
+    useState(false);
 
   // Cerrar el dropdown cuando se hace click afuera
   useEffect(() => {
@@ -99,8 +102,6 @@ export function Navbar() {
     document.addEventListener("mousedown", handler);
     return () => document.removeEventListener("mousedown", handler);
   }, []);
-
-
 
   const isServicioActive = SERVICIOS.some((s) => pathname.startsWith(s.href));
 
@@ -119,7 +120,21 @@ export function Navbar() {
 
         <div className="navbar-divider" />
 
-        <div className="nav-items">
+        <button
+          className="mobile-menu-btn"
+          onClick={() =>
+            setMobileOpen((v) => !v)
+          }
+          aria-label="Abrir menú"
+          aria-expanded={mobileOpen}
+        >
+          <IHamburger
+            size={22}
+            color="#fff"
+          />
+        </button>
+
+        <div className="nav-items desktop-nav">
           {/* Home */}
           <Link
             href="/"
@@ -169,7 +184,47 @@ export function Navbar() {
           </Link>
         </div>
 
+
+
       </div>
-    </nav>
+
+      {mobileOpen && (
+        <div className="mobile-nav">
+
+          <Link
+            href="/"
+            className="mobile-nav-item"
+            onClick={() => setMobileOpen(false)}
+          >
+            Inicio
+          </Link>
+
+          <div className="mobile-nav-section">
+            Servicios
+          </div>
+
+          {SERVICIOS.map((s) => (
+            <Link
+              key={s.href}
+              href={s.href}
+              className="mobile-nav-item"
+              onClick={() => setMobileOpen(false)}
+            >
+              {s.label}
+            </Link>
+          ))}
+
+          <Link
+            href="/about"
+            className="mobile-nav-item"
+            onClick={() => setMobileOpen(false)}
+          >
+            Acerca de
+          </Link>
+
+        </div>
+      )}
+
+    </nav >
   );
 }
