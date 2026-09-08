@@ -43,7 +43,7 @@
   color: rgba(188, 228, 250, 0.65);
   text-decoration: none;
   margin-bottom: 8px;
-  transition: color 0.1s;
+  transition: var(--transition-fast);
 }
 .footer-link:hover {
   color: #fff;
