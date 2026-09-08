@@ -6,7 +6,7 @@
 .footer-main {
   max-width: var(--container-wide);
   margin: 0 auto;
-  padding: var(--space-2xl) var(--space-xl) 28px;
+  padding: var(--space-2xl) var(--space-xl) var(--space-lg);
   display: grid;
   grid-template-columns: 2fr 1fr 1fr 1fr;
   gap: var(--space-xl);
@@ -52,8 +52,8 @@
   border-top: 1px solid rgba(255, 255, 255, 0.07);
   max-width: var(--container-wide);
   margin: 0 auto;
-  padding: 16px var(--space-xl);
-  font-size: 10px;
+  padding: var(--space-md) var(--space-xl);
+  font-size: var(--font-xs);
   text-align: center;
   color: rgba(188, 228, 250, 0.3);
 }

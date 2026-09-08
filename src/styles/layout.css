@@ -1,5 +1,5 @@
 .page-container {
-  background-color: #f8fafc;
+  background-color: var(--bg);
   min-height: 100vh;
 }
 

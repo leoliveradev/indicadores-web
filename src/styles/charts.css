@@ -15,10 +15,12 @@
   gap: 8px;
 }
 .chart-title {
-  font-size: 13px;
+  font-size: var(--font-md);
   font-weight: 600;
   color: var(--enacom-navy);
+  margin: 0;
 }
+
 .chart-wrap {
   position: relative;
   width: 100%;
@@ -28,8 +30,8 @@
 .legend {
   display: flex;
   flex-wrap: wrap;
-  gap: 14px;
-  margin-top: 14px;
+  gap: var(--space-14);
+  margin-top: var(--space-14);
   font-size: 11px;
   color: var(--text-secondary);
 }
@@ -50,15 +52,6 @@
   grid-template-columns: 1fr 1fr;
   gap: var(--space-md);
   margin-bottom: var(--space-xl);
-}
-
-/* Tarjeta de Gráfico */
-
-.chart-title {
-  font-size: var(--font-md);
-  font-weight: 600;
-  color: #0b1742;
-  margin: 0;
 }
 
 .chart-sub {

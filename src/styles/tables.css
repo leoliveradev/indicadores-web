@@ -19,7 +19,7 @@
 }
 .btn-export {
   font-family: var(--font);
-  font-size: 11px;
+  font-size: var(--font-sm);
   padding: 6px 12px;
   border: 1px solid var(--border-strong);
   border-radius: var(--radius);
@@ -43,7 +43,7 @@
 .data-table th {
   padding: 10px var(--space-md);
   text-align: left;
-  font-size: 10px;
+  font-size: var(--font-xs);
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
