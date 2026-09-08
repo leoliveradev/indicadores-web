@@ -1,5 +1,48 @@
-.next
+# Dependencies
 node_modules
-coverage
+
+# Next.js
+.next
+out
+
+# Build outputs
 dist
 build
+coverage
+
+# Logs
+*.log
+
+# Lockfiles (opcional)
+package-lock.json
+pnpm-lock.yaml
+yarn.lock
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Generated files
+*.min.css
+*.min.js
+
+# Cache
+.cache
+.turbo
+
+# Vercel
+.vercel
+
+# Static exports
+/export
+
+# Generated reports
+playwright-report
+test-results
+
+# OS
+.DS_Store
+Thumbs.db
