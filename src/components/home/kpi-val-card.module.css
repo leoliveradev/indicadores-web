@@ -21,7 +21,7 @@
 .card:hover {
   z-index: 10;
   transform: translateY(-4px);
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 6px var(--space-md) rgba(0, 0, 0, 0.08);
 }
 
 /* icon */
@@ -60,7 +60,7 @@
 /* responsive */
 @media (max-width: 640px) {
   .number {
-    font-size: 22px;
+    font-size: var(--font-xl);
   }
 }
 
@@ -77,6 +77,11 @@
 }
 
 @keyframes pulse {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.4; }
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
 }
