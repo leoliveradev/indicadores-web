@@ -5,6 +5,8 @@
 @import "../styles/tables.css";
 @import "../styles/footer.css";
 @import "../styles/layout.css";
+@import "../styles/components.css";
+@import "../styles/utilities.css";
 :root {
   /* ========================================================
      COLORS
@@ -89,6 +91,19 @@
   --shadow-card: 0 2px 12px rgba(11, 23, 66, 0.08);
 
   --shadow-nav: 0 2px 16px rgba(11, 23, 66, 0.12);
+
+  /* ========================================================
+     TRANSITIONS
+  ======================================================== */
+  --transition-fast: 0.1s;
+  --transition-normal: 0.15s;
+  --transition-slow: 0.2s;
+
+  /* ========================================================
+     INDEXES
+  ======================================================== */
+  --z-nav: 100;
+  --z-mobile-nav: 99;
 }
 
 *,
@@ -193,142 +208,6 @@ body {
   background: var(--bg);
 }
 
-/* ── Service page header ── */
-.svc-page-header {
-  background: var(--enacom-navy);
-  color: white;
-  padding: 28px 0;
-}
-.svc-page-header-inner {
-  max-width: var(--container);
-  margin: 0 auto;
-  padding: 0 var(--space-xl);
-}
-.svc-breadcrumb {
-  font-size: 11px;
-  color: rgba(188, 228, 250, 0.5);
-  margin-bottom: 6px;
-}
-.svc-breadcrumb a {
-  color: rgba(188, 228, 250, 0.5);
-  text-decoration: none;
-}
-.svc-title {
-  font-size: var(--font-xl);
-  font-weight: 300;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  margin: 0;
-}
-
-/* ── Controls inside page ── */
-.page-controls {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-  margin-bottom: 28px;
-}
-.ctrl-select {
-  font-family: var(--font);
-  font-size: var(--font-sm);
-  padding: 8px 28px 8px 12px;
-  border: 1px solid var(--border-strong);
-  border-radius: var(--radius);
-  background: var(--surface);
-  color: var(--text-primary);
-  cursor: pointer;
-  appearance: none;
-  min-width: 130px;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='10' viewBox='0 0 24 24' fill='none' stroke='%234a5568' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 10px center;
-}
-.ctrl-select:focus {
-  outline: none;
-  border-color: var(--blue-300);
-}
-
-/* ── Tabs ── */
-.tab-bar {
-  display: flex;
-  border-bottom: 2px solid var(--border);
-  margin-bottom: 24px;
-}
-.tab-btn {
-  font-family: var(--font);
-  font-size: 13px;
-  padding: 9px 20px;
-  border: none;
-  background: none;
-  cursor: pointer;
-  color: var(--text-secondary);
-  border-bottom: 2px solid transparent;
-  margin-bottom: -2px;
-  font-weight: 400;
-  transition: color 0.1s;
-}
-.tab-btn:hover {
-  color: var(--text-primary);
-}
-.tab-btn.active {
-  color: var(--enacom-navy);
-  border-bottom-color: var(--blue-200);
-  font-weight: 600;
-}
-
-/* ── KPI mini (dentro de páginas de servicio) ── */
-.kpi-row {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 12px;
-  margin-bottom: 24px;
-}
-.kpi-mini {
-  background: var(--blue-100);
-  border-radius: var(--radius);
-  padding: 14px 18px;
-}
-.kpi-mini-label {
-  font-size: 9px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.1em;
-  color: var(--blue-400);
-  margin-bottom: 6px;
-}
-.kpi-mini-value {
-  font-size: 21px;
-  font-weight: 600;
-  color: var(--blue-500);
-  font-family: var(--font-mono);
-  letter-spacing: -0.02em;
-}
-
-/* ── States ── */
-.skeleton {
-  background: #dde3ed;
-  border-radius: 4px;
-  animation: pulse 1.4s infinite;
-}
-@keyframes pulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.5;
-  }
-}
-.error-box {
-  background: var(--negative-bg);
-  border: 1px solid rgba(163, 45, 45, 0.2);
-  border-radius: var(--radius);
-  padding: 16px;
-  color: var(--negative);
-  font-size: 13px;
-}
-
 /* ── Scrollbar ── */
 ::-webkit-scrollbar {
   width: 5px;
@@ -340,25 +219,6 @@ body {
 ::-webkit-scrollbar-thumb {
   background: var(--border-strong);
   border-radius: 3px;
-}
-
-/* ── Clases adicionales referenciadas ── */
-.overview-card-badge {
-  font-size: 10px;
-  font-weight: 500;
-  background: var(--blue-100);
-  color: var(--blue-500);
-  padding: 3px 9px;
-  border-radius: 20px;
-  display: inline-block;
-}
-
-.mobile-menu-btn {
-  display: none;
-}
-
-.mobile-nav {
-  display: none;
 }
 
 /* ========================================================
@@ -408,71 +268,7 @@ body {
   .nav-grid {
     grid-template-columns: 1fr;
   }
-  .navbar-inner {
-    justify-content: space-between;
-  }
-
-  .navbar-divider {
-    display: none;
-  }
-
-  .desktop-nav {
-    display: none;
-  }
-
-  .mobile-menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 40px;
-    height: 40px;
-    border: 0;
-    background: transparent;
-    color: white;
-    cursor: pointer;
-  }
-
-  .mobile-nav {
-    display: flex;
-    flex-direction: column;
-
-    position: fixed;
-    top: var(--navbar-h);
-    left: 0;
-    right: 0;
-
-    z-index: 99;
-
-    gap: 2px;
-    padding: 12px var(--space-md);
-
-    background: var(--enacom-navy);
-  }
-
-  .mobile-nav-section {
-    margin-top: 8px;
-    padding: 8px 0;
-    color: rgba(255, 255, 255, 0.6);
-    font-size: 0.75rem;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .mobile-nav-item {
-    color: white;
-    text-decoration: none;
-    padding: 10px 0;
-    font-size: var(--font-md);
-    display: block;
-  }
-
-  .service {
-    padding-left: 12px;
-  }
-
-  .navbar-brand {
-    flex-shrink: 0;
-  }
+  
 }
 
 @media (max-width: 520px) {
@@ -483,4 +279,3 @@ body {
     grid-template-columns: 1fr;
   }
 }
-
