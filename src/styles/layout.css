@@ -1,0 +1,28 @@
+.page-container {
+  background-color: #f8fafc;
+  min-height: 100vh;
+}
+
+/* ── KPI Cards (home style — vertical, like ENACOM site) ── */
+.kpi-cards-grid {
+  display: grid;
+  position: relative;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 14px;
+}
+
+/* Grilla de KPIs: 3 columnas */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-bottom: 24px;
+}
+
+/* Grilla de navegación inferior */
+.nav-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 12px;
+  margin-top: var(--space-md);
+}
