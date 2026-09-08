@@ -1,0 +1,27 @@
+/* ── Tabs ── */
+.tab-bar {
+  display: flex;
+  border-bottom: 2px solid var(--border);
+  margin-bottom: 24px;
+}
+.tab-btn {
+  font-family: var(--font);
+  font-size: 13px;
+  padding: 9px 20px;
+  border: none;
+  background: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  border-bottom: 2px solid transparent;
+  margin-bottom: -2px;
+  font-weight: 400;
+  transition: var(--transition-fast);
+}
+.tab-btn:hover {
+  color: var(--text-primary);
+}
+.tab-btn.active {
+  color: var(--enacom-navy);
+  border-bottom-color: var(--blue-200);
+  font-weight: 600;
+}
