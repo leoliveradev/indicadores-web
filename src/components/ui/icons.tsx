@@ -3,6 +3,26 @@ interface IconProps {
   color?: string;
 }
 
+export const IHamburger = ({
+  size = 24,
+  color = "currentColor",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <path d="M3 6h18" />
+    <path d="M3 12h18" />
+    <path d="M3 18h18" />
+  </svg>
+);
+
 export const IFija = ({ size = 28, color = "var(--blue-500)" }: IconProps) => (
   <svg
     width={size}
