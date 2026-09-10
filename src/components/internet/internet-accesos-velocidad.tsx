@@ -13,6 +13,9 @@ import {
   getAccesosVelocidadProvincias,
   getAccesosVelocidadData,
   getAccesosVelocidadRangosData,
+  getAccesosVelocidadComparacionData,
+  getAccesosVelocidadComparacionKpi,
+  getAccesosVelocidadComparacionKPIItems,
 } from "@/lib/internet/accesos-velocidad";
 
 import {
@@ -23,11 +26,15 @@ import {
 import { BarChartBase }
   from "@/components/ui/charts/bar-chart-base";
 
+import { ComparisonBarChart }
+  from "@/components/ui/charts/comparison-bar-chart";
+
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
 
 import { dispValue }
   from "@/lib/format";
+import { KPISection } from "../home/kpi-section";
 
 type Props = {
   velocidades: ApiResponse<InternetAccesosVelocidadRow>;
@@ -61,6 +68,27 @@ export function InternetAccesosVelocidad({
     [
       velocidades.data,
       provincia,
+    ]
+  );
+
+  const nacionalRows =
+    velocidades.data;
+
+  const showComparison =
+    provincia !== "all";
+
+  const comparacionData = useMemo(
+    () =>
+      provincia === "all"
+        ? []
+        : getAccesosVelocidadComparacionData(
+          filteredRows,
+          velocidades.data
+        ),
+    [
+      provincia,
+      filteredRows,
+      velocidades.data,
     ]
   );
 
@@ -120,10 +148,39 @@ export function InternetAccesosVelocidad({
     ]
   );
 
+  const kpiComparacion = useMemo(
+    () =>
+      provincia === "all"
+        ? null
+        : getAccesosVelocidadComparacionKpi(
+          filteredRows,
+          velocidades.data
+        ),
+    [
+      provincia,
+      filteredRows,
+      velocidades.data,
+    ]
+  );
+
+  const comparacionKPIItems = useMemo(
+    () =>
+      provincia === "all" ||
+        !kpiComparacion
+        ? []
+        : getAccesosVelocidadComparacionKPIItems(
+          provincia,
+          kpiComparacion
+        ),
+    [
+      provincia,
+      kpiComparacion,
+    ]
+  );
+
   return (
     <section className="section-wrap">
       <div className="section-inner">
-
 
         <h2 className="section-heading">
           Accesos por velocidad
@@ -227,6 +284,31 @@ export function InternetAccesosVelocidad({
         <InsightsCard
           insights={insights}
         />
+
+        {showComparison &&
+          comparacionKPIItems.length > 0 && (
+            <KPISection
+              title="Conexiones superiores a 100 Mbps"
+              items={comparacionKPIItems}
+            />
+          )}
+
+        {showComparison && (
+          <div className="chart-card">
+            <h3 className="chart-title">
+              Comparación Provincia vs Argentina
+            </h3>
+
+            <p className="chart-sub">
+              Distribución porcentual de accesos
+              por rango de velocidad.
+            </p>
+
+            <ComparisonBarChart
+              data={comparacionData}
+            />
+          </div>
+        )}
 
       </div>
     </section>
