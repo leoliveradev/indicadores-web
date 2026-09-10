@@ -29,7 +29,7 @@ export function getInternetTecnologiaProvinciasLatest() {
   );
 }
 
-export function getInternetAccesosVelocidad() {
+export function getInternetAccesosVelocidadProvincias() {
   return get<ApiResponse<InternetAccesosVelocidadRow>>(
     "/api/v1/internet/accesos/velocidad/provincias/latest"
   );
