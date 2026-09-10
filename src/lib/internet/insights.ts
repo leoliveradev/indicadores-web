@@ -5,7 +5,8 @@ import type {
   InternetTecnologiaRow,
   InternetPenetracionRow,
   InternetIngresosRow,
-  InternetAccesosVelocidadRangoItem
+  InternetAccesosVelocidadRangoItem,
+  InternetAccesosVelocidadComparacionKpi
 } from "./types";
 
 import { fmtDecimal, fmtPercent } from "@/lib/format";
@@ -289,4 +290,37 @@ export function getAccesosVelocidadRangosInsights(
       text: "Las velocidades superiores a 100 Mbps concentran la mayor parte del mercado.",
     },
   ];
+}
+
+export function getAccesosVelocidadComparacionInsights(
+  provincia: string,
+  kpi: InternetAccesosVelocidadComparacionKpi
+): string[] {
+  const insights: string[] = [];
+
+  if (kpi.diferencia > 0) {
+    insights.push(
+      `${provincia} supera al promedio nacional en conexiones superiores a 100 Mbps por ${kpi.diferencia} puntos porcentuales.`
+    );
+  } else if (kpi.diferencia < 0) {
+    insights.push(
+      `${provincia} se ubica ${Math.abs(
+        kpi.diferencia
+      )} puntos porcentuales por debajo del promedio nacional en conexiones superiores a 100 Mbps.`
+    );
+  }
+
+  if (kpi.provincia >= 80) {
+    insights.push(
+      `La alta velocidad es predominante en ${provincia}: más del 80% de los accesos corresponden a conexiones superiores a 100 Mbps.`
+    );
+  }
+
+  if (kpi.nacional - kpi.provincia > 10) {
+    insights.push(
+      `${provincia} presenta margen de mejora respecto al promedio nacional en adopción de conexiones de alta velocidad.`
+    );
+  }
+
+  return insights;
 }
