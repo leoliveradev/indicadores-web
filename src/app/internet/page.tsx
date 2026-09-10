@@ -1,7 +1,7 @@
 import { getOverview } from "@/lib/api/home";
 import {
   getInternetTecnologias, getInternetTecnologiaProvinciasLatest,
-  getInternetAccesosVelocidad,
+  getInternetAccesosVelocidadProvincias,
   getInternetVelocidadMedia, getInternetVelocidadMediaProvinciasLatest,
   getInternetRangosVelocidad,
   getInternetPenetracion, getInternetPenetracionProvinciasLatest,
@@ -32,7 +32,7 @@ export default async function InternetPage() {
   ] = await Promise.all([
     getInternetTecnologias(),
     getInternetTecnologiaProvinciasLatest(),
-    getInternetAccesosVelocidad(),
+    getInternetAccesosVelocidadProvincias(),
     getInternetVelocidadMedia(),
     getInternetVelocidadMediaProvinciasLatest(),
     getInternetRangosVelocidad(),
