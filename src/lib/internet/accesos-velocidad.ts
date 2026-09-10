@@ -1,4 +1,7 @@
+import { KPIItem } from "@/components/home/kpi-section";
 import type {
+  InternetAccesosVelocidadComparacionItem,
+  InternetAccesosVelocidadComparacionKpi,
   InternetAccesosVelocidadRangoItem,
   InternetAccesosVelocidadRow,
 } from "./types";
@@ -128,4 +131,163 @@ export function getAccesosVelocidadProvincias(
       (row) => row.provincia
     )
   )].sort();
+}
+
+export function getAccesosVelocidadComparacionData(
+  provinciaRows: InternetAccesosVelocidadRow[],
+  nacionalRows: InternetAccesosVelocidadRow[]
+): InternetAccesosVelocidadComparacionItem[] {
+
+  const provinciaData =
+    getAccesosVelocidadRangosData(provinciaRows);
+
+  const nacionalData =
+    getAccesosVelocidadRangosData(nacionalRows);
+
+  const totalProvincia =
+    provinciaData.reduce(
+      (acc, item) => acc + item.accesos,
+      0
+    );
+
+  const totalNacional =
+    nacionalData.reduce(
+      (acc, item) => acc + item.accesos,
+      0
+    );
+
+  return provinciaData.map((provItem) => {
+    const nacionalItem =
+      nacionalData.find(
+        (n) => n.rango === provItem.rango
+      );
+
+    return {
+      rango: provItem.rango,
+
+      provincia:
+        totalProvincia > 0
+          ? Number(
+              (
+                (provItem.accesos /
+                  totalProvincia) *
+                100
+              ).toFixed(2)
+            )
+          : 0,
+
+      nacional:
+        totalNacional > 0
+          ? Number(
+              (
+                ((nacionalItem?.accesos ?? 0) /
+                  totalNacional) *
+                100
+              ).toFixed(2)
+            )
+          : 0,
+    };
+  });
+}
+
+export function getAccesosVelocidadComparacionKPIItems(
+  provincia: string,
+  kpi: InternetAccesosVelocidadComparacionKpi
+): KPIItem[] {
+  return [
+    {
+      label: `${provincia} >100 Mbps`,
+      value: kpi.provincia,
+      format: (v) => `${v.toFixed(1)}%`,
+    },
+    {
+      label: "Argentina >100 Mbps",
+      value: kpi.nacional,
+      format: (v) => `${v.toFixed(1)}%`,
+    },
+    {
+      label: "Diferencia",
+      value: kpi.diferencia,
+      format: (v) =>
+        `${v > 0 ? "+" : ""}${v.toFixed(1)} pp`,
+    },
+  ];
+}
+
+export function getAccesosVelocidadComparacionKpi(
+  provinciaRows: InternetAccesosVelocidadRow[],
+  nacionalRows: InternetAccesosVelocidadRow[]
+): InternetAccesosVelocidadComparacionKpi {
+  const provinciaRangos =
+    getAccesosVelocidadRangosData(
+      provinciaRows
+    );
+
+  const nacionalRangos =
+    getAccesosVelocidadRangosData(
+      nacionalRows
+    );
+
+  const provinciaTotal =
+    provinciaRangos.reduce(
+      (acc, item) => acc + item.accesos,
+      0
+    );
+
+  const nacionalTotal =
+    nacionalRangos.reduce(
+      (acc, item) => acc + item.accesos,
+      0
+    );
+
+  const provincia100Plus =
+    provinciaRangos
+      .filter((r) =>
+        [
+          "100-300 Mbps",
+          "300-1000 Mbps",
+          "1000+ Mbps",
+        ].includes(r.rango)
+      )
+      .reduce(
+        (acc, item) => acc + item.accesos,
+        0
+      );
+
+  const nacional100Plus =
+    nacionalRangos
+      .filter((r) =>
+        [
+          "100-300 Mbps",
+          "300-1000 Mbps",
+          "1000+ Mbps",
+        ].includes(r.rango)
+      )
+      .reduce(
+        (acc, item) => acc + item.accesos,
+        0
+      );
+
+  const provincia =
+    (provincia100Plus /
+      provinciaTotal) *
+    100;
+
+  const nacional =
+    (nacional100Plus /
+      nacionalTotal) *
+    100;
+
+  return {
+    provincia: Number(
+      provincia.toFixed(1)
+    ),
+    nacional: Number(
+      nacional.toFixed(1)
+    ),
+    diferencia: Number(
+      (provincia - nacional)
+        .toFixed(1)
+    ),
+  };
 }
