@@ -5,6 +5,7 @@ import type {
   InternetAccesosVelocidadRangoItem,
   InternetAccesosVelocidadRow,
 } from "./types";
+import { dispValue } from "../format";
 
 export type InternetAccesosVelocidadItem = {
   velocidad: string;
@@ -168,23 +169,23 @@ export function getAccesosVelocidadComparacionData(
       provincia:
         totalProvincia > 0
           ? Number(
-              (
-                (provItem.accesos /
-                  totalProvincia) *
-                100
-              ).toFixed(2)
-            )
+            (
+              (provItem.accesos /
+                totalProvincia) *
+              100
+            ).toFixed(2)
+          )
           : 0,
 
       nacional:
         totalNacional > 0
           ? Number(
-              (
-                ((nacionalItem?.accesos ?? 0) /
-                  totalNacional) *
-                100
-              ).toFixed(2)
-            )
+            (
+              ((nacionalItem?.accesos ?? 0) /
+                totalNacional) *
+              100
+            ).toFixed(2)
+          )
           : 0,
     };
   });
@@ -198,18 +199,20 @@ export function getAccesosVelocidadComparacionKPIItems(
     {
       label: `${provincia} >100 Mbps`,
       value: kpi.provincia,
-      format: (v) => `${v.toFixed(1)}%`,
+      format: (v) => `${dispValue(v, { format: "percent", decimals: 1 })}`,
     },
     {
       label: "Argentina >100 Mbps",
       value: kpi.nacional,
-      format: (v) => `${v.toFixed(1)}%`,
+      format: (v) => `${dispValue(v, { format: "percent", decimals: 1 })}`,
     },
     {
       label: "Diferencia",
       value: kpi.diferencia,
       format: (v) =>
         `${v > 0 ? "+" : ""}${v.toFixed(1)} pp`,
+      tooltip:
+        "Diferencia en puntos porcentuales respecto al promedio nacional."
     },
   ];
 }

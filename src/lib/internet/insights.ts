@@ -6,7 +6,8 @@ import type {
   InternetPenetracionRow,
   InternetIngresosRow,
   InternetAccesosVelocidadRangoItem,
-  InternetAccesosVelocidadComparacionKpi
+  InternetAccesosVelocidadComparacionKpi,
+  InternetAccesosVelocidadComparacionItem
 } from "./types";
 
 import { fmtDecimal, fmtPercent } from "@/lib/format";
@@ -294,32 +295,79 @@ export function getAccesosVelocidadRangosInsights(
 
 export function getAccesosVelocidadComparacionInsights(
   provincia: string,
+  comparacionData: InternetAccesosVelocidadComparacionItem[],
   kpi: InternetAccesosVelocidadComparacionKpi
-): string[] {
-  const insights: string[] = [];
+): Insight[] {
+
+  const insights: Insight[] = [];
 
   if (kpi.diferencia > 0) {
-    insights.push(
-      `${provincia} supera al promedio nacional en conexiones superiores a 100 Mbps por ${kpi.diferencia} puntos porcentuales.`
-    );
-  } else if (kpi.diferencia < 0) {
-    insights.push(
-      `${provincia} se ubica ${Math.abs(
+    insights.push({
+      title: "Ventaja sobre el promedio nacional",
+      text: `${provincia} supera al promedio nacional en conexiones superiores a 100 Mbps por ${kpi.diferencia.toFixed(
+        1
+      )} puntos porcentuales.`,
+      type: "trend",
+      severity: "success",
+    });
+  } else {
+    insights.push({
+      title: "Brecha respecto al promedio nacional",
+      text: `${provincia} se ubica ${Math.abs(
         kpi.diferencia
-      )} puntos porcentuales por debajo del promedio nacional en conexiones superiores a 100 Mbps.`
-    );
+      ).toFixed(
+        1
+      )} puntos porcentuales por debajo del promedio nacional en conexiones superiores a 100 Mbps.`,
+      type: "warning",
+      severity: "warning",
+    });
   }
+
+  const mayorDiferencia = comparacionData.reduce(
+    (best, current) => {
+      const currentDiff =
+        current.provincia - current.nacional;
+
+      const bestDiff =
+        best.provincia - best.nacional;
+
+      return Math.abs(currentDiff) >
+        Math.abs(bestDiff)
+        ? current
+        : best;
+    }
+  );
+
+  const diff =
+    mayorDiferencia.provincia -
+    mayorDiferencia.nacional;
+
+  insights.push({
+    title: "Rango destacado",
+    text:
+      diff > 0
+        ? `${provincia} presenta su principal ventaja relativa en el rango ${mayorDiferencia.rango}, con ${diff.toFixed(
+            1
+          )} puntos porcentuales más que el promedio nacional.`
+        : `${provincia} presenta su principal diferencia respecto del promedio nacional en el rango ${mayorDiferencia.rango}.`,
+    type: "highlight",
+    severity: "info",
+  });
 
   if (kpi.provincia >= 80) {
-    insights.push(
-      `La alta velocidad es predominante en ${provincia}: más del 80% de los accesos corresponden a conexiones superiores a 100 Mbps.`
-    );
-  }
-
-  if (kpi.nacional - kpi.provincia > 10) {
-    insights.push(
-      `${provincia} presenta margen de mejora respecto al promedio nacional en adopción de conexiones de alta velocidad.`
-    );
+    insights.push({
+      title: "Alta velocidad predominante",
+      text: `Más del 80% de los accesos de ${provincia} corresponden a conexiones superiores a 100 Mbps.`,
+      type: "record",
+      severity: "success",
+    });
+  } else if (kpi.provincia >= 60) {
+    insights.push({
+      title: "Mayoría de conexiones rápidas",
+      text: `Las conexiones superiores a 100 Mbps representan la mayor parte de los accesos en ${provincia}.`,
+      type: "highlight",
+      severity: "info",
+    });
   }
 
   return insights;

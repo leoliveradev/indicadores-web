@@ -19,6 +19,7 @@ import {
 } from "@/lib/internet/accesos-velocidad";
 
 import {
+  getAccesosVelocidadComparacionInsights,
   getAccesosVelocidadInsights,
   getAccesosVelocidadRangosInsights,
 } from "@/lib/internet/insights";
@@ -178,6 +179,22 @@ export function InternetAccesosVelocidad({
     ]
   );
 
+  const comparacionInsights = useMemo(
+    () =>
+      provincia === "all" || !kpiComparacion
+        ? []
+        : getAccesosVelocidadComparacionInsights(
+          provincia,
+          comparacionData,
+          kpiComparacion
+        ),
+    [
+      provincia,
+      comparacionData,
+      kpiComparacion,
+    ]
+  );
+
   return (
     <section className="section-wrap">
       <div className="section-inner">
@@ -309,6 +326,13 @@ export function InternetAccesosVelocidad({
             />
           </div>
         )}
+
+        {showComparison &&
+          comparacionInsights.length > 0 && (
+            <InsightsCard
+              insights={comparacionInsights}
+            />
+          )}
 
       </div>
     </section>
