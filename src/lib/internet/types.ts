@@ -99,3 +99,15 @@ export type InternetAccesosVelocidadRow = {
   velocidad: number;
   accesos: number;
 };
+
+export type InternetAccesosVelocidadComparacionItem = {
+  rango: string;
+  provincia: number;
+  nacional: number;
+};
+
+export type InternetAccesosVelocidadComparacionKpi = {
+  provincia: number;
+  nacional: number;
+  diferencia: number;
+};
