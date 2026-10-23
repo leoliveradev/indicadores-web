@@ -24,17 +24,19 @@ export function getPenetracionKPIItems(
       label: "Accesos / 100 habitantes",
       icon: IInternet,
       value: latest.accesos_100_hab,
-      format: (v) => dispValue(v, {
-        decimals: 2,
-      }),
+      format: (v) =>
+        dispValue(v, {
+          decimals: 2,
+        }),
     },
     {
       label: "Accesos / 100 hogares",
       icon: IInternet,
       value: latest.accesos_100_hog,
-      format: (v) => dispValue(v, {
-        decimals: 2,
-      }),
+      format: (v) =>
+        dispValue(v, {
+          decimals: 2,
+        }),
     },
   ];
 }

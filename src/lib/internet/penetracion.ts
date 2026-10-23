@@ -1,11 +1,11 @@
-import {  ApiResponse } from "@/lib/types";
+import { ApiResponse } from "@/lib/types";
 
 import {
   InternetPenetracionRow,
   InternetPenetracionProvinciaRow,
 } from "@/lib/internet";
 
-import { fmtNumber } from "@/lib/format";
+import { dispValue, fmtNumber } from "@/lib/format";
 import { getTopN } from "./common";
 
 export function getPenetracionKPIItems(
@@ -20,13 +20,21 @@ export function getPenetracionKPIItems(
       label: "Accesos / 100 hogares",
       value: latest.accesos_cada_100_hogares,
       // icon: "home",
-      format: (v: number) => fmtNumber(v, 2),
+      format: (v: number) =>
+        dispValue(v, {
+          format: "number",
+          decimals: 2
+        }),
     },
     {
       label: "Accesos / 100 habitantes",
       value: latest.accesos_cada_100_habitantes,
       // icon: "users",
-      format: (v: number) => fmtNumber(v, 2),
+      format: (v: number) =>
+        dispValue(v, {
+          format: "number",
+          decimals: 2
+        }),
     },
   ];
 }

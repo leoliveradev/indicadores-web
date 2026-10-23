@@ -9,7 +9,7 @@ import type { KPIItem } from "@/components/home/kpi-section";
 
 import { TECH_CONFIG, TECH_CONFIG_KPI } from "@/lib/constants/internet";
 
-import { buildDonutData, getTopN } from "./common";
+import { buildDonutData, getTopN } from "@/lib/internet/common";
 
 export function getTecnologiaDonutData(
   response: ApiResponse<InternetTecnologiaRow>
@@ -36,7 +36,10 @@ export function getTecnologiaKPIItems(
     label: t.label,
     icon: () => null,
     value: cur[t.key],
-    format: (v: number) => dispValue(v, { format: "compact" }),
+    format: (v: number) => 
+      dispValue(v, { 
+        format: "compact" 
+      }),
   }));
 }
 

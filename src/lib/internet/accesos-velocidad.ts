@@ -4,8 +4,8 @@ import type {
   InternetAccesosVelocidadComparacionKpi,
   InternetAccesosVelocidadRangoItem,
   InternetAccesosVelocidadRow,
-} from "./types";
-import { dispValue } from "../format";
+} from "@/lib/internet";
+import { dispValue } from "@/lib/format";
 
 export type InternetAccesosVelocidadItem = {
   velocidad: string;
@@ -199,12 +199,20 @@ export function getAccesosVelocidadComparacionKPIItems(
     {
       label: `${provincia} >100 Mbps`,
       value: kpi.provincia,
-      format: (v) => `${dispValue(v, { format: "percent", decimals: 1 })}`,
+      format: (v) => 
+        dispValue(v, { 
+          format: "percent", 
+          decimals: 1 
+        }),
     },
     {
       label: "Argentina >100 Mbps",
       value: kpi.nacional,
-      format: (v) => `${dispValue(v, { format: "percent", decimals: 1 })}`,
+      format: (v) => 
+        dispValue(v, { 
+          format: "percent", 
+          decimals: 1 
+        }),
     },
     {
       label: "Diferencia",

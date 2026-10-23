@@ -9,13 +9,11 @@ import type {
 } from "@/lib/portabilidad";
 
 import {
-  // getPortabilidadKPIItems,
   getPortabilidadEvolutionData,
   getPortabilidadInsights,
   getPortabilidadSeasonalityInsights
 } from "@/lib/portabilidad";
 
-// import { KPISection } from "@/components/home/kpi-section";
 
 import type { PeriodFilterValue } from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
@@ -62,9 +60,6 @@ export function PortabilidadMovil({
       12
     );
 
-  // const kpiItems =
-  //   getPortabilidadKPIItems(data);
-
   const evolutionData =
     getPortabilidadEvolutionData({
       ...data,
@@ -94,10 +89,6 @@ export function PortabilidadMovil({
 
   return (
     <>
-      {/* <KPISection
-        title="Portabilidad numérica móvil"
-        items={kpiItems}
-      /> */}
 
       <section className="section-wrap alt">
         <div className="section-inner">

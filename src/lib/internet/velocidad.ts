@@ -1,5 +1,5 @@
-import { fmtDecimal, fmtPercent } from "@/lib/format";
-import {  ApiResponse } from "@/lib/types";
+import { dispValue } from "@/lib/format";
+import { ApiResponse } from "@/lib/types";
 import type {
   InternetVelocidadMediaRow,
   InternetVelocidadMediaProvinciasRow,
@@ -43,13 +43,23 @@ export function getVelocidadKPIItems(
       label: "Velocidad media",
       // icon: IVelocidad,
       value: latest.Mbps,
-      format: (v: number) => `${fmtDecimal(v, 2)} Mbps`
+      format: (v: number) =>
+        dispValue(v, {
+          format: "number",
+          decimals: 2,
+          suffix: " Mbps"
+        }),
     },
     {
       label: "Crecimiento desde 2014",
       // icon: IVelocidad,
       value: growthPct,
-      format: (v: number) => fmtPercent(v, 0),
+      format: (v: number) =>
+        dispValue(v, {
+          format: "number",
+          decimals: 0,
+          suffix: " %"
+        }),
     },
   ];
 }

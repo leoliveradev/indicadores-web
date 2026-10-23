@@ -5,7 +5,7 @@ import { IDinero } from "@/components/ui/icons";
 
 import {
   dispCurrencyCompact,
-  fmtPercent,
+  dispValue,
 } from "@/lib/format";
 
 import type {
@@ -38,7 +38,12 @@ export function getIngresosKPIItems(
       label: "Crecimiento desde 2014",
       icon: IDinero,
       value: growthPct,
-      format: (v) => fmtPercent(v, 0),
+      format: (v) =>
+        dispValue(v, {
+          format: "number",
+          decimals: 0,
+          suffix: " %"
+        }),
     },
   ];
 }

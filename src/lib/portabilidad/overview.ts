@@ -1,8 +1,8 @@
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+// import { IInternet } from "@/components/ui/icons";
 
-import { dispValue, fmtPercent } from "@/lib/format";
+import { dispValue } from "@/lib/format";
 
 import type { ApiResponse } from "@/lib/types";
 
@@ -56,7 +56,11 @@ export function getPortabilidadOverviewItems(
       icon: () => null,
       value: variation,
       format: (v) =>
-        fmtPercent(v, 1),
+        dispValue(v, {
+          format: "number",
+          decimals: 1,
+          suffix: " %"
+        }),
     },
     {
       label: "Total histórico",
