@@ -17,8 +17,12 @@ type Props = {
     tooltipData?: TooltipItem[];
   }[];
 
-  onSelect?: (
-    provincia: string
+  selectedProvincia?: string;
+
+  onSelect?: (provincia: string) => void;
+
+  onProvinciaHover?: (
+    provincia: string | undefined
   ) => void;
 };
 
@@ -37,7 +41,12 @@ import type {
   Geometry,
 } from "geojson";
 
-export function ProvinciasMap({ data, onSelect }: Props) {
+export function ProvinciasMap({
+  data,
+  onSelect,
+  selectedProvincia,
+  onProvinciaHover,
+}: Props) {
   const geo = useGeoData();
   const [tooltip, setTooltip] =
     useState<MapTooltipData | null>(null);
@@ -78,11 +87,17 @@ export function ProvinciasMap({ data, onSelect }: Props) {
             <path
               key={geoName}
               d={path(feature) || ""}
-              fill={colorScale(value)}
+              fill={
+                apiName === selectedProvincia
+                  ? "var(--accent-amber)"
+                  : colorScale(value)
+              }
               stroke="#fff"
               strokeWidth={0.5}
               onClick={() => onSelect?.(geoName)}
               onMouseMove={(e) => {
+                onProvinciaHover?.(apiName);
+
                 const bounds = e.currentTarget.getBoundingClientRect();
 
                 setTooltip({
@@ -94,7 +109,10 @@ export function ProvinciasMap({ data, onSelect }: Props) {
                     entry?.tooltipData,
                 });
               }}
-              onMouseLeave={() => setTooltip(null)}
+              onMouseLeave={() => {
+                setTooltip(null);
+                onProvinciaHover?.(undefined);
+              }}
               style={{ cursor: "pointer" }}
             />
           );

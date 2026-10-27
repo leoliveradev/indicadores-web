@@ -60,12 +60,10 @@ export function getTecnologiaEvolutionData(
 }
 
 
-export function getTecnologiaProvinciaRankingData(
+export function getTecnologiaProvinciaSortedData(
   response: ApiResponse<InternetTecnologiaProvinciaRow>
 ) {
-  const topRows = getTopN(
-    response.data,
-    (r) => r.total
+  return [...response.data].sort(
+    (a, b) => b.total - a.total
   );
-  return topRows
 }

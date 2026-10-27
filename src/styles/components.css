@@ -25,3 +25,74 @@
   border-bottom-color: var(--blue-200);
   font-weight: 600;
 }
+
+/* ========================================================
+   SCROLLABLE RANKING
+======================================================== */
+
+.ranking-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.ranking-header {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border);
+
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--enacom-navy);
+}
+
+.ranking-list {
+  overflow-y: auto;
+}
+
+.ranking-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 10px var(--space-md);
+
+  border-bottom: 1px solid var(--border);
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.ranking-item:last-child {
+  border-bottom: none;
+}
+
+.ranking-item:hover {
+  background: var(--bg);
+}
+
+.ranking-item.active {
+  background: var(--blue-100);
+}
+
+.ranking-label {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.ranking-position {
+  font-weight: 600;
+  color: var(--text-muted);
+  min-width: 24px;
+}
+
+.ranking-value {
+  font-family: var(--font-mono);
+  font-weight: 600;
+  color: var(--enacom-navy);
+}

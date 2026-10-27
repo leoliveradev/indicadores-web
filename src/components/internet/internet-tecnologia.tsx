@@ -1,7 +1,6 @@
 'use client';
 import { useState } from "react";
 
-
 import type { ApiResponse } from "@/lib/types";
 import type {
   InternetTecnologiaRow,
@@ -12,7 +11,7 @@ import { KPISection } from "@/components/home/kpi-section";
 import {
   getTecnologiaKPIItems,
   getTecnologiaEvolutionData,
-  getTecnologiaProvinciaRankingData,
+  getTecnologiaProvinciaSortedData,
   getTecnologiaInsights
 } from "@/lib/internet";
 
@@ -27,6 +26,7 @@ import { InsightsCard }
   from "@/components/ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
+import { ScrollableRanking } from "../ui/ranking/scrollable-ranking";
 
 export function InternetTecnologia({
   tecnologias,
@@ -38,6 +38,8 @@ export function InternetTecnologia({
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
+
+  const [selectedProvincia, setSelectedProvincia,] = useState<string>();
 
   const rows = tecnologias.data;
 
@@ -75,9 +77,17 @@ export function InternetTecnologia({
   );
 
   const rankingData =
-    getTecnologiaProvinciaRankingData(
+    getTecnologiaProvinciaSortedData(
       tecnologiasProvincias
     );
+
+  const rankingItems = rankingData.map(
+    (item) => ({
+      id: item.provincia,
+      label: item.provincia,
+      value: item.total,
+    })
+  );
 
   return (
     <>
@@ -167,16 +177,22 @@ export function InternetTecnologia({
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
             <div className="chart-card">
-              <ProvinciasMap data={provinciaData} />
+              <ProvinciasMap
+                data={provinciaData}
+                selectedProvincia={selectedProvincia}
+                onProvinciaHover={
+                  setSelectedProvincia
+                }
+              />
+
             </div>
 
             <div className="chart-card">
-              <RankingBarChart
-                data={rankingData.map((r) => ({
-                  label: r.provincia,
-                  value: r.total,
-                }))}
-                tooltipLabel="Accesos"
+              <ScrollableRanking
+                title={`Provincias (${rankingData.length})`}
+                items={rankingItems}
+                selectedId={selectedProvincia}
+                onSelect={setSelectedProvincia}
               />
             </div>
 
