@@ -20,7 +20,6 @@ import { PeriodFilter } from "@/components/ui/filters/period-filter";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
-import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";

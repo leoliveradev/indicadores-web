@@ -9,7 +9,7 @@ import type { KPIItem } from "@/components/home/kpi-section";
 
 import { TECH_CONFIG, TECH_CONFIG_KPI } from "@/lib/constants/internet";
 
-import { buildDonutData, getTopN } from "@/lib/internet/common";
+import { buildDonutData } from "@/lib/internet/common";
 
 export function getTecnologiaDonutData(
   response: ApiResponse<InternetTecnologiaRow>
