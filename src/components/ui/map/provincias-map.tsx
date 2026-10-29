@@ -89,7 +89,7 @@ export function ProvinciasMap({
               d={path(feature) || ""}
               fill={
                 apiName === selectedProvincia
-                  ? "var(--accent-amber)"
+                  ? "var(--accent-green)"
                   : colorScale(value)
               }
               stroke="#fff"
