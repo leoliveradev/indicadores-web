@@ -12,7 +12,7 @@ import type {
 import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
-  getPenetracionProvinciaRankingData,
+  getPenetracionProvinciaSortedData,
   getPenetracionInsights,
 } from "@/lib/television";
 
@@ -27,11 +27,9 @@ import { LineChartBase }
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
 
-import { RankingComparisonBarChart }
-  from "@/components/ui/charts/ranking-comparison-bar-chart";
-
 import { ProvinciasMap }
   from "@/components/ui/map/provincias-map";
+import { ScrollableDualRanking } from "../ui/ranking/scrollable-dual-ranking";
 
 type Props = {
   penetracion: ApiResponse<TelevisionPenetracionRow>;
@@ -42,6 +40,9 @@ export function TelevisionPenetracion({
   penetracion,
   provincias,
 }: Props) {
+  const [selectedProvincia, setSelectedProvincia] =
+    useState<string>();
+    
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
@@ -68,7 +69,7 @@ export function TelevisionPenetracion({
     );
 
   const rankingData =
-    getPenetracionProvinciaRankingData(
+    getPenetracionProvinciaSortedData(
       provincias
     );
 
@@ -144,27 +145,29 @@ export function TelevisionPenetracion({
             Penetración por provincia
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="map-ranking-grid">
 
             <div className="chart-card">
               <ProvinciasMap
                 data={provinciaData}
+                selectedProvincia={selectedProvincia}
+                onProvinciaHover={setSelectedProvincia}
               />
             </div>
 
-            <div className="chart-card">
-
-              <RankingComparisonBarChart
-                data={rankingData.map((r) => ({
-                  label: r.provincia,
-                  primary: r.hogares,
-                  secondary: r.habitantes,
-                }))}
-                primaryLabel="Hogares"
-                secondaryLabel="Habitantes"
-              />
-
-            </div>
+            <ScrollableDualRanking
+              title={`Provincias (${rankingData.length})`}
+              items={rankingData.map((r) => ({
+                id: r.provincia,
+                label: r.provincia,
+                primary: r.hogares,
+                secondary: r.habitantes,
+              }))}
+              primaryLabel="Hogares"
+              secondaryLabel="Habitantes"
+              selectedId={selectedProvincia}
+              onSelect={setSelectedProvincia}
+            />
 
           </div>
 
