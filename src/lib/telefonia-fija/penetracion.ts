@@ -51,7 +51,7 @@ export function getPenetracionEvolutionData(
   }));
 }
 
-export function getPenetracionProvinciaRankingData(
+export function getPenetracionProvinciaSortedData(
   response: ApiResponse<TelefoniaFijaPenetracionProvinciaRow>
 ) {
   return [...response.data]
@@ -60,7 +60,6 @@ export function getPenetracionProvinciaRankingData(
         b.accesos_100_hog -
         a.accesos_100_hog
     )
-    .slice(0, 10)
     .map((row) => ({
       provincia: row.provincia,
       hogares: row.accesos_100_hog,

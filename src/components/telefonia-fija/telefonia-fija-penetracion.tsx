@@ -13,7 +13,7 @@ import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
   getPenetracionInsights,
-  getPenetracionProvinciaRankingData,
+  getPenetracionProvinciaSortedData,
 } from "@/lib/telefonia-fija";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -24,13 +24,12 @@ import { PeriodFilter } from "@/components/ui/filters/period-filter";
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
 
-import { RankingComparisonBarChart }
-  from "@/components/ui/charts/ranking-comparison-bar-chart";
 import { ProvinciasMap }
   from "@/components/ui/map/provincias-map";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
+import { ScrollableDualRanking } from "../ui/ranking/scrollable-dual-ranking";
 
 type Props = {
   penetracion: ApiResponse<TelefoniaFijaPenetracionRow>;
@@ -41,6 +40,9 @@ export function TelefoniaFijaPenetracion({
   penetracion,
   provincias,
 }: Props) {
+  const [selectedProvincia, setSelectedProvincia] =
+    useState<string>();
+
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
@@ -67,7 +69,7 @@ export function TelefoniaFijaPenetracion({
     );
 
   const rankingData =
-    getPenetracionProvinciaRankingData(
+    getPenetracionProvinciaSortedData(
       provincias
     );
 
@@ -144,25 +146,29 @@ export function TelefoniaFijaPenetracion({
             Distribución provincial
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
+          <div className="map-ranking-grid">
+            
             <div className="chart-card">
               <ProvinciasMap
                 data={provinciaData}
+                selectedProvincia={selectedProvincia}
+                onProvinciaHover={setSelectedProvincia}
               />
             </div>
 
-            <div className="chart-card">
-              <RankingComparisonBarChart
-                data={rankingData.map((r) => ({
-                  label: r.provincia,
-                  primary: r.hogares,
-                  secondary: r.habitantes,
-                }))}
-                primaryLabel="Hogares"
-                secondaryLabel="Habitantes"
-              />
-            </div>
+            <ScrollableDualRanking
+              title={`Provincias (${rankingData.length})`}
+              items={rankingData.map((r) => ({
+                id: r.provincia,
+                label: r.provincia,
+                primary: r.hogares,
+                secondary: r.habitantes,
+              }))}
+              primaryLabel="Hogares"
+              secondaryLabel="Habitantes"
+              selectedId={selectedProvincia}
+              onSelect={setSelectedProvincia}
+            />
           </div>
 
         </div>
