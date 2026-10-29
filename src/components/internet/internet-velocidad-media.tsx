@@ -10,7 +10,7 @@ import type {
 import {
   getVelocidadEvolutionData,
   getVelocidadKPIItems,
-  getVelocidadProvinciaRankingData,
+  getVmdProvinciaSortedData,
   getVelocidadInsights
 } from "@/lib/internet";
 
@@ -25,7 +25,8 @@ import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
 
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
-import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
+import { dispValue } from "@/lib/format";
+import { ScrollableRanking } from "../ui/ranking/scrollable-ranking";
 
 export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
@@ -37,6 +38,8 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
+
+  const [selectedProvincia, setSelectedProvincia,] = useState<string>();
 
   const filteredRows =
     filterByPeriods(
@@ -52,7 +55,16 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
     });
 
   const rankingData =
-    getVelocidadProvinciaRankingData(provincias);
+    getVmdProvinciaSortedData(provincias);
+
+  const rankingItems = rankingData.map(
+    (item) => ({
+      id: item.provincia,
+      label: item.provincia,
+      value: item.mbps,
+    })
+  );
+
   const top = rankingData[0];
 
   const insights =
@@ -68,7 +80,11 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
       tooltipData: [
         {
           label: "Velocidad media",
-          value: `${d.mbps.toFixed(1)} Mbps`,
+          value: dispValue(d.mbps, {
+            format: "number",
+            decimals: 2,
+            suffix: " Mbps",
+          }),
           color: "#005297",
         },
       ],
@@ -83,6 +99,7 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
         items={kpiItems}
       />
 
+      {/* EVOLUCIÓN */}
       <section className="section-wrap alt">
         <div className="section-inner">
 
@@ -109,7 +126,11 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
                 },
               ]}
               tooltipFormatter={(v) =>
-                `${v.toFixed(2)} Mbps`
+                dispValue(v, {
+                  format: "number",
+                  decimals: 2,
+                  suffix: " Mbps",
+                })
               }
             />
           </div>
@@ -120,6 +141,7 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
         </div>
       </section>
 
+      {/* PROVINCIAS */}
       <section className="section-wrap">
         <div className="section-inner">
 
@@ -127,34 +149,42 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
             Distribución provincial
           </h2>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
-            <div className="chart-card">
-              <ProvinciasMap
-                data={provinciaData}
-              />
-            </div>
-
-            <div className="chart-card">
-              <RankingBarChart
-                data={rankingData.map((r) => ({
-                  label: r.provincia,
-                  value: r.mbps,
-                }))}
-                tooltipLabel="Velocidad media"
-                formatter={(v) =>
-                  `${v.toFixed(1)} Mbps`
-                }
-              />
-            </div>
-
-          </div>
+          {/* INSIGHT */}
           <p className="chart-description">
             La provincia con mayor velocidad media es{" "}
             <strong>{top.provincia}</strong>
             con{" "}
             <strong>{top.mbps.toFixed(1)} Mbps</strong>.
           </p>
+
+          {/* MAPA */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+            <div className="chart-card">
+              <ProvinciasMap
+                data={provinciaData}
+                selectedProvincia={selectedProvincia}
+                onProvinciaHover={setSelectedProvincia}
+              />
+            </div>
+
+            <div className="chart-card">
+              <ScrollableRanking
+                title={`Provincias (${rankingData.length}) · Mbps`}
+                items={rankingItems}
+                selectedId={selectedProvincia}
+                onSelect={setSelectedProvincia}
+                formatter={(v) =>
+                  dispValue(v, {
+                    format: "number",
+                    decimals: 2
+                  })
+                }
+              />
+            </div>
+
+          </div>
+
         </div>
       </section>
     </>

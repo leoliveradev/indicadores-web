@@ -91,12 +91,10 @@ export function getVelocidadEvolutionData(
   }));
 }
 
-export function getVelocidadProvinciaRankingData(
+export function getVmdProvinciaSortedData(
   response: ApiResponse<InternetVelocidadMediaProvinciasRow>
 ) {
-  const topRows = getTopN(
-    response.data,
-    (r) => r.mbps
+  return [...response.data].sort(
+    (a, b) => b.mbps - a.mbps
   );
-  return topRows;
 }
