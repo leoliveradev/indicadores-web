@@ -156,7 +156,8 @@ export function InternetPenetracion({
             {" "}accesos cada 100 hogares.
           </p>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <div className="map-ranking-grid">
+            
             <div className="chart-card">
               <ProvinciasMap
                 data={provinciaData}
