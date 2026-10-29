@@ -168,20 +168,18 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
               />
             </div>
 
-            <div className="chart-card">
-              <ScrollableRanking
-                title={`Provincias (${rankingData.length}) · Mbps`}
-                items={rankingItems}
-                selectedId={selectedProvincia}
-                onSelect={setSelectedProvincia}
-                formatter={(v) =>
-                  dispValue(v, {
-                    format: "number",
-                    decimals: 2
-                  })
-                }
-              />
-            </div>
+            <ScrollableRanking
+              title={`Provincias (${rankingData.length}) · Mbps`}
+              items={rankingItems}
+              selectedId={selectedProvincia}
+              onSelect={setSelectedProvincia}
+              formatter={(v) =>
+                dispValue(v, {
+                  format: "number",
+                  decimals: 2
+                })
+              }
+            />
 
           </div>
 

@@ -183,17 +183,14 @@ export function InternetTecnologia({
                   setSelectedProvincia
                 }
               />
-
             </div>
 
-            <div className="chart-card">
-              <ScrollableRanking
-                title={`Provincias (${rankingData.length})`}
-                items={rankingItems}
-                selectedId={selectedProvincia}
-                onSelect={setSelectedProvincia}
-              />
-            </div>
+            <ScrollableRanking
+              title={`Provincias (${rankingData.length})`}
+              items={rankingItems}
+              selectedId={selectedProvincia}
+              onSelect={setSelectedProvincia}
+            />
 
           </div>
 

@@ -165,21 +165,20 @@ export function InternetPenetracion({
               />
             </div>
 
-            <div className="chart-card">
-              <ScrollableDualRanking
-                title={`Provincias (${rankingData.length})`}
-                items={rankingData.map((r) => ({
-                  id: r.provincia,
-                  label: r.provincia,
-                  primary: r.hogares,
-                  secondary: r.habitantes,
-                }))}
-                primaryLabel="Hogares"
-                secondaryLabel="Habitantes"
-                selectedId={selectedProvincia}
-                onSelect={setSelectedProvincia}
-              />
-            </div>
+            <ScrollableDualRanking
+              title={`Provincias (${rankingData.length})`}
+              items={rankingData.map((r) => ({
+                id: r.provincia,
+                label: r.provincia,
+                primary: r.hogares,
+                secondary: r.habitantes,
+              }))}
+              primaryLabel="Hogares"
+              secondaryLabel="Habitantes"
+              selectedId={selectedProvincia}
+              onSelect={setSelectedProvincia}
+            />
+
           </div>
         </div>
       </section>
