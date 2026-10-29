@@ -97,12 +97,11 @@ export function getAccesosEvolutionData(
   }));
 }
 
-export function getAccesosProvinciaRankingData(
+export function getAccesosProvinciaSortedData(
   response: ApiResponse<TelefoniaFijaAccesosProvinciaRow>
 ) {
   return [...response.data]
     .sort((a, b) => b.total - a.total)
-    .slice(0, 10)
     .map((row) => ({
       provincia: row.provincia,
       total: row.total,

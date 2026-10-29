@@ -13,7 +13,7 @@ import {
   getAccesosDonutData,
   getAccesosEvolutionData,
   getAccesosInsights,
-  getAccesosProvinciaRankingData,
+  getAccesosProvinciaSortedData
 } from "@/lib/telefonia-fija";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -28,11 +28,10 @@ import { PeriodFilter } from "../ui/filters/period-filter";
 
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
-import { RankingBarChart } from "@/components/ui/charts/ranking-bar-chart";
-
 import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
+import { ScrollableRanking } from "../ui/ranking/scrollable-ranking";
 
 type Props = {
   accesos: ApiResponse<TelefoniaFijaAccesosRow>;
@@ -45,6 +44,8 @@ export function TelefoniaFijaAccesos({
 }: Props) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
+
+  const [selectedProvincia, setSelectedProvincia,] = useState<string>();
 
   const filteredRows =
     filterByPeriods(
@@ -71,9 +72,17 @@ export function TelefoniaFijaAccesos({
     );
 
   const rankingData =
-    getAccesosProvinciaRankingData(
+    getAccesosProvinciaSortedData(
       provincias
     );
+
+  const rankingItems = rankingData.map(
+    (item) => ({
+      id: item.provincia,
+      label: item.provincia,
+      value: item.total,
+    })
+  );
 
   const provinciaData =
     provincias.data.map((p) => ({
@@ -150,11 +159,11 @@ export function TelefoniaFijaAccesos({
               }
             />
           </div>
-          
+
           <InsightsCard
             insights={insights}
           />
-        
+
         </div>
       </section>
 
@@ -170,17 +179,19 @@ export function TelefoniaFijaAccesos({
             <div className="chart-card">
               <ProvinciasMap
                 data={provinciaData}
+                selectedProvincia={selectedProvincia}
+                onProvinciaHover={
+                  setSelectedProvincia
+                }
               />
             </div>
 
-            <div className="chart-card">
-              <RankingBarChart
-                data={rankingData.map((r) => ({
-                  label: r.provincia,
-                  value: r.total,
-                }))}
-              />
-            </div>
+            <ScrollableRanking
+              title={`Provincias (${rankingData.length})`}
+              items={rankingItems}
+              selectedId={selectedProvincia}
+              onSelect={setSelectedProvincia}
+            />
 
           </div>
 
