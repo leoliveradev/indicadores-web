@@ -61,7 +61,7 @@ export function getPenetracionEvolutionData(
   }));
 }
 
-export function getPenetracionProvinciaRankingData(
+export function getPenetracionProvinciaSortedData(
   response: ApiResponse<TelevisionPenetracionProvinciaRow>
 ) {
   return [...response.data]
@@ -70,7 +70,6 @@ export function getPenetracionProvinciaRankingData(
         b.tv_suscripcion_100hogares -
         a.tv_suscripcion_100hogares
     )
-    .slice(0, 10)
     .map((row) => ({
       provincia: row.provincia,
       hogares: row.tv_suscripcion_100hogares,
