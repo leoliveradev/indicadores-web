@@ -96,3 +96,106 @@
   font-weight: 600;
   color: var(--enacom-navy);
 }
+
+/* ========================================================
+   DUAL RANKING
+======================================================== */
+
+.dual-ranking-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-card);
+  overflow: hidden;
+}
+
+.dual-ranking-header {
+  padding: var(--space-md);
+  border-bottom: 1px solid var(--border);
+
+  font-size: var(--font-md);
+  font-weight: 600;
+  color: var(--enacom-navy);
+}
+
+.dual-ranking-list {
+  overflow-y: auto;
+}
+
+.dual-ranking-item {
+  padding: var(--space-md);
+
+  border-bottom: 1px solid var(--border);
+
+  cursor: pointer;
+
+  transition:
+    background var(--transition-fast),
+    color var(--transition-fast);
+}
+
+.dual-ranking-item:last-child {
+  border-bottom: none;
+}
+
+.dual-ranking-item:hover {
+  background: var(--bg);
+}
+
+.dual-ranking-item.active {
+  background: var(--blue-100);
+}
+
+.dual-ranking-title {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+
+  margin-bottom: 6px;
+}
+
+.dual-ranking-position {
+  min-width: 24px;
+
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.dual-ranking-label {
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.dual-ranking-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+
+  gap: var(--space-md);
+
+  padding-left: 32px;
+}
+
+.dual-ranking-metric {
+  display: flex;
+  flex-direction: column;
+}
+
+.dual-ranking-metric-label {
+  font-size: var(--font-xs);
+  color: var(--text-muted);
+  text-transform: uppercase;
+}
+
+.dual-ranking-metric-value {
+  margin-top: 2px;
+  font-weight: 600;
+  font-family: var(--font-mono);
+}
+
+.dual-ranking-metric-value.primary {
+  color: var(--blue-300);
+}
+
+.dual-ranking-metric-value.secondary {
+  color: var(--accent-green);
+}

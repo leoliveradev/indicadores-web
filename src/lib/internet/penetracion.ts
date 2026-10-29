@@ -49,12 +49,11 @@ export function getPenetracionEvolutionData(
   }));
 }
 
-export function getPenetracionProvinciaRankingData(
+export function getPenetracionProvinciaSortedData(
   response: ApiResponse<InternetPenetracionProvinciaRow>
 ) {
   return [...response.data]
     .sort((a, b) => b.accesos_cada_100_hogares - a.accesos_cada_100_hogares)
-    .slice(0, 10)
     .map((row) => ({
       provincia: row.provincia,
       total: row.accesos_cada_100_hogares,

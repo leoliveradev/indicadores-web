@@ -13,10 +13,8 @@ import type {
 import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
-  getPenetracionProvinciaRankingData
+  getPenetracionProvinciaSortedData
 } from "@/lib/internet";
-
-import { RankingComparisonBarChart } from "@/components/ui/charts/ranking-comparison-bar-chart";
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
@@ -27,6 +25,7 @@ import {
 
 import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
+import { ScrollableDualRanking } from "../ui/ranking/scrollable-dual-ranking";
 
 export function InternetPenetracion({
   penetracion,
@@ -37,6 +36,9 @@ export function InternetPenetracion({
 }) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
+
+  const [selectedProvincia, setSelectedProvincia] =
+    useState<string>();
 
   const rows = penetracion.data;
 
@@ -63,7 +65,7 @@ export function InternetPenetracion({
       filteredRows
     );
 
-  const rankingData = getPenetracionProvinciaRankingData(penetracionProvincias);
+  const rankingData = getPenetracionProvinciaSortedData(penetracionProvincias);
 
   const provinciaData = penetracionProvincias.data.map((d) => ({
     provincia: d.provincia,
@@ -156,20 +158,26 @@ export function InternetPenetracion({
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             <div className="chart-card">
-              <ProvinciasMap data={provinciaData} />
+              <ProvinciasMap
+                data={provinciaData}
+                selectedProvincia={selectedProvincia}
+                onProvinciaHover={setSelectedProvincia}
+              />
             </div>
 
             <div className="chart-card">
-              <RankingComparisonBarChart
-                data={rankingData.map((r) => ({
+              <ScrollableDualRanking
+                title={`Provincias (${rankingData.length})`}
+                items={rankingData.map((r) => ({
+                  id: r.provincia,
                   label: r.provincia,
                   primary: r.hogares,
                   secondary: r.habitantes,
                 }))}
                 primaryLabel="Hogares"
                 secondaryLabel="Habitantes"
-                primaryColor="var(--blue-200)"
-                secondaryColor="var(--accent-green)"
+                selectedId={selectedProvincia}
+                onSelect={setSelectedProvincia}
               />
             </div>
           </div>
