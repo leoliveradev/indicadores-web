@@ -72,9 +72,6 @@ export function InternetAccesosVelocidad({
     ]
   );
 
-  const nacionalRows =
-    velocidades.data;
-
   const showComparison =
     provincia !== "all";
 
