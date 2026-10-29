@@ -88,7 +88,7 @@ export function getAccesosEvolutionData(
   }));
 }
 
-export function getAccesosProvinciaRankingData(
+export function getAccesosProvinciaSortedData(
   response: ApiResponse<TelevisionAccesosProvinciaRow>
 ) {
   return [...response.data]
@@ -97,7 +97,6 @@ export function getAccesosProvinciaRankingData(
         b.tv_suscripcion -
         a.tv_suscripcion
     )
-    .slice(0, 10)
     .map((row) => ({
       provincia: row.provincia,
       total: row.tv_suscripcion,
