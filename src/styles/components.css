@@ -29,6 +29,16 @@
 /* ========================================================
    SCROLLABLE RANKING
 ======================================================== */
+.map-ranking-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--space-md);
+  align-items: stretch;
+}
+
+.map-ranking-grid > * {
+  height: 100%;
+}
 
 .ranking-card {
   background: var(--surface);
@@ -36,6 +46,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   overflow: hidden;
+  height: 100%;
 }
 
 .ranking-header {
@@ -49,6 +60,7 @@
 
 .ranking-list {
   overflow-y: auto;
+  
 }
 
 .ranking-item {
@@ -107,6 +119,7 @@
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-card);
   overflow: hidden;
+  height: 100%;
 }
 
 .dual-ranking-header {
