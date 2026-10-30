@@ -179,8 +179,11 @@ export function InternetTecnologia({
               <ProvinciasMap
                 data={provinciaData}
                 selectedProvincia={selectedProvincia}
-                onProvinciaHover={
-                  setSelectedProvincia
+                onProvinciaHover={setSelectedProvincia}
+                legendFormatter={(v) =>
+                  dispValue(v, {
+                    format: "compact"
+                  })
                 }
               />
             </div>
