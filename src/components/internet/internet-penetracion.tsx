@@ -2,7 +2,6 @@
 import { useState } from "react";
 import { KPISection } from "@/components/home/kpi-section";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
-import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
 import type { ApiResponse } from "@/lib/types";
 import type {
@@ -13,7 +12,6 @@ import type {
 import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
-  getPenetracionProvinciaSortedData
 } from "@/lib/internet";
 
 import { InsightsCard }
@@ -25,7 +23,7 @@ import {
 
 import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
-import { ScrollableDualRanking } from "../ui/ranking/scrollable-dual-ranking";
+import { PenetracionProvinciaView } from "@/components/internet/provincias/penetracion-provincia-view";
 
 export function InternetPenetracion({
   penetracion,
@@ -36,9 +34,6 @@ export function InternetPenetracion({
 }) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
-
-  const [selectedProvincia, setSelectedProvincia] =
-    useState<string>();
 
   const rows = penetracion.data;
 
@@ -63,35 +58,6 @@ export function InternetPenetracion({
   const insights =
     getPenetracionInsights(
       filteredRows
-    );
-
-  const rankingData = getPenetracionProvinciaSortedData(penetracionProvincias);
-
-  const provinciaData = penetracionProvincias.data.map((d) => ({
-    provincia: d.provincia,
-    total: d.accesos_cada_100_hogares,
-
-    tooltipData: [
-      {
-        label: "Hogares",
-        value: d.accesos_cada_100_hogares.toFixed(2),
-        color: "var(--blue-300)",
-      },
-      {
-        label: "Habitantes",
-        value: d.accesos_cada_100_habitantes.toFixed(2),
-        color: "var(--accent-green)",
-      },
-    ],
-  }));
-
-  const top =
-    penetracionProvincias.data.reduce(
-      (a, b) =>
-        b.accesos_cada_100_hogares >
-          a.accesos_cada_100_hogares
-          ? b
-          : a
     );
 
   return (
@@ -142,47 +108,11 @@ export function InternetPenetracion({
       </section>
 
       {/* PROVINCIAS */}
-      <section className="section-wrap alt">
-        <div className="section-inner">
-          <h2 className="section-heading">
-            Penetración por provincia
-          </h2>
-
-          <p className="chart-description">
-            La mayor penetración corresponde a{" "}
-            <strong>{top.provincia}</strong>{" "}
-            con{" "}
-            {top.accesos_cada_100_hogares.toFixed(2)}
-            {" "}accesos cada 100 hogares.
-          </p>
-
-          <div className="geo-layout">
-            
-            <div className="chart-card">
-              <ProvinciasMap
-                data={provinciaData}
-                selectedProvincia={selectedProvincia}
-                onProvinciaHover={setSelectedProvincia}
-              />
-            </div>
-
-            <ScrollableDualRanking
-              title={`Provincias (${rankingData.length})`}
-              items={rankingData.map((r) => ({
-                id: r.provincia,
-                label: r.provincia,
-                primary: r.hogares,
-                secondary: r.habitantes,
-              }))}
-              primaryLabel="Hogares"
-              secondaryLabel="Habitantes"
-              selectedId={selectedProvincia}
-              onSelect={setSelectedProvincia}
-            />
-
-          </div>
-        </div>
-      </section>
+      <PenetracionProvinciaView
+        penetracionProvincias={
+          penetracionProvincias
+        }
+      />
     </>
   );
 }

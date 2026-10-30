@@ -11,7 +11,6 @@ import { KPISection } from "@/components/home/kpi-section";
 import {
   getTecnologiaKPIItems,
   getTecnologiaEvolutionData,
-  getTecnologiaProvinciaSortedData,
   getTecnologiaInsights
 } from "@/lib/internet";
 
@@ -19,13 +18,10 @@ import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
-import { ProvinciasMap } from "@/components/ui/map/provincias-map";
-
-import { InsightsCard }
-  from "@/components/ui/insights/insights-card";
+import { InsightsCard } from "@/components/ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
-import { ScrollableRanking } from "../ui/ranking/scrollable-ranking";
+import { TecnologiaProvinciaView } from "./provincias/tecnologia-provincia-view";
 
 export function InternetTecnologia({
   tecnologias,
@@ -37,8 +33,6 @@ export function InternetTecnologia({
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
-
-  const [selectedProvincia, setSelectedProvincia,] = useState<string>();
 
   const rows = tecnologias.data;
 
@@ -65,28 +59,6 @@ export function InternetTecnologia({
     getTecnologiaInsights(
       filteredRows
     );
-
-  const provinciaData = tecnologiasProvincias.data.map((d) => ({
-    provincia: d.provincia,
-    total: d.total,
-  }));
-
-  const top = provinciaData.reduce((a, b) =>
-    b.total > a.total ? b : a
-  );
-
-  const rankingData =
-    getTecnologiaProvinciaSortedData(
-      tecnologiasProvincias
-    );
-
-  const rankingItems = rankingData.map(
-    (item) => ({
-      id: item.provincia,
-      label: item.provincia,
-      value: item.total,
-    })
-  );
 
   return (
     <>
@@ -158,47 +130,11 @@ export function InternetTecnologia({
       </section>
 
       {/* PROVINCIAS */}
-      <section className="section-wrap alt">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Accesos por tecnología en provincias
-          </h2>
-
-          {/* INSIGHT */}
-          <p className="chart-description">
-            La provincia con mayor cantidad de accesos es{" "}
-            <strong>{top.provincia}</strong> ({top.total}), concentrando la mayor
-            infraestructura tecnológica del país.
-          </p>
-
-          {/* MAPA */}
-          <div className="geo-layout">
-
-            <div className="chart-card">
-              <ProvinciasMap
-                data={provinciaData}
-                selectedProvincia={selectedProvincia}
-                onProvinciaHover={setSelectedProvincia}
-                legendFormatter={(v) =>
-                  dispValue(v, {
-                    format: "compact"
-                  })
-                }
-              />
-            </div>
-
-            <ScrollableRanking
-              title={`Provincias (${rankingData.length})`}
-              items={rankingItems}
-              selectedId={selectedProvincia}
-              onSelect={setSelectedProvincia}
-            />
-
-          </div>
-
-        </div>
-      </section>
+      <TecnologiaProvinciaView
+        tecnologiasProvincias={
+          tecnologiasProvincias
+        }
+      />
 
     </>
   );
