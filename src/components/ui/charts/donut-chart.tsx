@@ -21,7 +21,7 @@ export function DonutChart({ data }: { data: DonutItem[] }) {
   }
 
   return (
-    <ResponsiveContainer width="100%" height={220}>
+    <ResponsiveContainer width="100%" height={260}>
       <PieChart>
         <Pie
           data={data}
@@ -54,6 +54,7 @@ export function DonutChart({ data }: { data: DonutItem[] }) {
         />
 
         <Legend />
+
       </PieChart>
     </ResponsiveContainer>
   );
