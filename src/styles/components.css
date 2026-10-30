@@ -29,15 +29,21 @@
 /* ========================================================
    SCROLLABLE RANKING
 ======================================================== */
-.map-ranking-grid {
+.geo-layout {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: var(--space-md);
   align-items: stretch;
 }
 
-.map-ranking-grid > * {
+.geo-layout > * {
   height: 100%;
+}
+
+@media (max-width: 1024px) {
+  .geo-layout {
+    grid-template-columns: 1fr;
+  }
 }
 
 .ranking-card {
