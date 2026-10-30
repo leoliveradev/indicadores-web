@@ -146,7 +146,7 @@ export function TelefoniaFijaPenetracion({
             Distribución provincial
           </h2>
 
-          <div className="map-ranking-grid">
+          <div className="geo-layout">
             
             <div className="chart-card">
               <ProvinciasMap

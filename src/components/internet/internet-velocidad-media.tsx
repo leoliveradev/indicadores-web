@@ -158,7 +158,7 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
           </p>
 
           {/* MAPA */}
-          <div className="map-ranking-grid">
+          <div className="geo-layout">
 
             <div className="chart-card">
               <ProvinciasMap

@@ -54,7 +54,7 @@ export function MercadoPostalProvincias({
           </p>
         )}
 
-        <div className="map-ranking-grid">
+        <div className="geo-layout">
 
           <div className="chart-card">
             <ProvinciasMap

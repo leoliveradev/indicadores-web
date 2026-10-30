@@ -173,7 +173,7 @@ export function InternetTecnologia({
           </p>
 
           {/* MAPA */}
-          <div className="map-ranking-grid">
+          <div className="geo-layout">
 
             <div className="chart-card">
               <ProvinciasMap

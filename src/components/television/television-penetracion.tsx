@@ -145,7 +145,7 @@ export function TelevisionPenetracion({
             Penetración por provincia
           </h2>
 
-          <div className="map-ranking-grid">
+          <div className="geo-layout">
 
             <div className="chart-card">
               <ProvinciasMap
