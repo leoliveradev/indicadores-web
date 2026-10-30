@@ -7,8 +7,6 @@ import {
   getInternetIngresos
 } from "@/lib/api/internet";
 
-import { InternetOverview } from "@/components/internet/internet-overview";
-import { InternetInsights } from "@/components/internet/internet-insights";
 import { InternetTabs } from "@/components/internet/internet-tabs";
 
 import {
@@ -56,18 +54,11 @@ export default async function InternetPage() {
         subtitle={`${period} · Datos oficiales ENACOM`}
       />
 
-      {/* OVERVIEW */}
-      <InternetOverview data={overview} />
-
-      {/* INSIGHTS */}
-      <InternetInsights
-        tecnologiaData={tecnologiaDonutData}
-        rangosData={rangosDonutData}
-
-      />
-
       {/* EXPLORATION */}
       <InternetTabs
+        overview={overview}
+        tecnologiaDonutData={tecnologiaDonutData}
+        rangosDonutData={rangosDonutData}
         tecnologias={tecnologias}
         tecnologiasProvincias={tecnologiasProvincias}
         accesosVelocidad={accesosVelocidad}

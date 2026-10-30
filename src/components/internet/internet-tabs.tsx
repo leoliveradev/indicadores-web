@@ -10,6 +10,9 @@ import {
   InternetIngresosRow,
 } from "@/lib/internet";
 
+import { InternetResumen } from "@/components/internet/internet-resumen";
+import { Overview } from "@/lib/home/types";
+import { DonutItem } from "@/components/ui/charts/donut-chart";
 import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
 import { InternetAccesosVelocidad } from "@/components/internet/internet-accesos-velocidad";
 import { InternetVelocidadMedia } from "@/components/internet/internet-velocidad-media";
@@ -17,6 +20,8 @@ import { InternetPenetracion } from "@/components/internet/internet-penetracion"
 import { InternetIngresos } from "@/components/internet/internet-ingresos";
 
 const TABS = [
+  { key: "resumen", label: "Resumen" },
+  { key: "provincias", label: "Provincias" },
   { key: "tecnologia", label: "Tecnología" },
   { key: "penetracion", label: "Penetración" },
   { key: "velocidadMedia", label: "Velocidad media" },
@@ -25,6 +30,9 @@ const TABS = [
 ];
 
 type Props = {
+  overview: Overview;
+  tecnologiaDonutData: DonutItem[];
+  rangosDonutData: DonutItem[];
   tecnologias: ApiResponse<InternetTecnologiaRow>;
   tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
   accesosVelocidad: ApiResponse<InternetAccesosVelocidadRow>;
@@ -36,6 +44,9 @@ type Props = {
 };
 
 export function InternetTabs({
+  overview,
+  tecnologiaDonutData,
+  rangosDonutData,
   tecnologias,
   tecnologiasProvincias,
   accesosVelocidad,
@@ -46,7 +57,7 @@ export function InternetTabs({
   ingresos
 }: Props) {
 
-  const [active, setActive] = useState("tecnologia");
+  const [active, setActive] = useState("resumen");
 
   return (
     <section className="section-wrap">
@@ -68,6 +79,20 @@ export function InternetTabs({
 
         {/* CONTENIDO DINÁMICO */}
         <div>
+
+          {active === "resumen" && (
+            <InternetResumen
+              overview={overview}
+              tecnologiaData={tecnologiaDonutData}
+              rangosData={rangosDonutData}
+            />
+          )}
+
+          {active === "provincias" && (
+            <div className="chart-card">
+              Próximamente: exploración provincial interactiva.
+            </div>
+          )}
 
           {active === "tecnologia" && (
             <InternetTecnologia

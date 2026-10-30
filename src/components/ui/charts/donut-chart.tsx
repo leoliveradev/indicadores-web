@@ -2,7 +2,7 @@
 
 import { PieChart, Pie, Cell, ResponsiveContainer, Tooltip, Legend } from "recharts";
 
-type DonutItem = {
+export type DonutItem = {
   name: string;
   value: number;
   color: string;
