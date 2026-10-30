@@ -8,12 +8,11 @@ import {
   dispCurrency,
 } from "@/lib/format";
 
-export function getProvinciaRankingData(
+export function getProvinciaSortedData(
   response: ApiResponse<MercadoPostalProvinciaRow>
 ) {
   return [...response.data]
     .sort((a, b) => b.pesos - a.pesos)
-    .slice(0, 10)
     .map((row) => ({
       provincia: row.provincia,
       pesos: row.pesos,
