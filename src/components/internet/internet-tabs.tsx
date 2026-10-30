@@ -13,6 +13,7 @@ import {
 import { InternetResumen } from "@/components/internet/internet-resumen";
 import { Overview } from "@/lib/home/types";
 import { DonutItem } from "@/components/ui/charts/donut-chart";
+import { InternetProvincias } from "@/components/internet/internet-provincias";
 import { InternetTecnologia } from "@/components/internet/internet-tecnologia";
 import { InternetAccesosVelocidad } from "@/components/internet/internet-accesos-velocidad";
 import { InternetVelocidadMedia } from "@/components/internet/internet-velocidad-media";
@@ -89,9 +90,15 @@ export function InternetTabs({
           )}
 
           {active === "provincias" && (
-            <div className="chart-card">
-              Próximamente: exploración provincial interactiva.
-            </div>
+            <InternetProvincias
+              tecnologias={tecnologiasProvincias}
+              velocidadMedia={
+                velocidadMediaProvincias
+              }
+              penetracion={
+                penetracionProvincias
+              }
+            />
           )}
 
           {active === "tecnologia" && (
