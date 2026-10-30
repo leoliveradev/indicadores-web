@@ -302,3 +302,24 @@ export function getAccesosVelocidadComparacionKpi(
     ),
   };
 }
+
+export function getAccesosVelocidadDonutData(
+  rows: InternetAccesosVelocidadRow[]
+) {
+  const colors = [
+    "var(--accent-green)",
+    "var(--accent-amber)",
+    "var(--blue-200)",
+    "var(--blue-300)",
+    "var(--blue-400)",
+    "var(--blue-500)",
+  ];
+
+  return getAccesosVelocidadRangosData(rows)
+    .map((item, index) => ({
+      name: item.rango,
+      value: item.accesos,
+      color: colors[index],
+    }))
+    .filter((item) => item.value > 0);
+}

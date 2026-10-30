@@ -6,8 +6,7 @@ import type {
   InternetTecnologiaProvinciaRow, InternetTecnologiaRow, 
   InternetAccesosVelocidadRow,
   InternetVelocidadMediaRow, 
-  InternetVelocidadMediaProvinciasRow, 
-  InternetVelocidadRangosRow, 
+  InternetVelocidadMediaProvinciasRow,
   InternetIngresosRow,
 } from "@/lib/internet";
 
@@ -44,12 +43,6 @@ export function getInternetVelocidadMedia() {
 export function getInternetVelocidadMediaProvinciasLatest() {
   return get<ApiResponse<InternetVelocidadMediaProvinciasRow>>(
     "/api/v1/internet/accesos/velocidad-media/provincias/latest"
-  );
-}
-
-export function getInternetRangosVelocidad() {
-  return get<ApiResponse<InternetVelocidadRangosRow>>(
-    "/api/v1/internet/accesos/rangos-velocidad"
   );
 }
 

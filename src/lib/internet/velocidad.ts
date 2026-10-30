@@ -2,28 +2,12 @@ import { dispValue } from "@/lib/format";
 import { ApiResponse } from "@/lib/types";
 import type {
   InternetVelocidadMediaRow,
-  InternetVelocidadMediaProvinciasRow,
-  InternetVelocidadRangosRow,
+  InternetVelocidadMediaProvinciasRow
 } from "@/lib/internet";
 
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { VELOCITY_CONFIG } from "@/lib/constants/internet";
 
-import { buildDonutData, getTopN } from "./common";
-
-
-export function getVelocidadRangosDonutData(
-  response: ApiResponse<InternetVelocidadRangosRow>
-) {
-  const rows = response.data;
-
-  if (!rows.length) return [];
-
-  const cur = rows[rows.length - 1];
-
-  return buildDonutData(cur, VELOCITY_CONFIG);
-}
 
 export function getVelocidadKPIItems(
   response: ApiResponse<InternetVelocidadMediaRow>
