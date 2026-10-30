@@ -6,14 +6,15 @@ import type {
 
 import {
   getProvinciaMapData,
-  getProvinciaRankingData,
+  getProvinciaSortedData,
 } from "@/lib/mercado-postal";
 
 import { ProvinciasMap }
   from "@/components/ui/map/provincias-map";
 
-import { RankingComparisonBarChart }
-  from "@/components/ui/charts/ranking-comparison-bar-chart";
+import { ScrollableDualRanking } from "../ui/ranking/scrollable-dual-ranking";
+import { useState } from "react";
+import { dispValue } from "@/lib/format";
 
 type Props = {
   provincias: ApiResponse<MercadoPostalProvinciaRow>;
@@ -22,11 +23,14 @@ type Props = {
 export function MercadoPostalProvincias({
   provincias,
 }: Props) {
-  const mapData =
+  const [selectedProvincia, setSelectedProvincia] =
+    useState<string>();
+
+  const provinciaData =
     getProvinciaMapData(provincias);
 
   const rankingData =
-    getProvinciaRankingData(provincias);
+    getProvinciaSortedData(provincias);
 
   const top =
     rankingData.length > 0
@@ -50,29 +54,35 @@ export function MercadoPostalProvincias({
           </p>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="map-ranking-grid">
 
           <div className="chart-card">
             <ProvinciasMap
-              data={mapData}
-            />
+              data={provinciaData}
+              selectedProvincia={selectedProvincia}
+              onProvinciaHover={setSelectedProvincia}
+              legendFormatter={(v) =>
+                dispValue(v, {
+                  format: "compact",
+                  decimals: 1,
+                })
+              }
+                />
           </div>
 
-          <div className="chart-card">
-
-            <RankingComparisonBarChart
-              data={rankingData.map((r) => ({
-                label: r.provincia,
-                primary: r.pesos,
-                secondary: r.unidades,
-              }))}
-              primaryLabel="Facturación"
-              secondaryLabel="Producción"
-              primaryColor="#005297"
-              secondaryColor="#22c55e"
-            />
-
-          </div>
+          <ScrollableDualRanking
+            title={`Provincias (${rankingData.length})`}
+            items={rankingData.map((r) => ({
+              id: r.provincia,
+              label: r.provincia,
+              primary: r.pesos,
+              secondary: r.unidades,
+            }))}
+            primaryLabel="Facturación"
+            secondaryLabel="Producción"
+            selectedId={selectedProvincia}
+            onSelect={setSelectedProvincia}
+          />
 
         </div>
 
