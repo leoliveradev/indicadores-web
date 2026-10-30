@@ -8,8 +8,12 @@ type LegendScale = {
 
 export function MapLegend({
   scale,
+  formatter
 }: {
   scale: LegendScale;
+  formatter?: (
+    value: number
+  ) => string;
 }) {
   const range = scale.range();
 
@@ -30,7 +34,11 @@ export function MapLegend({
                 background: color,
               }}
             />
-            <div>{Math.round(min ?? 0)}</div>
+            <div>
+              {formatter
+                ? formatter(min ?? 0)
+                : Math.round(min ?? 0)}
+            </div>
           </div>
         );
       })}

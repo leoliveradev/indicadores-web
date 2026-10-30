@@ -24,6 +24,10 @@ type Props = {
   onProvinciaHover?: (
     provincia: string | undefined
   ) => void;
+
+  legendFormatter?: (
+    value: number
+  ) => string;
 };
 
 type MapTooltipData = {
@@ -46,6 +50,7 @@ export function ProvinciasMap({
   onSelect,
   selectedProvincia,
   onProvinciaHover,
+  legendFormatter
 }: Props) {
   const geo = useGeoData();
   const [tooltip, setTooltip] =
@@ -121,7 +126,10 @@ export function ProvinciasMap({
 
       {tooltip && <MapTooltip {...tooltip} />}
 
-      <MapLegend scale={colorScale} />
+      <MapLegend
+        scale={colorScale}
+        formatter={legendFormatter}
+      />
     </div>
   );
 }
