@@ -44,34 +44,37 @@ export function InternetProvincias({
           Exploración provincial
         </h2>
 
-        <div className="filter-bar">
-          <label className="filter-label">
-            Indicador
-          </label>
+        <div className="filter-toolbar">
+          <div className="filter-group">
+            <label className="filter-label">
+              Indicador
+            </label>
 
-          <select
-            value={view}
-            onChange={(e) =>
-              setView(
-                e.target.value as
-                | "tecnologia"
-                | "velocidad"
-                | "penetracion"
-              )
-            }
-          >
-            <option value="tecnologia">
-              Tecnología
-            </option>
+            <select
+              value={view}
+              onChange={(e) =>
+                setView(
+                  e.target.value as
+                  | "tecnologia"
+                  | "velocidad"
+                  | "penetracion"
+                )
+              }
+              className="filter-select"
+            >
+              <option value="tecnologia">
+                Tecnología
+              </option>
 
-            <option value="velocidad">
-              Velocidad media
-            </option>
+              <option value="velocidad">
+                Velocidad media
+              </option>
 
-            <option value="penetracion">
-              Penetración
-            </option>
-          </select>
+              <option value="penetracion">
+                Penetración
+              </option>
+            </select>
+          </div>
         </div>
 
         {view === "tecnologia" && (

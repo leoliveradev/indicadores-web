@@ -218,3 +218,55 @@
 .dual-ranking-metric-value.secondary {
   color: var(--accent-green);
 }
+
+/* ========================================================
+   FILTERS
+======================================================== */
+
+.filter-group {
+  margin-bottom: var(--space-lg);
+}
+
+.filter-label {
+  display: block;
+  margin-bottom: 8px;
+
+  font-size: var(--font-sm);
+  font-weight: 600;
+
+  color: var(--text-primary);
+}
+
+.filter-select {
+  min-width: 240px;
+
+  padding: 10px 12px;
+
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+
+  background: var(--surface);
+
+  font-family: var(--font);
+  font-size: var(--font-sm);
+
+  color: var(--text-primary);
+
+  transition:
+    border-color var(--transition-fast),
+    box-shadow var(--transition-fast);
+}
+
+.filter-select:hover {
+  border-color: var(--blue-200);
+}
+
+.filter-select:focus {
+  outline: none;
+
+  border-color: var(--blue-200);
+
+  box-shadow:
+    0 0 0 3px
+    rgba(0, 82, 151, 0.12);
+}
