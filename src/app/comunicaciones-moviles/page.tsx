@@ -13,9 +13,6 @@ import { fmtPeriod } from "@/lib/format";
 
 import { PageHero } from "@/components/layout/page-hero";
 
-import { ComunicacionesMovilesOverview }
-  from "@/components/comunicaciones-moviles/comunicaciones-moviles-overview";
-
 import { ComunicacionesMovilesTabs }
   from "@/components/comunicaciones-moviles/comunicaciones-moviles-tabs";
 
