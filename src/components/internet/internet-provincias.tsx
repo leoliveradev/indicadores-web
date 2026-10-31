@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 
-import {
-  TecnologiaProvinciaView
-} from "./provincias/tecnologia-provincia-view";
+import { TecnologiaProvinciaView } from "./provincias/tecnologia-provincia-view";
+import { PenetracionProvinciaView } from "./provincias/penetracion-provincia-view";
+import { VelocidadMediaProvinciaView } from "./provincias/velocidad-media-provincia-view";
 
 import type { ApiResponse } from "@/lib/types";
 
@@ -13,7 +13,6 @@ import type {
   InternetVelocidadMediaProvinciasRow,
   InternetPenetracionProvinciaRow,
 } from "@/lib/internet";
-import { PenetracionProvinciaView } from "./provincias/penetracion-provincia-view";
 
 type Props = {
   tecnologias:
@@ -84,17 +83,9 @@ export function InternetProvincias({
         )}
 
         {view === "velocidad" && (
-          <div className="chart-card">
-            <p>
-              Vista provincial de velocidad media.
-            </p>
-
-            <p>
-              Total de provincias:
-              {" "}
-              {velocidadMedia.data.length}
-            </p>
-          </div>
+          <VelocidadMediaProvinciaView
+            provincias={velocidadMedia}
+          />
         )}
 
         {view === "penetracion" && (

@@ -21,7 +21,6 @@ import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { InsightsCard } from "@/components/ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
-import { TecnologiaProvinciaView } from "./provincias/tecnologia-provincia-view";
 
 export function InternetTecnologia({
   tecnologias,
@@ -128,13 +127,6 @@ export function InternetTecnologia({
           <InsightsCard insights={insights} />
         </div>
       </section>
-
-      {/* PROVINCIAS */}
-      <TecnologiaProvinciaView
-        tecnologiasProvincias={
-          tecnologiasProvincias
-        }
-      />
 
     </>
   );

@@ -107,12 +107,6 @@ export function InternetPenetracion({
         </div>
       </section>
 
-      {/* PROVINCIAS */}
-      <PenetracionProvinciaView
-        penetracionProvincias={
-          penetracionProvincias
-        }
-      />
     </>
   );
 }
