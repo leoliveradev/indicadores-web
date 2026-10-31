@@ -141,50 +141,6 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
         </div>
       </section>
 
-      {/* PROVINCIAS */}
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Distribución provincial
-          </h2>
-
-          {/* INSIGHT */}
-          <p className="chart-description">
-            La provincia con mayor velocidad media es{" "}
-            <strong>{top.provincia}</strong>
-            con{" "}
-            <strong>{top.mbps.toFixed(1)} Mbps</strong>.
-          </p>
-
-          {/* MAPA */}
-          <div className="geo-layout">
-
-            <div className="chart-card">
-              <ProvinciasMap
-                data={provinciaData}
-                selectedProvincia={selectedProvincia}
-                onProvinciaHover={setSelectedProvincia}
-              />
-            </div>
-
-            <ScrollableRanking
-              title={`Provincias (${rankingData.length}) · Mbps`}
-              items={rankingItems}
-              selectedId={selectedProvincia}
-              onSelect={setSelectedProvincia}
-              formatter={(v) =>
-                dispValue(v, {
-                  format: "number",
-                  decimals: 2
-                })
-              }
-            />
-
-          </div>
-
-        </div>
-      </section>
     </>
   );
 }
