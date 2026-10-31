@@ -10,15 +10,12 @@ import type {
 
 import {
   getAccesosKPIItems,
-  getAccesosDonutData,
   getAccesosEvolutionData,
   getAccesosInsights,
   getAccesosProvinciaSortedData
 } from "@/lib/telefonia-fija";
 
 import { KPISection } from "@/components/home/kpi-section";
-
-import { DonutChart } from "@/components/ui/charts/donut-chart";
 
 import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
@@ -57,9 +54,6 @@ export function TelefoniaFijaAccesos({
   const kpiItems =
     getAccesosKPIItems(accesos);
 
-  const donutData =
-    getAccesosDonutData(accesos);
-
   const evolutionData =
     getAccesosEvolutionData({
       ...accesos,
@@ -96,20 +90,6 @@ export function TelefoniaFijaAccesos({
         title="Accesos de telefonía fija"
         items={kpiItems}
       />
-
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Composición actual de accesos
-          </h2>
-
-          <div className="chart-card">
-            <DonutChart data={donutData} />
-          </div>
-
-        </div>
-      </section>
 
       <section className="section-wrap alt">
         <div className="section-inner">

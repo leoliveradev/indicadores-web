@@ -50,11 +50,8 @@ export default async function TelefoniaFijaPage() {
         subtitle={`${period} · Datos oficiales ENACOM`}
       />
 
-      <TelefoniaFijaOverview
-        data={overview}
-      />
-
       <TelefoniaFijaTabs
+        overview={overview}
         accesos={accesos}
         accesosProvincias={accesosProvincias}
         penetracion={penetracion}
