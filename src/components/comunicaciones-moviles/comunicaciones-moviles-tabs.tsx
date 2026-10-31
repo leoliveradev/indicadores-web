@@ -5,6 +5,11 @@ import { useState } from "react";
 import type {
   ApiResponse
 } from "@/lib/types";
+
+import type {
+  Overview
+} from "@/lib/home/types";
+
 import type {
   ComunicacionesMovilesAccesosRow,
   ComunicacionesMovilesPenetracionRow,
@@ -14,6 +19,8 @@ import type {
   ComunicacionesMovilesSmsRow,
 } from "@/lib/comunicaciones-moviles/types";
 
+import { ComunicacionesMovilesResumen }
+  from "./comunicaciones-moviles-resumen";
 import { ComunicacionesMovilesAccesos }
   from "./comunicaciones-moviles-accesos";
 import { ComunicacionesMovilesPenetracion }
@@ -24,6 +31,7 @@ import { ComunicacionesMovilesIngresos }
   from "./comunicaciones-moviles-ingresos";
 
 type TabKey =
+  | "resumen"
   | "accesos"
   | "penetracion"
   | "trafico"
@@ -33,6 +41,7 @@ const TABS: {
   key: TabKey;
   label: string;
 }[] = [
+    { key: "resumen", label: "Resumen" },
     { key: "accesos", label: "Accesos", },
     { key: "penetracion", label: "Penetración", },
     { key: "trafico", label: "Tráfico" },
@@ -41,6 +50,7 @@ const TABS: {
 
 
 type Props = {
+  overview: Overview;
   accesos: ApiResponse<ComunicacionesMovilesAccesosRow>;
   penetracion: ApiResponse<ComunicacionesMovilesPenetracionRow>;
   ingresos: ApiResponse<ComunicacionesMovilesIngresosRow>;
@@ -50,6 +60,7 @@ type Props = {
 };
 
 export function ComunicacionesMovilesTabs({
+  overview,
   accesos,
   penetracion,
   ingresos,
@@ -59,7 +70,7 @@ export function ComunicacionesMovilesTabs({
 }: Props) {
 
   const [active, setActive] =
-    useState<TabKey>("accesos");
+    useState<TabKey>("resumen");
 
   return (
     <>
@@ -80,6 +91,13 @@ export function ComunicacionesMovilesTabs({
 
           {/* CONTENIDO DINÁMICO */}
           <div>
+
+            {active === "resumen" && (
+              <ComunicacionesMovilesResumen
+                overview={overview}
+                accesos={accesos}
+              />
+            )}
 
             {active === "accesos" && (
               <ComunicacionesMovilesAccesos
@@ -106,7 +124,7 @@ export function ComunicacionesMovilesTabs({
                 ingresos={ingresos}
               />
             )}
-            
+
           </div>
 
         </div>

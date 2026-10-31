@@ -8,7 +8,6 @@ import type {
 
 import {
   getAccesosKPIItems,
-  getAccesosDonutData,
   getAccesosEvolutionData,
 } from "@/lib/comunicaciones-moviles";
 
@@ -18,8 +17,6 @@ import type { PeriodFilterValue } from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
-import { DonutChart }
-  from "@/components/ui/charts/donut-chart";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 import { InsightsCard }
@@ -49,9 +46,6 @@ export function ComunicacionesMovilesAccesos({
   const kpiItems =
     getAccesosKPIItems(accesos);
 
-  const donutData =
-    getAccesosDonutData(accesos);
-
   const evolutionData =
     getAccesosEvolutionData({
       ...accesos,
@@ -69,22 +63,6 @@ export function ComunicacionesMovilesAccesos({
         title="Accesos móviles"
         items={kpiItems}
       />
-
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Composición actual
-          </h2>
-
-          <div className="chart-card">
-            <DonutChart
-              data={donutData}
-            />
-          </div>
-
-        </div>
-      </section>
 
       <section className="section-wrap alt">
         <div className="section-inner">

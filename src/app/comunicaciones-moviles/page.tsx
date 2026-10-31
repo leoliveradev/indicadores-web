@@ -49,11 +49,8 @@ export default async function ComunicacionesMovilesPage() {
         subtitle={`${period} · Datos oficiales ENACOM`}
       />
 
-      <ComunicacionesMovilesOverview
-        data={overview}
-      />
-
       <ComunicacionesMovilesTabs
+        overview={overview}
         accesos={accesos}
         penetracion={penetracion}
         ingresos={ingresos}
