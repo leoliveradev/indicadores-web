@@ -4,13 +4,7 @@ import { getPortabilidadMovil }
 import { PageHero }
   from "@/components/layout/page-hero";
 
-import {
-  PortabilidadOverview,
-} from "@/components/portabilidad/portabilidad-overview";
-
-import {
-  PortabilidadMovil,
-} from "@/components/portabilidad/portabilidad-movil";
+import { PortabilidadTabs } from "@/components/portabilidad/portabilidad-tabs";
 
 export default async function PortabilidadPage() {
   const portabilidad =
@@ -23,13 +17,10 @@ export default async function PortabilidadPage() {
         subtitle="Portabilidad móvil · Datos oficiales ENACOM"
       />
 
-      <PortabilidadOverview
+      <PortabilidadTabs
         data={portabilidad}
       />
 
-      <PortabilidadMovil
-        data={portabilidad}
-      />
     </>
   );
 }
