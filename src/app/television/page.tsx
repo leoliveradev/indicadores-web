@@ -16,10 +16,6 @@ import { PageHero }
   from "@/components/layout/page-hero";
 
 import {
-  TelevisionOverview,
-} from "@/components/television/television-overview";
-
-import {
   TelevisionTabs,
 } from "@/components/television/television-tabs";
 
@@ -52,11 +48,8 @@ export default async function TelevisionPage() {
         subtitle={`${period} · Datos oficiales ENACOM`}
       />
 
-      <TelevisionOverview
-        data={overview}
-      />
-
       <TelevisionTabs
+        overview={overview}
         accesos={accesos}
         accesosProvincias={accesosProvincias}
         penetracion={penetracion}

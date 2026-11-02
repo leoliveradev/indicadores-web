@@ -12,16 +12,12 @@ import type {
 
 import {
   getAccesosKPIItems,
-  getAccesosDonutData,
   getAccesosEvolutionData,
   getAccesosInsights,
   getAccesosProvinciaSortedData,
 } from "@/lib/television";
 
 import { KPISection } from "@/components/home/kpi-section";
-
-import { DonutChart } from "@/components/ui/charts/donut-chart";
-
 
 import type { PeriodFilterValue } from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
@@ -58,9 +54,6 @@ export function TelevisionAccesos({
 
   const kpiItems = getAccesosKPIItems(accesos);
 
-  const donutData =
-    getAccesosDonutData(accesos);
-
   const evolutionData =
     getAccesosEvolutionData({
       ...accesos,
@@ -95,20 +88,6 @@ export function TelevisionAccesos({
         title="Accesos de televisión por suscripción"
         items={kpiItems}
       />
-
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Composición actual
-          </h2>
-
-          <div className="chart-card">
-            <DonutChart data={donutData} />
-          </div>
-
-        </div>
-      </section>
 
       <section className="section-wrap alt">
         <div className="section-inner">

@@ -12,6 +12,13 @@ import type {
   TelevisionIngresosRow,
 } from "@/lib/television";
 
+import type { Overview }
+  from "@/lib/home/types";
+
+import {
+  TelevisionResumen,
+} from "./television-resumen";
+
 import { TelevisionAccesos }
   from "./television-accesos";
 
@@ -21,23 +28,25 @@ import { TelevisionPenetracion }
 import { TelevisionIngresos }
   from "./television-ingresos";
 
+
 const TABS = [
+  { key: "resumen", label: "Resumen" },
   { key: "accesos", label: "Accesos" },
   { key: "penetracion", label: "Penetración" },
   { key: "ingresos", label: "Ingresos" },
 ];
 
 type Props = {
+  overview: Overview;
   accesos: ApiResponse<TelevisionAccesosRow>;
   accesosProvincias: ApiResponse<TelevisionAccesosProvinciaRow>;
-
   penetracion: ApiResponse<TelevisionPenetracionRow>;
   penetracionProvincias: ApiResponse<TelevisionPenetracionProvinciaRow>;
-
   ingresos: ApiResponse<TelevisionIngresosRow>;
 };
 
 export function TelevisionTabs({
+  overview,
   accesos,
   accesosProvincias,
   penetracion,
@@ -45,7 +54,7 @@ export function TelevisionTabs({
   ingresos,
 }: Props) {
   const [active, setActive] =
-    useState("accesos");
+    useState("resumen");
 
   return (
     <section className="section-wrap">
@@ -56,8 +65,8 @@ export function TelevisionTabs({
             <button
               key={tab.key}
               className={`tab-btn ${active === tab.key
-                  ? "active"
-                  : ""
+                ? "active"
+                : ""
                 }`}
               onClick={() =>
                 setActive(tab.key)
@@ -67,6 +76,13 @@ export function TelevisionTabs({
             </button>
           ))}
         </div>
+
+        {active === "resumen" && (
+          <TelevisionResumen
+            overview={overview}
+            accesos={accesos}
+          />
+        )}
 
         {active === "accesos" && (
           <TelevisionAccesos
@@ -88,7 +104,7 @@ export function TelevisionTabs({
           />
         )}
 
-      </div>  
-  </section>
+      </div>
+    </section>
   );
 }
