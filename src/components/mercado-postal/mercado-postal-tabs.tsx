@@ -11,19 +11,45 @@ import type {
   MercadoPostalProvinciaRow,
 } from "@/lib/mercado-postal";
 
-import { MercadoPostalFacturacion }
-  from "./mercado-postal-facturacion";
+import {
+  MercadoPostalResumen,
+} from "./mercado-postal-resumen";
 
-import { MercadoPostalProduccion }
-  from "./mercado-postal-produccion";
+import {
+  MercadoPostalFacturacion,
+} from "./mercado-postal-facturacion";
 
-import { MercadoPostalPersonal }
-  from "./mercado-postal-personal";
+import {
+  MercadoPostalProduccion,
+} from "./mercado-postal-produccion";
 
-import { MercadoPostalProvincias }
-  from "./mercado-postal-provincias";
+import {
+  MercadoPostalPersonal,
+} from "./mercado-postal-personal";
 
-const TABS = [
+import {
+  MercadoPostalProvincias,
+} from "./mercado-postal-provincias";
+
+type TabKey =
+  | "resumen"
+  | "provincias"
+  | "facturacion"
+  | "produccion"
+  | "personal";
+
+const TABS: {
+  key: TabKey;
+  label: string;
+}[] = [
+  {
+    key: "resumen",
+    label: "Resumen",
+  },
+  {
+    key: "provincias",
+    label: "Provincias",
+  },
   {
     key: "facturacion",
     label: "Facturación",
@@ -36,17 +62,20 @@ const TABS = [
     key: "personal",
     label: "Personal",
   },
-  {
-    key: "provincias",
-    label: "Provincias",
-  },
 ];
 
 type Props = {
-  facturacion: ApiResponse<MercadoPostalFacturacionRow>;
-  produccion: ApiResponse<MercadoPostalProduccionRow>;
-  personal: ApiResponse<MercadoPostalPersonalRow>;
-  provincias: ApiResponse<MercadoPostalProvinciaRow>;
+  facturacion:
+    ApiResponse<MercadoPostalFacturacionRow>;
+
+  produccion:
+    ApiResponse<MercadoPostalProduccionRow>;
+
+  personal:
+    ApiResponse<MercadoPostalPersonalRow>;
+
+  provincias:
+    ApiResponse<MercadoPostalProvinciaRow>;
 };
 
 export function MercadoPostalTabs({
@@ -55,8 +84,9 @@ export function MercadoPostalTabs({
   personal,
   provincias,
 }: Props) {
+
   const [active, setActive] =
-    useState("facturacion");
+    useState<TabKey>("resumen");
 
   return (
     <section className="section-wrap">
@@ -80,6 +110,20 @@ export function MercadoPostalTabs({
           ))}
         </div>
 
+        {active === "resumen" && (
+          <MercadoPostalResumen
+            facturacion={facturacion}
+            produccion={produccion}
+            personal={personal}
+          />
+        )}
+
+        {active === "provincias" && (
+          <MercadoPostalProvincias
+            provincias={provincias}
+          />
+        )}
+
         {active === "facturacion" && (
           <MercadoPostalFacturacion
             facturacion={facturacion}
@@ -95,12 +139,6 @@ export function MercadoPostalTabs({
         {active === "personal" && (
           <MercadoPostalPersonal
             personal={personal}
-          />
-        )}
-
-        {active === "provincias" && (
-          <MercadoPostalProvincias
-            provincias={provincias}
           />
         )}
 

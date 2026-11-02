@@ -2,10 +2,6 @@ import { PageHero }
   from "@/components/layout/page-hero";
 
 import {
-  MercadoPostalOverview,
-} from "@/components/mercado-postal/mercado-postal-overview";
-
-import {
   MercadoPostalTabs,
 } from "@/components/mercado-postal/mercado-postal-tabs";
 
@@ -34,11 +30,6 @@ export default async function MercadoPostalPage() {
       <PageHero
         title="Mercado Postal Argentino"
         subtitle="Facturación, producción, empleo y distribución provincial"
-      />
-
-      <MercadoPostalOverview
-        facturacion={facturacion}
-        personal={personal}
       />
 
       <MercadoPostalTabs

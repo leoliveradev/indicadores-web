@@ -10,15 +10,11 @@ import type {
 
 import {
   getProduccionKPIItems,
-  getProduccionDonutData,
   getProduccionEvolutionData,
   getProduccionInsights
 } from "@/lib/mercado-postal";
 
 import { KPISection } from "@/components/home/kpi-section";
-
-import { DonutChart }
-  from "@/components/ui/charts/donut-chart";
 
 import type {
   PeriodFilterValue,
@@ -60,9 +56,6 @@ export function MercadoPostalProduccion({
   const kpiItems =
     getProduccionKPIItems(produccion);
 
-  const donutData =
-    getProduccionDonutData(produccion);
-
   const evolutionData =
     getProduccionEvolutionData(
       filteredRows
@@ -79,20 +72,6 @@ export function MercadoPostalProduccion({
         title="Producción"
         items={kpiItems}
       />
-
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Composición actual
-          </h2>
-
-          <div className="chart-card">
-            <DonutChart data={donutData} />
-          </div>
-
-        </div>
-      </section>
 
       <section className="section-wrap alt">
         <div className="section-inner">
