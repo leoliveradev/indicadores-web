@@ -27,10 +27,12 @@ import { TelevisionPenetracion }
 
 import { TelevisionIngresos }
   from "./television-ingresos";
+import { TelevisionProvincias } from "./television-provincias";
 
 
 const TABS = [
   { key: "resumen", label: "Resumen" },
+  { key: "provincias", label: "Provincias" },
   { key: "accesos", label: "Accesos" },
   { key: "penetracion", label: "Penetración" },
   { key: "ingresos", label: "Ingresos" },
@@ -84,10 +86,16 @@ export function TelevisionTabs({
           />
         )}
 
+        {active === "provincias" && (
+          <TelevisionProvincias
+            accesos={accesosProvincias}
+            penetracion={penetracionProvincias}
+          />
+        )}
+
         {active === "accesos" && (
           <TelevisionAccesos
             accesos={accesos}
-            provincias={accesosProvincias}
           />
         )}
 

@@ -12,7 +12,6 @@ import type {
 import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
-  getPenetracionProvinciaSortedData,
   getPenetracionInsights,
 } from "@/lib/television";
 
@@ -27,10 +26,6 @@ import { LineChartBase }
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
 
-import { ProvinciasMap }
-  from "@/components/ui/map/provincias-map";
-import { ScrollableDualRanking } from "../ui/ranking/scrollable-dual-ranking";
-
 type Props = {
   penetracion: ApiResponse<TelevisionPenetracionRow>;
   provincias: ApiResponse<TelevisionPenetracionProvinciaRow>;
@@ -38,11 +33,8 @@ type Props = {
 
 export function TelevisionPenetracion({
   penetracion,
-  provincias,
 }: Props) {
-  const [selectedProvincia, setSelectedProvincia] =
-    useState<string>();
-    
+
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
@@ -67,30 +59,6 @@ export function TelevisionPenetracion({
     getPenetracionInsights(
       filteredRows
     );
-
-  const rankingData =
-    getPenetracionProvinciaSortedData(
-      provincias
-    );
-
-  const provinciaData =
-    provincias.data.map((d) => ({
-      provincia: d.provincia,
-      total: d.tv_suscripcion_100hogares,
-
-      tooltipData: [
-        {
-          label: "Hogares",
-          value: d.tv_suscripcion_100hogares.toFixed(2),
-          color: "var(--accent-green)",
-        },
-        {
-          label: "Habitantes",
-          value: d.tv_suscripcion_100habitantes.toFixed(2),
-          color: "var(--accent-amber)",
-        },
-      ],
-    }));
 
   return (
     <>
@@ -138,41 +106,6 @@ export function TelevisionPenetracion({
         </div>
       </section>
 
-      <section className="section-wrap alt">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Penetración por provincia
-          </h2>
-
-          <div className="geo-layout">
-
-            <div className="chart-card">
-              <ProvinciasMap
-                data={provinciaData}
-                selectedProvincia={selectedProvincia}
-                onProvinciaHover={setSelectedProvincia}
-              />
-            </div>
-
-            <ScrollableDualRanking
-              title={`Provincias (${rankingData.length})`}
-              items={rankingData.map((r) => ({
-                id: r.provincia,
-                label: r.provincia,
-                primary: r.hogares,
-                secondary: r.habitantes,
-              }))}
-              primaryLabel="Hogares"
-              secondaryLabel="Habitantes"
-              selectedId={selectedProvincia}
-              onSelect={setSelectedProvincia}
-            />
-
-          </div>
-
-        </div>
-      </section>
     </>
   );
 }

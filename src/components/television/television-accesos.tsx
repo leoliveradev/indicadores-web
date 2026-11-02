@@ -5,16 +5,12 @@ import { useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 
-import type {
-  TelevisionAccesosRow,
-  TelevisionAccesosProvinciaRow,
-} from "@/lib/television";
+import type { TelevisionAccesosRow } from "@/lib/television";
 
 import {
   getAccesosKPIItems,
   getAccesosEvolutionData,
   getAccesosInsights,
-  getAccesosProvinciaSortedData,
 } from "@/lib/television";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -27,23 +23,17 @@ import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 import { InsightsCard } from "@/components/ui/insights/insights-card";
 
-import { ProvinciasMap } from "@/components/ui/map/provincias-map";
-
 import { dispValue } from "@/lib/format";
-import { ScrollableRanking } from "../ui/ranking/scrollable-ranking";
 
 type Props = {
   accesos: ApiResponse<TelevisionAccesosRow>;
-  provincias: ApiResponse<TelevisionAccesosProvinciaRow>;
 };
 
 export function TelevisionAccesos({
   accesos,
-  provincias,
 }: Props) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
-  const [selectedProvincia, setSelectedProvincia,] = useState<string>();
 
   const filteredRows =
     filterByPeriods(
@@ -65,22 +55,6 @@ export function TelevisionAccesos({
       filteredRows
     );
 
-  const rankingData =
-    getAccesosProvinciaSortedData(provincias);
-
-  const rankingItems = rankingData.map(
-    (item) => ({
-      id: item.provincia,
-      label: item.provincia,
-      value: item.total,
-    })
-  );
-
-  const provinciaData =
-    provincias.data.map((row) => ({
-      provincia: row.provincia,
-      total: row.tv_suscripcion,
-    }));
 
   return (
     <>
@@ -139,34 +113,6 @@ export function TelevisionAccesos({
         </div>
       </section>
 
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Distribución provincial
-          </h2>
-
-          <div className="geo-layout">
-
-            <div className="chart-card">
-              <ProvinciasMap
-                data={provinciaData}
-                selectedProvincia={selectedProvincia}
-                onProvinciaHover={setSelectedProvincia}
-              />
-            </div>
-
-            <ScrollableRanking
-              title={`Provincias (${rankingData.length})`}
-              items={rankingItems}
-              selectedId={selectedProvincia}
-              onSelect={setSelectedProvincia}
-            />
-
-          </div>
-
-        </div>
-      </section>
     </>
   );
 }
