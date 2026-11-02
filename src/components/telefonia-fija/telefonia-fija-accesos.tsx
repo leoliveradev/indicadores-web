@@ -12,12 +12,9 @@ import {
   getAccesosKPIItems,
   getAccesosEvolutionData,
   getAccesosInsights,
-  getAccesosProvinciaSortedData
 } from "@/lib/telefonia-fija";
 
 import { KPISection } from "@/components/home/kpi-section";
-
-import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 
 import type { PeriodFilterValue } from "@/lib/utils/filter-period";
 import { filterByPeriods } from "@/lib/utils/filter-period";
@@ -28,21 +25,16 @@ import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
-import { ScrollableRanking } from "../ui/ranking/scrollable-ranking";
 
 type Props = {
   accesos: ApiResponse<TelefoniaFijaAccesosRow>;
-  provincias: ApiResponse<TelefoniaFijaAccesosProvinciaRow>;
 };
 
 export function TelefoniaFijaAccesos({
   accesos,
-  provincias,
 }: Props) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
-
-  const [selectedProvincia, setSelectedProvincia,] = useState<string>();
 
   const filteredRows =
     filterByPeriods(
@@ -64,25 +56,6 @@ export function TelefoniaFijaAccesos({
     getAccesosInsights(
       filteredRows
     );
-
-  const rankingData =
-    getAccesosProvinciaSortedData(
-      provincias
-    );
-
-  const rankingItems = rankingData.map(
-    (item) => ({
-      id: item.provincia,
-      label: item.provincia,
-      value: item.total,
-    })
-  );
-
-  const provinciaData =
-    provincias.data.map((p) => ({
-      provincia: p.provincia,
-      total: p.total,
-    }));
 
   return (
     <>
@@ -147,36 +120,6 @@ export function TelefoniaFijaAccesos({
         </div>
       </section>
 
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <h2 className="section-heading">
-            Distribución provincial
-          </h2>
-
-          <div className="geo-layout">
-            
-            <div className="chart-card">
-              <ProvinciasMap
-                data={provinciaData}
-                selectedProvincia={selectedProvincia}
-                onProvinciaHover={
-                  setSelectedProvincia
-                }
-              />
-            </div>
-
-            <ScrollableRanking
-              title={`Provincias (${rankingData.length})`}
-              items={rankingItems}
-              selectedId={selectedProvincia}
-              onSelect={setSelectedProvincia}
-            />
-
-          </div>
-
-        </div>
-      </section>
     </>
   );
 }

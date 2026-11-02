@@ -19,9 +19,11 @@ import { TelefoniaFijaResumen } from "./telefonia-fija-resumen";
 import { TelefoniaFijaAccesos } from "./telefonia-fija-accesos";
 import { TelefoniaFijaPenetracion } from "./telefonia-fija-penetracion";
 import { TelefoniaFijaIngresos } from "./telefonia-fija-ingresos";
+import { TelefoniaFijaProvincias } from "./telefonia-fija-provincias";
 
 const TABS = [
   { key: "resumen", label: "Resumen" },
+  { key: "provincias", label: "Provincias" },
   { key: "accesos", label: "Accesos" },
   { key: "penetracion", label: "Penetración" },
   { key: "ingresos", label: "Ingresos" },
@@ -71,17 +73,22 @@ export function TelefoniaFijaTabs({
           />
         )}
 
+        {active === "provincias" && (
+          <TelefoniaFijaProvincias
+            accesos={accesosProvincias}
+            penetracion={penetracionProvincias}
+          />
+        )}
+
         {active === "accesos" && (
           <TelefoniaFijaAccesos
             accesos={accesos}
-            provincias={accesosProvincias}
           />
         )}
 
         {active === "penetracion" && (
           <TelefoniaFijaPenetracion
             penetracion={penetracion}
-            provincias={penetracionProvincias}
           />
         )}
 
