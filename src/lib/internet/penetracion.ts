@@ -5,7 +5,7 @@ import {
   InternetPenetracionProvinciaRow,
 } from "@/lib/internet";
 
-import { dispValue, fmtNumber } from "@/lib/format";
+import { dispValue  } from "@/lib/format";
 import { getTopN } from "./common";
 
 export function getPenetracionKPIItems(
