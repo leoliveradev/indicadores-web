@@ -5,7 +5,6 @@ import type { ApiResponse } from "@/lib/types";
 
 import type {
   TelefoniaFijaAccesosRow,
-  TelefoniaFijaAccesosProvinciaRow,
 } from "@/lib/telefonia-fija";
 
 import {

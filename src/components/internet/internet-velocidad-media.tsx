@@ -2,15 +2,11 @@
 import { useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
-import type {
-  InternetVelocidadMediaProvinciasRow,
-  InternetVelocidadMediaRow,
-} from "@/lib/internet";
+import type { InternetVelocidadMediaRow } from "@/lib/internet";
 
 import {
   getVelocidadEvolutionData,
   getVelocidadKPIItems,
-  getVmdProvinciaSortedData,
   getVelocidadInsights
 } from "@/lib/internet";
 
@@ -24,13 +20,10 @@ import { PeriodFilter } from "@/components/ui/filters/period-filter";
 import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
 
-import { ProvinciasMap } from "@/components/ui/map/provincias-map";
 import { dispValue } from "@/lib/format";
-import { ScrollableRanking } from "../ui/ranking/scrollable-ranking";
 
-export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
+export function InternetVelocidadMedia({ velocidadMedia }: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
-  provincias: ApiResponse<InternetVelocidadMediaProvinciasRow>,
 }) {
 
   const kpiItems = getVelocidadKPIItems(velocidadMedia);
@@ -38,8 +31,6 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
-
-  const [selectedProvincia, setSelectedProvincia,] = useState<string>();
 
   const filteredRows =
     filterByPeriods(
@@ -54,41 +45,10 @@ export function InternetVelocidadMedia({ velocidadMedia, provincias }: {
       data: filteredRows,
     });
 
-  const rankingData =
-    getVmdProvinciaSortedData(provincias);
-
-  const rankingItems = rankingData.map(
-    (item) => ({
-      id: item.provincia,
-      label: item.provincia,
-      value: item.mbps,
-    })
-  );
-
-  const top = rankingData[0];
-
   const insights =
     getVelocidadInsights(
       filteredRows,
     );
-
-  const provinciaData =
-    provincias.data.map((d) => ({
-      provincia: d.provincia,
-      total: d.mbps,
-
-      tooltipData: [
-        {
-          label: "Velocidad media",
-          value: dispValue(d.mbps, {
-            format: "number",
-            decimals: 2,
-            suffix: " Mbps",
-          }),
-          color: "#005297",
-        },
-      ],
-    }));
 
 
   return (

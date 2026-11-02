@@ -13,10 +13,6 @@ import { fmtPeriod } from "@/lib/format";
 import { PageHero } from "@/components/layout/page-hero";
 
 import {
-  TelefoniaFijaOverview,
-} from "@/components/telefonia-fija/telefonia-fija-overview";
-
-import {
   TelefoniaFijaTabs,
 } from "@/components/telefonia-fija/telefonia-fija-tabs";
 

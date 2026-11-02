@@ -2,10 +2,7 @@
 import { useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
-import type {
-  InternetTecnologiaRow,
-  InternetTecnologiaProvinciaRow
-} from "@/lib/internet";
+import type { InternetTecnologiaRow } from "@/lib/internet";
 
 import { KPISection } from "@/components/home/kpi-section";
 import {
@@ -24,10 +21,8 @@ import { dispValue } from "@/lib/format";
 
 export function InternetTecnologia({
   tecnologias,
-  tecnologiasProvincias
 }: {
   tecnologias: ApiResponse<InternetTecnologiaRow>;
-  tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
 }) {
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"

@@ -4,10 +4,7 @@ import { KPISection } from "@/components/home/kpi-section";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 import type { ApiResponse } from "@/lib/types";
-import type {
-  InternetPenetracionRow,
-  InternetPenetracionProvinciaRow,
-} from "@/lib/internet";
+import type { InternetPenetracionRow } from "@/lib/internet";
 
 import {
   getPenetracionKPIItems,
@@ -23,14 +20,11 @@ import {
 
 import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
-import { PenetracionProvinciaView } from "@/components/internet/provincias/penetracion-provincia-view";
 
 export function InternetPenetracion({
   penetracion,
-  penetracionProvincias,
 }: {
   penetracion: ApiResponse<InternetPenetracionRow>;
-  penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
 }) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
