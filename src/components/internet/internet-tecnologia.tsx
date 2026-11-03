@@ -57,30 +57,18 @@ export function InternetTecnologia({
   const isArgentina =
     provincia === "Argentina";
 
-  const filteredRows =
-    filterByPeriods(
+  const currentRows = isArgentina
+    ? filterByPeriods(
       tecnologias.data,
       period,
       4
-    );
-
-  const provinciaRows =
-    tecnologiasProvincias.data.filter(
-      r => r.provincia === provincia
-    );
-
-  const filteredProvinciaRows = isArgentina
-    ? []
+    )
     : filterByPeriods(
-      provinciaRows,
+      tecnologiasProvincias.data.filter(
+        r => r.provincia === provincia
+      ),
       period,
       4
-    );
-
-  const currentRows = isArgentina
-    ? filteredRows
-    : filteredProvinciaRows.filter(
-      r => r.provincia === provincia
     );
 
   const kpiItems =
@@ -98,8 +86,6 @@ export function InternetTecnologia({
       currentRows,
       provincia
     );
-
-
 
   return (
     <>
