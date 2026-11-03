@@ -24,9 +24,9 @@ export function getTecnologiaDonutData(
 }
 
 export function getTecnologiaKPIItems(
-  response: ApiResponse<InternetTecnologiaRow>
+  response: InternetTecnologiaRow[]
 ): KPIItem[] {
-  const rows = response.data;
+  const rows = response;
 
   if (!rows.length) return [];
 

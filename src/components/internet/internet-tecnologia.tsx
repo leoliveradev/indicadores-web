@@ -54,8 +54,6 @@ export function InternetTecnologia({
     return <div className="error-box">Sin datos disponibles</div>;
   }
 
-  const kpiItems = getTecnologiaKPIItems(tecnologias);
-
   const isArgentina =
     provincia === "Argentina";
 
@@ -79,22 +77,29 @@ export function InternetTecnologia({
       4
     );
 
-  const evolutionRows = isArgentina
+  const currentRows = isArgentina
     ? filteredRows
     : filteredProvinciaRows.filter(
       r => r.provincia === provincia
     );
 
+  const kpiItems =
+    getTecnologiaKPIItems(
+      currentRows
+    );
+
   const evolutionData =
     getTecnologiaEvolutionData(
-      evolutionRows
+      currentRows
     );
 
   const insights =
     getTecnologiaInsights(
-      evolutionRows,
+      currentRows,
       provincia
     );
+
+
 
   return (
     <>
