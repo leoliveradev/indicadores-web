@@ -26,6 +26,11 @@ export function getVelocidadInsights(
   const first = rows[0];
   const latest = rows[rows.length - 1];
 
+  const periodText =
+    first.anio === latest.anio
+      ? `T${first.trimestre} ${first.anio}`
+      : `${first.anio}`;
+
   const growth =
     ((latest.mbps - first.mbps) /
       first.mbps) *
@@ -38,8 +43,10 @@ export function getVelocidadInsights(
   const insights: Insight[] = [];
 
   insights.push({
-    title: "Crecimiento histórico",
-    text: `La velocidad media aumentó ${fmtPercent(growth, 0)} respecto del inicio de la serie.${scope}`,
+    title:
+      "Crecimiento acumulado",
+    text:
+      `La velocidad media aumentó ${fmtPercent(growth, 0)} respecto de ${periodText}${scope}.`,
   });
 
   if (latest.mbps === peak) {

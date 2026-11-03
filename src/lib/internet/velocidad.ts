@@ -18,6 +18,11 @@ export function getVelocidadKPIItems(
   const first = rows[0];
   const latest = rows[rows.length - 1];
 
+  const growthLabel =
+    first.anio === latest.anio
+      ? `Crecimiento desde T${first.trimestre} ${first.anio}`
+      : `Crecimiento desde ${first.anio}`;
+
   const growthPct =
     ((latest.mbps - first.mbps) / first.mbps) * 100;
 
@@ -34,7 +39,7 @@ export function getVelocidadKPIItems(
         }),
     },
     {
-      label: "Crecimiento desde 2014",
+      label: growthLabel,
       // icon: IVelocidad,
       value: growthPct,
       format: (v: number) =>
