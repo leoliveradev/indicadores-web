@@ -48,9 +48,15 @@ export function getVelocidadInsights(
 }
 
 export function getTecnologiaInsights(
-  rows: InternetTecnologiaRow[]
+  rows: InternetTecnologiaRow[],
+  provincia?: string
 ): Insight[] {
   if (!rows.length) return [];
+
+  const scope =
+    provincia && provincia !== "Argentina"
+      ? ` en ${provincia}`
+      : "";
 
   const latest = rows[rows.length - 1];
   const first = rows[0];
@@ -68,7 +74,7 @@ export function getTecnologiaInsights(
 
   insights.push({
     title: "Predominio de la fibra óptica",
-    text: `La fibra óptica representa ${fmtPercent(fibraShare)} de los accesos actuales.`,
+    text: `La fibra óptica representa ${fmtPercent(fibraShare)} de los accesos actuales${scope}.`,
   });
 
   if (
@@ -89,7 +95,7 @@ export function getTecnologiaInsights(
   if (adslDrop > 50) {
     insights.push({
       title: "Retroceso del ADSL",
-      text: `Los accesos ADSL disminuyeron ${fmtPercent(adslDrop)} respecto del inicio de la serie.`,
+      text: `Los accesos ADSL disminuyeron ${fmtPercent(adslDrop)} respecto del inicio de la serie${scope}.`,
     });
   }
 
@@ -347,8 +353,8 @@ export function getAccesosVelocidadComparacionInsights(
     text:
       diff > 0
         ? `${provincia} presenta su principal ventaja relativa en el rango ${mayorDiferencia.rango}, con ${diff.toFixed(
-            1
-          )} puntos porcentuales más que el promedio nacional.`
+          1
+        )} puntos porcentuales más que el promedio nacional.`
         : `${provincia} presenta su principal diferencia respecto del promedio nacional en el rango ${mayorDiferencia.rango}.`,
     type: "highlight",
     severity: "info",

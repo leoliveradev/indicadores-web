@@ -36,6 +36,7 @@ type Props = {
   rangosDonutData: DonutItem[];
   tecnologias: ApiResponse<InternetTecnologiaRow>;
   tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
+  tecnologiasProvinciasLatest: ApiResponse<InternetTecnologiaProvinciaRow>;
   accesosVelocidad: ApiResponse<InternetAccesosVelocidadRow>;
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>;
   velocidadMediaProvincias: ApiResponse<InternetVelocidadMediaProvinciasRow>;
@@ -50,6 +51,7 @@ export function InternetTabs({
   rangosDonutData,
   tecnologias,
   tecnologiasProvincias,
+  tecnologiasProvinciasLatest,
   accesosVelocidad,
   velocidadMedia,
   velocidadMediaProvincias,
@@ -91,13 +93,9 @@ export function InternetTabs({
 
           {active === "provincias" && (
             <InternetProvincias
-              tecnologias={tecnologiasProvincias}
-              velocidadMedia={
-                velocidadMediaProvincias
-              }
-              penetracion={
-                penetracionProvincias
-              }
+              tecnologias={tecnologiasProvinciasLatest}
+              velocidadMedia={velocidadMediaProvincias}
+              penetracion={penetracionProvincias}
             />
           )}
 
@@ -117,14 +115,12 @@ export function InternetTabs({
           {active === "velocidadMedia" && (
             <InternetVelocidadMedia
               velocidadMedia={velocidadMedia}
-              provincias={velocidadMediaProvincias}
             />
           )}
 
           {active === "penetracion" && (
             <InternetPenetracion
               penetracion={penetracion}
-              penetracionProvincias={penetracionProvincias}
             />
           )}
 

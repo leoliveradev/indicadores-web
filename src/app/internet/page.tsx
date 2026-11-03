@@ -4,7 +4,8 @@ import {
   getInternetAccesosVelocidadProvincias,
   getInternetVelocidadMedia, getInternetVelocidadMediaProvinciasLatest,
   getInternetPenetracion, getInternetPenetracionProvinciasLatest,
-  getInternetIngresos
+  getInternetIngresos,
+  getInternetTecnologiaProvincias
 } from "@/lib/api/internet";
 
 import { InternetTabs } from "@/components/internet/internet-tabs";
@@ -21,13 +22,14 @@ export default async function InternetPage() {
   const overview = await getOverview();
 
   const [
-    tecnologias, tecnologiasProvincias,
+    tecnologias, tecnologiasProvincias, tecnologiasProvinciasLatest,
     accesosVelocidad,
     velocidadMedia, velocidadMediaProvincias,
     penetracion, penetracionProvincias,
     ingresos
   ] = await Promise.all([
     getInternetTecnologias(),
+    getInternetTecnologiaProvincias(),
     getInternetTecnologiaProvinciasLatest(),
     getInternetAccesosVelocidadProvincias(),
     getInternetVelocidadMedia(),
@@ -61,6 +63,7 @@ export default async function InternetPage() {
         rangosDonutData={rangosDonutData}
         tecnologias={tecnologias}
         tecnologiasProvincias={tecnologiasProvincias}
+        tecnologiasProvinciasLatest={tecnologiasProvinciasLatest}
         accesosVelocidad={accesosVelocidad}
         velocidadMedia={velocidadMedia}
         velocidadMediaProvincias={velocidadMediaProvincias}

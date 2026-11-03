@@ -1,5 +1,5 @@
 import { dispValue } from "@/lib/format";
-import {  ApiResponse } from "@/lib/types";
+import { ApiResponse } from "@/lib/types";
 import type {
   InternetTecnologiaRow,
   InternetTecnologiaProvinciaRow
@@ -36,29 +36,24 @@ export function getTecnologiaKPIItems(
     label: t.label,
     icon: () => null,
     value: cur[t.key],
-    format: (v: number) => 
-      dispValue(v, { 
-        format: "compact" 
+    format: (v: number) =>
+      dispValue(v, {
+        format: "compact"
       }),
   }));
 }
 
-
-
 export function getTecnologiaEvolutionData(
-  response: ApiResponse<InternetTecnologiaRow>
+  rows: InternetTecnologiaRow[]
 ) {
-  const rows = response.data;
-
   return rows.map((row) => ({
-    label: `${row.anio} T${row.trimestre}`, // eje X
+    label: `${row.anio} T${row.trimestre}`,
     adsl: row.adsl,
     cablemodem: row.cablemodem,
     fibra_optica: row.fibra_optica,
     wireless: row.wireless,
   }));
 }
-
 
 export function getTecnologiaProvinciaSortedData(
   response: ApiResponse<InternetTecnologiaProvinciaRow>
