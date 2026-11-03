@@ -31,19 +31,16 @@ export type InternetPenetracionEvolutionItem = {
   habitantes: number;
 };
 
-export interface InternetVelocidadMediaRow {
+export type InternetVelocidadMediaRow ={
   anio: number;
   trimestre: number;
-  Mbps: number;
+  mbps: number;
 }
 
-export interface InternetVelocidadMediaProvinciasRow {
+export type InternetVelocidadMediaProvinciasRow = InternetVelocidadMediaRow & {
   id: number;
   created_at: string;
-  anio: number;
-  trimestre: number;
   provincia: string;
-  mbps: number;
 }
 
 export interface InternetIngresosRow {

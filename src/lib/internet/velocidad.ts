@@ -8,11 +8,10 @@ import type {
 import type { KPIItem } from "@/components/home/kpi-section";
 
 
-
 export function getVelocidadKPIItems(
-  response: ApiResponse<InternetVelocidadMediaRow>
+  response: InternetVelocidadMediaRow[]
 ): KPIItem[] {
-  const rows = response.data;
+  const rows = response;
 
   if (!rows.length) return [];
 
@@ -20,13 +19,13 @@ export function getVelocidadKPIItems(
   const latest = rows[rows.length - 1];
 
   const growthPct =
-    ((latest.Mbps - first.Mbps) / first.Mbps) * 100;
+    ((latest.mbps - first.mbps) / first.mbps) * 100;
 
   return [
     {
       label: "Velocidad media",
       // icon: IVelocidad,
-      value: latest.Mbps,
+      value: latest.mbps,
       format: (v: number) =>
         dispValue(v, {
           format: "number",
@@ -59,19 +58,19 @@ export function getVelocidadStats(
   const latest = rows[rows.length - 1];
 
   return {
-    current: latest.Mbps,
+    current: latest.mbps,
     growthPct:
-      ((latest.Mbps - first.Mbps) / first.Mbps) * 100,
+      ((latest.mbps - first.mbps) / first.mbps) * 100,
     period: `${latest.anio} T${latest.trimestre}`,
   };
 }
 
 export function getVelocidadEvolutionData(
-  response: ApiResponse<InternetVelocidadMediaRow>
+  response: InternetVelocidadMediaRow[]
 ) {
-  return response.data.map((row) => ({
+  return response.map((row) => ({
     label: `${row.anio} T${row.trimestre}`,
-    mbps: row.Mbps,
+    mbps: row.mbps,
   }));
 }
 

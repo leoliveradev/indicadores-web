@@ -13,33 +13,39 @@ import type {
 import { fmtDecimal, fmtPercent } from "@/lib/format";
 
 export function getVelocidadInsights(
-  rows: InternetVelocidadMediaRow[]
+  rows: InternetVelocidadMediaRow[],
+  provincia?: string
 ): Insight[] {
   if (rows.length < 2) return [];
+
+  const scope =
+    provincia && provincia !== "Argentina"
+      ? ` en ${provincia}`
+      : "";
 
   const first = rows[0];
   const latest = rows[rows.length - 1];
 
   const growth =
-    ((latest.Mbps - first.Mbps) /
-      first.Mbps) *
+    ((latest.mbps - first.mbps) /
+      first.mbps) *
     100;
 
   const peak = Math.max(
-    ...rows.map((r) => r.Mbps)
+    ...rows.map((r) => r.mbps)
   );
 
   const insights: Insight[] = [];
 
   insights.push({
     title: "Crecimiento histórico",
-    text: `La velocidad media aumentó ${fmtPercent(growth, 0)} respecto del inicio de la serie.`,
+    text: `La velocidad media aumentó ${fmtPercent(growth, 0)} respecto del inicio de la serie.${scope}`,
   });
 
-  if (latest.Mbps === peak) {
+  if (latest.mbps === peak) {
     insights.push({
       title: "Máximo histórico",
-      text: "El último período registra la mayor velocidad de toda la serie.",
+      text: `El último período registra la mayor velocidad de toda la serie.${scope}`,
       severity: "success",
     });
   }
@@ -107,7 +113,7 @@ export function getPenetracionInsights(
   provincia: string
 ): Insight[] {
   if (!rows.length) return [];
-  
+
   const scope =
     provincia && provincia !== "Argentina"
       ? ` en ${provincia}`

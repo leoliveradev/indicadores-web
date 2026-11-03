@@ -1,8 +1,11 @@
 'use client';
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
-import type { InternetVelocidadMediaRow } from "@/lib/internet";
+import type {
+  InternetVelocidadMediaRow,
+  InternetVelocidadMediaProvinciasRow
+} from "@/lib/internet";
 
 import {
   getVelocidadEvolutionData,
@@ -21,34 +24,81 @@ import { LineChartBase }
   from "@/components/ui/charts/line-chart-base";
 
 import { dispValue } from "@/lib/format";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
-export function InternetVelocidadMedia({ velocidadMedia }: {
+export function InternetVelocidadMedia({
+  velocidadMedia,
+  velocidadMediaProvincias
+}: {
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>,
+  velocidadMediaProvincias: ApiResponse<InternetVelocidadMediaProvinciasRow>
 }) {
-
-  const kpiItems = getVelocidadKPIItems(velocidadMedia);
 
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
 
-  const filteredRows =
-    filterByPeriods(
+  const [provincia, setProvincia] =
+    useState("Argentina");
+
+  const isArgentina =
+    provincia === "Argentina";
+
+  const provincias = useMemo(
+    () =>
+      [
+        ...new Set(
+          velocidadMediaProvincias.data.map(
+            (r) => r.provincia
+          )
+        ),
+      ].sort(),
+    [velocidadMediaProvincias.data]
+  );
+
+  const rows = velocidadMedia.data;
+
+  if (!rows.length) {
+    return (
+      <div className="error-box">
+        Sin datos disponibles
+      </div>
+    );
+  }
+
+  const currentRows = isArgentina
+    ? filterByPeriods(
       velocidadMedia.data,
+      period,
+      4
+    )
+    : filterByPeriods(
+      velocidadMediaProvincias.data.filter(
+        r => r.provincia === provincia
+      ),
       period,
       4
     );
 
+  const kpiItems =
+    getVelocidadKPIItems(
+      currentRows
+    );
+
   const evolutionData =
-    getVelocidadEvolutionData({
-      ...velocidadMedia,
-      data: filteredRows,
-    });
+    getVelocidadEvolutionData(
+      currentRows
+    );
 
   const insights =
     getVelocidadInsights(
-      filteredRows,
+      currentRows,
+      provincia
     );
+
+  console.log(
+    velocidadMedia.data[0]
+  );
 
 
   return (
@@ -64,8 +114,16 @@ export function InternetVelocidadMedia({ velocidadMedia }: {
         <div className="section-inner">
 
           <h2 className="section-heading">
-            Evolución histórica de la velocidad media
+            {provincia === "Argentina"
+              ? "Evolución histórica de la velocidad media"
+              : `Evolución histórica de la velocidad media · ${provincia}`}
           </h2>
+
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
 
           <PeriodFilter
             value={period}
@@ -74,6 +132,7 @@ export function InternetVelocidadMedia({ velocidadMedia }: {
 
           <div className="chart-card">
             <LineChartBase
+              key={provincia}
               data={evolutionData}
               height={350}
               series={[

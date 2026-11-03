@@ -40,6 +40,7 @@ type Props = {
   accesosVelocidad: ApiResponse<InternetAccesosVelocidadRow>;
   velocidadMedia: ApiResponse<InternetVelocidadMediaRow>;
   velocidadMediaProvincias: ApiResponse<InternetVelocidadMediaProvinciasRow>;
+  velocidadMediaProvinciasLatest: ApiResponse<InternetVelocidadMediaProvinciasRow>;
   penetracion: ApiResponse<InternetPenetracionRow>;
   penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
   penetracionProvinciasLatest: ApiResponse<InternetPenetracionProvinciaRow>;
@@ -56,6 +57,7 @@ export function InternetTabs({
   accesosVelocidad,
   velocidadMedia,
   velocidadMediaProvincias,
+  velocidadMediaProvinciasLatest,
   penetracion,
   penetracionProvincias,
   penetracionProvinciasLatest,
@@ -96,7 +98,7 @@ export function InternetTabs({
           {active === "provincias" && (
             <InternetProvincias
               tecnologias={tecnologiasProvinciasLatest}
-              velocidadMedia={velocidadMediaProvincias}
+              velocidadMedia={velocidadMediaProvinciasLatest}
               penetracion={penetracionProvinciasLatest}
             />
           )}
@@ -117,6 +119,7 @@ export function InternetTabs({
           {active === "velocidadMedia" && (
             <InternetVelocidadMedia
               velocidadMedia={velocidadMedia}
+              velocidadMediaProvincias={velocidadMediaProvincias}
             />
           )}
 

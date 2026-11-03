@@ -23,6 +23,7 @@ import {
 
 import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
 export function InternetPenetracion({
   penetracion,
@@ -105,32 +106,11 @@ export function InternetPenetracion({
               : `Evolución de penetración · ${provincia}`}
           </h2>
 
-          <div className="mb-4">
-            <label className="filter-label">
-              Provincia
-            </label>
-
-            <select
-              className="filter-select"
-              value={provincia}
-              onChange={(e) =>
-                setProvincia(e.target.value)
-              }
-            >
-              <option value="Argentina">
-                Argentina
-              </option>
-
-              {provincias.map((p) => (
-                <option
-                  key={p}
-                  value={p}
-                >
-                  {p}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
 
           <PeriodFilter
             value={period}

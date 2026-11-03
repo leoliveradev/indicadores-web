@@ -4,7 +4,9 @@ import {
   getInternetTecnologiaProvincias,
   getInternetTecnologiaProvinciasLatest,
   getInternetAccesosVelocidadProvincias,
-  getInternetVelocidadMedia, getInternetVelocidadMediaProvinciasLatest,
+  getInternetVelocidadMedia,
+  getInternetVelocidadMediaProvincias,
+  getInternetVelocidadMediaProvinciasLatest,
   getInternetPenetracion,
   getInternetPenetracionProvincias,
   getInternetPenetracionProvinciasLatest,
@@ -27,7 +29,9 @@ export default async function InternetPage() {
   const [
     tecnologias, tecnologiasProvincias, tecnologiasProvinciasLatest,
     accesosVelocidad,
-    velocidadMedia, velocidadMediaProvincias,
+    velocidadMedia,
+    velocidadMediaProvincias,
+    velocidadMediaProvinciasLatest,
     penetracion, penetracionProvincias, penetracionProvinciasLatest,
     ingresos
   ] = await Promise.all([
@@ -36,6 +40,7 @@ export default async function InternetPage() {
     getInternetTecnologiaProvinciasLatest(),
     getInternetAccesosVelocidadProvincias(),
     getInternetVelocidadMedia(),
+    getInternetVelocidadMediaProvincias(),
     getInternetVelocidadMediaProvinciasLatest(),
     getInternetPenetracion(),
     getInternetPenetracionProvincias(),
@@ -71,6 +76,7 @@ export default async function InternetPage() {
         accesosVelocidad={accesosVelocidad}
         velocidadMedia={velocidadMedia}
         velocidadMediaProvincias={velocidadMediaProvincias}
+        velocidadMediaProvinciasLatest={velocidadMediaProvinciasLatest}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
         penetracionProvinciasLatest={penetracionProvinciasLatest}

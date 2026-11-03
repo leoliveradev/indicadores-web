@@ -21,6 +21,7 @@ import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { InsightsCard } from "@/components/ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
 export function InternetTecnologia({
   tecnologias,
@@ -105,32 +106,11 @@ export function InternetTecnologia({
               : `Evolución de accesos por tecnología · ${provincia}`}
           </h2>
 
-          <div className="mb-4">
-            <label className="filter-label">
-              Provincia
-            </label>
-
-            <select
-              className="filter-select"
-              value={provincia}
-              onChange={(e) =>
-                setProvincia(e.target.value)
-              }
-            >
-              <option value="Argentina">
-                Argentina
-              </option>
-
-              {provincias.map((p) => (
-                <option
-                  key={p}
-                  value={p}
-                >
-                  {p}
-                </option>
-              ))}
-            </select>
-          </div>
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
 
           <PeriodFilter
             value={period}

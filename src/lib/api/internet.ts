@@ -40,6 +40,12 @@ export function getInternetVelocidadMedia() {
   );
 }
 
+export function getInternetVelocidadMediaProvincias() {
+  return get<ApiResponse<InternetVelocidadMediaProvinciasRow>>(
+    "/api/v1/internet/accesos/velocidad-media/provincias"
+  );
+}
+
 export function getInternetVelocidadMediaProvinciasLatest() {
   return get<ApiResponse<InternetVelocidadMediaProvinciasRow>>(
     "/api/v1/internet/accesos/velocidad-media/provincias/latest"
