@@ -103,11 +103,18 @@ export function getTecnologiaInsights(
 }
 
 export function getPenetracionInsights(
-  rows: InternetPenetracionRow[]
+  rows: InternetPenetracionRow[],
+  provincia: string
 ): Insight[] {
   if (!rows.length) return [];
+  
+  const scope =
+    provincia && provincia !== "Argentina"
+      ? ` en ${provincia}`
+      : "";
 
   const latest = rows[rows.length - 1];
+
 
   const gap =
     latest.accesos_cada_100_hogares -
@@ -135,7 +142,7 @@ export function getPenetracionInsights(
   ) {
     insights.push({
       title: "Máximo histórico",
-      text: "El último período registra la mayor penetración sobre hogares de toda la serie.",
+      text: `El último período registra la mayor penetración sobre hogares de toda la serie${scope}.`,
     });
   }
 

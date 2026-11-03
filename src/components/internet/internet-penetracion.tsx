@@ -1,10 +1,13 @@
 "use client";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { KPISection } from "@/components/home/kpi-section";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
 import type { ApiResponse } from "@/lib/types";
-import type { InternetPenetracionRow } from "@/lib/internet";
+import type {
+  InternetPenetracionProvinciaRow,
+  InternetPenetracionRow
+} from "@/lib/internet";
 
 import {
   getPenetracionKPIItems,
@@ -23,11 +26,31 @@ import { PeriodFilter } from "@/components/ui/filters/period-filter";
 
 export function InternetPenetracion({
   penetracion,
+  penetracionProvincias,
 }: {
   penetracion: ApiResponse<InternetPenetracionRow>;
+  penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
 }) {
+  const [provincia, setProvincia] =
+    useState("Argentina");
+
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
+
+  const isArgentina =
+    provincia === "Argentina";
+
+  const provincias = useMemo(
+    () =>
+      [
+        ...new Set(
+          penetracionProvincias.data.map(
+            (r) => r.provincia
+          )
+        ),
+      ].sort(),
+    [penetracionProvincias.data]
+  );
 
   const rows = penetracion.data;
 
@@ -35,23 +58,34 @@ export function InternetPenetracion({
     return <div className="error-box">Sin datos disponibles</div>;
   }
 
-  const kpiItems = getPenetracionKPIItems(penetracion.data);
-
-  const filteredRows =
-    filterByPeriods(
+  const currentRows = isArgentina
+    ? filterByPeriods(
       penetracion.data,
+      period,
+      4
+    )
+    : filterByPeriods(
+      penetracionProvincias.data.filter(
+        r => r.provincia === provincia
+      ),
       period,
       4
     );
 
+  const kpiItems =
+    getPenetracionKPIItems(
+      currentRows
+    );
+
   const evolutionData =
     getPenetracionEvolutionData(
-      filteredRows
+      currentRows
     );
 
   const insights =
     getPenetracionInsights(
-      filteredRows
+      currentRows,
+      provincia
     );
 
   return (
@@ -63,11 +97,40 @@ export function InternetPenetracion({
       />
 
       {/* EVOLUCIÓN */}
-      <section className="section-wrap">
+      <section className="section-wrap alt">
         <div className="section-inner">
           <h2 className="section-heading">
-            Evolución de penetración
+            {provincia === "Argentina"
+              ? "Evolución de penetración"
+              : `Evolución de penetración · ${provincia}`}
           </h2>
+
+          <div className="mb-4">
+            <label className="filter-label">
+              Provincia
+            </label>
+
+            <select
+              className="filter-select"
+              value={provincia}
+              onChange={(e) =>
+                setProvincia(e.target.value)
+              }
+            >
+              <option value="Argentina">
+                Argentina
+              </option>
+
+              {provincias.map((p) => (
+                <option
+                  key={p}
+                  value={p}
+                >
+                  {p}
+                </option>
+              ))}
+            </select>
+          </div>
 
           <PeriodFilter
             value={period}
@@ -76,6 +139,7 @@ export function InternetPenetracion({
 
           <div className="chart-card">
             <LineChartBase
+              key={provincia}
               data={evolutionData}
               height={320}
               xDataKey="period"
