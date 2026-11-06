@@ -9,9 +9,15 @@ import type {
 import { fmtDecimal, fmtPercent } from "@/lib/format";
 
 export function getAccesosInsights(
-  rows: TelevisionAccesosRow[]
+  rows: TelevisionAccesosRow[],
+  provincia?: string
 ): Insight[] {
   if (!rows.length) return [];
+
+  const scope =
+    provincia && provincia !== "Argentina"
+      ? ` en ${provincia}`
+      : "";
 
   const latest = rows[rows.length - 1];
 
@@ -32,7 +38,7 @@ export function getAccesosInsights(
     },
     {
       title: "TV satelital",
-      text: `La TV satelital concentra ${fmtPercent(shareSatelital)} del total de accesos.`,
+      text: `La TV satelital concentra ${fmtPercent(shareSatelital)} del total de accesos.${scope}`,
     },
   ];
 }

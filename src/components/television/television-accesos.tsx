@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
-
+import { useMemo, useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 
-import type { TelevisionAccesosRow } from "@/lib/television";
+import type {
+  TelevisionAccesosRow,
+  TelevisionAccesosProvinciaRow,
+} from "@/lib/television";
 
 import {
   getAccesosKPIItems,
@@ -24,37 +26,60 @@ import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { InsightsCard } from "@/components/ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 type Props = {
   accesos: ApiResponse<TelevisionAccesosRow>;
+  accesosProvincias: ApiResponse<TelevisionAccesosProvinciaRow>;
 };
 
 export function TelevisionAccesos({
   accesos,
+  accesosProvincias,
 }: Props) {
+
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const filteredRows =
-    filterByPeriods(
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    accesosProvincias.data
+  );
+
+  const currentRows = isArgentina
+    ? filterByPeriods(
       accesos.data,
+      period,
+      4
+    )
+    : filterByPeriods(
+      accesosProvincias.data.filter(
+        (r) => r.provincia === provincia
+      ),
       period,
       4
     );
 
-  const kpiItems = getAccesosKPIItems(accesos);
+  const kpiItems =
+    getAccesosKPIItems(
+      currentRows
+    );
 
   const evolutionData =
-    getAccesosEvolutionData({
-      ...accesos,
-      data: filteredRows,
-    });
+    getAccesosEvolutionData(
+      currentRows
+    );
 
   const insights =
     getAccesosInsights(
-      filteredRows
+      currentRows,
+      provincia
     );
-
 
   return (
     <>
@@ -67,8 +92,16 @@ export function TelevisionAccesos({
         <div className="section-inner">
 
           <h2 className="section-heading">
-            Evolución histórica de accesos
+            {isArgentina
+              ? "Evolución histórica de accesos"
+              : `Evolución histórica de accesos · ${provincia}`}
           </h2>
+
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
 
           <PeriodFilter
             value={period}
@@ -78,6 +111,7 @@ export function TelevisionAccesos({
           <div className="chart-card">
 
             <LineChartBase
+              key={provincia}
               data={evolutionData}
               series={[
                 {

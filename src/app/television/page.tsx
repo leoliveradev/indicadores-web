@@ -3,6 +3,7 @@ import { getOverview }
 
 import {
   getTelevisionAccesos,
+  getTelevisionAccesosProvincias,
   getTelevisionAccesosProvinciasLatest,
   getTelevisionPenetracion,
   getTelevisionPenetracionProvinciasLatest,
@@ -25,11 +26,13 @@ export default async function TelevisionPage() {
   const [
     accesos,
     accesosProvincias,
+    accesosProvinciasLatest,
     penetracion,
     penetracionProvincias,
     ingresos,
   ] = await Promise.all([
     getTelevisionAccesos(),
+    getTelevisionAccesosProvincias(),
     getTelevisionAccesosProvinciasLatest(),
 
     getTelevisionPenetracion(),
@@ -52,6 +55,7 @@ export default async function TelevisionPage() {
         overview={overview}
         accesos={accesos}
         accesosProvincias={accesosProvincias}
+        accesosProvinciasLatest={accesosProvinciasLatest}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
         ingresos={ingresos}

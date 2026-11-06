@@ -16,6 +16,12 @@ export async function getTelevisionAccesos() {
   );
 }
 
+export async function getTelevisionAccesosProvincias() {
+  return get<ApiResponse<TelevisionAccesosProvinciaRow>>(
+    "/api/v1/television/accesos/provincias"
+  );
+}
+
 export async function getTelevisionAccesosProvinciasLatest() {
   return get<ApiResponse<TelevisionAccesosProvinciaRow>>(
     "/api/v1/television/accesos/provincias/latest"

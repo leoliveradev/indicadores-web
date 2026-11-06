@@ -1,22 +1,19 @@
-export interface TelevisionAccesosRow {
+export type TelevisionAccesosRow = {
   anio: number;
   trimestre: number;
 
   tv_suscripcion: number;
   tv_satelital: number;
-}
+};
 
-export interface TelevisionAccesosProvinciaRow {
-  id: number;
-  created_at: string;
+export type TelevisionAccesosProvinciaRow =
+  TelevisionAccesosRow & {
 
-  anio: number;
-  trimestre: number;
+    id: number;
+    created_at: string;
 
-  provincia: string;
-
-  tv_suscripcion: number;
-}
+    provincia: string;
+  };
 
 export interface TelevisionIngresosRow {
   anio: number;

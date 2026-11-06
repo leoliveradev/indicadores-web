@@ -27,7 +27,9 @@ import { TelevisionPenetracion }
 
 import { TelevisionIngresos }
   from "./television-ingresos";
-import { TelevisionProvincias } from "./television-provincias";
+
+import { TelevisionProvincias }
+  from "./television-provincias";
 
 
 const TABS = [
@@ -42,6 +44,7 @@ type Props = {
   overview: Overview;
   accesos: ApiResponse<TelevisionAccesosRow>;
   accesosProvincias: ApiResponse<TelevisionAccesosProvinciaRow>;
+  accesosProvinciasLatest: ApiResponse<TelevisionAccesosProvinciaRow>;
   penetracion: ApiResponse<TelevisionPenetracionRow>;
   penetracionProvincias: ApiResponse<TelevisionPenetracionProvinciaRow>;
   ingresos: ApiResponse<TelevisionIngresosRow>;
@@ -51,6 +54,7 @@ export function TelevisionTabs({
   overview,
   accesos,
   accesosProvincias,
+  accesosProvinciasLatest,
   penetracion,
   penetracionProvincias,
   ingresos,
@@ -88,7 +92,7 @@ export function TelevisionTabs({
 
         {active === "provincias" && (
           <TelevisionProvincias
-            accesos={accesosProvincias}
+            accesos={accesosProvinciasLatest}
             penetracion={penetracionProvincias}
           />
         )}
@@ -96,6 +100,7 @@ export function TelevisionTabs({
         {active === "accesos" && (
           <TelevisionAccesos
             accesos={accesos}
+            accesosProvincias={accesosProvincias}
           />
         )}
 
