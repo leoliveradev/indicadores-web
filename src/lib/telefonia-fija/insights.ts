@@ -58,9 +58,15 @@ export function getAccesosInsights(
 }
 
 export function getPenetracionInsights(
-  rows: TelefoniaFijaPenetracionRow[]
+  rows: TelefoniaFijaPenetracionRow[],
+  provincia?: string
 ): Insight[] {
   if (!rows.length) return [];
+
+  const scope =
+    provincia && provincia !== "Argentina"
+      ? ` en ${provincia}`
+      : "";
 
   const first = rows[0];
   const latest = rows[rows.length - 1];
@@ -82,7 +88,7 @@ export function getPenetracionInsights(
     },
     {
       title: "Brecha hogares vs habitantes",
-      text: `La diferencia actual es de ${fmtDecimal(gap)} puntos.`,
+      text: `La diferencia actual es de ${fmtDecimal(gap)} puntos.${scope}`,
     },
   ];
 }

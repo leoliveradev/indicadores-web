@@ -11,9 +11,9 @@ import type {
 } from "./types";
 
 export function getPenetracionKPIItems(
-  response: ApiResponse<TelefoniaFijaPenetracionRow>
+  response: TelefoniaFijaPenetracionRow[]
 ): KPIItem[] {
-  const rows = response.data;
+  const rows = response;
 
   if (!rows.length) return [];
 

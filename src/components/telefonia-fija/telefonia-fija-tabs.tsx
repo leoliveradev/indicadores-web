@@ -36,6 +36,7 @@ type Props = {
   accesosProvinciasLatest: ApiResponse<TelefoniaFijaAccesosProvinciaRow>;
   penetracion: ApiResponse<TelefoniaFijaPenetracionRow>;
   penetracionProvincias: ApiResponse<TelefoniaFijaPenetracionProvinciaRow>;
+  penetracionProvinciasLatest: ApiResponse<TelefoniaFijaPenetracionProvinciaRow>;
   ingresos: ApiResponse<TelefoniaFijaIngresosRow>;
 };
 
@@ -46,6 +47,7 @@ export function TelefoniaFijaTabs({
   accesosProvinciasLatest,
   penetracion,
   penetracionProvincias,
+  penetracionProvinciasLatest,
   ingresos,
 }: Props) {
   const [active, setActive] =
@@ -78,7 +80,7 @@ export function TelefoniaFijaTabs({
         {active === "provincias" && (
           <TelefoniaFijaProvincias
             accesos={accesosProvinciasLatest}
-            penetracion={penetracionProvincias}
+            penetracion={penetracionProvinciasLatest}
           />
         )}
 
@@ -92,6 +94,7 @@ export function TelefoniaFijaTabs({
         {active === "penetracion" && (
           <TelefoniaFijaPenetracion
             penetracion={penetracion}
+            penetracionProvincias={penetracionProvincias}
           />
         )}
 

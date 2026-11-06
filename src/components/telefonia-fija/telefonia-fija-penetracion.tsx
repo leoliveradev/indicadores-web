@@ -1,11 +1,12 @@
 "use client";
 
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 
 import type {
   TelefoniaFijaPenetracionRow,
+  TelefoniaFijaPenetracionProvinciaRow,
 } from "@/lib/telefonia-fija";
 
 import {
@@ -24,38 +25,67 @@ import { LineChartBase }
 
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
 type Props = {
   penetracion: ApiResponse<TelefoniaFijaPenetracionRow>;
+  penetracionProvincias: ApiResponse<TelefoniaFijaPenetracionProvinciaRow>;
 };
 
 export function TelefoniaFijaPenetracion({
   penetracion,
+  penetracionProvincias,
 }: Props) {
+
+  const [provincia, setProvincia] =
+    useState("Argentina");
 
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const filteredRows =
-    filterByPeriods(
+  const isArgentina =
+    provincia === "Argentina";
+
+  const provincias = useMemo(
+    () =>
+      [
+        ...new Set(
+          penetracionProvincias.data.map(
+            r => r.provincia
+          )
+        ),
+      ].sort(),
+    [penetracionProvincias.data]
+  );
+
+  const currentRows = isArgentina
+    ? filterByPeriods(
       penetracion.data,
+      period,
+      4
+    )
+    : filterByPeriods(
+      penetracionProvincias.data.filter(
+        r => r.provincia === provincia
+      ),
       period,
       4
     );
 
   const kpiItems =
     getPenetracionKPIItems(
-      penetracion
+      currentRows
     );
 
   const evolutionData =
     getPenetracionEvolutionData(
-      filteredRows
+      currentRows
     );
 
   const insights =
     getPenetracionInsights(
-      filteredRows
+      currentRows,
+      provincia
     );
 
   return (
@@ -69,8 +99,16 @@ export function TelefoniaFijaPenetracion({
         <div className="section-inner">
 
           <h2 className="section-heading">
-            Evolución de la penetración
+            {isArgentina
+              ? "Evolución de la penetración"
+              : `Evolución de la penetración · ${provincia}`}
           </h2>
+
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
 
           <PeriodFilter
             value={period}
@@ -80,6 +118,7 @@ export function TelefoniaFijaPenetracion({
           <div className="chart-card">
 
             <LineChartBase
+              key={provincia}
               data={evolutionData}
               series={[
                 {

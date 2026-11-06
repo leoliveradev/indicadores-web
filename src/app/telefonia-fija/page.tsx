@@ -5,6 +5,7 @@ import {
   getTelefoniaFijaAccesosProvincias,
   getTelefoniaFijaAccesosProvinciasLatest,
   getTelefoniaFijaPenetracion,
+  getTelefoniaFijaPenetracionProvincias,
   getTelefoniaFijaPenetracionProvinciasLatest,
   getTelefoniaFijaIngresos,
 } from "@/lib/api/telefonia-fija";
@@ -26,15 +27,15 @@ export default async function TelefoniaFijaPage() {
     accesosProvinciasLatest,
     penetracion,
     penetracionProvincias,
+    penetracionProvinciasLatest,
     ingresos,
   ] = await Promise.all([
     getTelefoniaFijaAccesos(),
     getTelefoniaFijaAccesosProvincias(),
     getTelefoniaFijaAccesosProvinciasLatest(),
-
     getTelefoniaFijaPenetracion(),
+    getTelefoniaFijaPenetracionProvincias(),
     getTelefoniaFijaPenetracionProvinciasLatest(),
-
     getTelefoniaFijaIngresos(),
   ]);
 
@@ -56,6 +57,7 @@ export default async function TelefoniaFijaPage() {
         accesosProvinciasLatest={accesosProvinciasLatest}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
+        penetracionProvinciasLatest={penetracionProvinciasLatest}
         ingresos={ingresos}
       />
     </>

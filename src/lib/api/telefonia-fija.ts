@@ -33,6 +33,12 @@ export async function getTelefoniaFijaPenetracion() {
   );
 }
 
+export async function getTelefoniaFijaPenetracionProvincias() {
+  return get<ApiResponse<TelefoniaFijaPenetracionProvinciaRow>>(
+    "/api/v1/telefonia-fija/penetracion/provincias"
+  );
+}
+
 export async function getTelefoniaFijaPenetracionProvinciasLatest() {
   return get<ApiResponse<TelefoniaFijaPenetracionProvinciaRow>>(
     "/api/v1/telefonia-fija/penetracion/provincias/latest"

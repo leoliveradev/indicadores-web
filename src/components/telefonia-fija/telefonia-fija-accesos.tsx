@@ -99,8 +99,11 @@ export function TelefoniaFijaAccesos({
         <div className="section-inner">
 
           <h2 className="section-heading">
-            Evolución histórica de accesos
+            {isArgentina
+              ? "Evolución histórica de accesos"
+              : `Evolución histórica de accesos · ${provincia}`}
           </h2>
+
 
           <ProvinciaFilter
             value={provincia}
