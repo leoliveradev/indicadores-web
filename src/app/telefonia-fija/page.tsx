@@ -2,6 +2,7 @@ import { getOverview } from "@/lib/api/home";
 
 import {
   getTelefoniaFijaAccesos,
+  getTelefoniaFijaAccesosProvincias,
   getTelefoniaFijaAccesosProvinciasLatest,
   getTelefoniaFijaPenetracion,
   getTelefoniaFijaPenetracionProvinciasLatest,
@@ -22,11 +23,13 @@ export default async function TelefoniaFijaPage() {
   const [
     accesos,
     accesosProvincias,
+    accesosProvinciasLatest,
     penetracion,
     penetracionProvincias,
     ingresos,
   ] = await Promise.all([
     getTelefoniaFijaAccesos(),
+    getTelefoniaFijaAccesosProvincias(),
     getTelefoniaFijaAccesosProvinciasLatest(),
 
     getTelefoniaFijaPenetracion(),
@@ -50,6 +53,7 @@ export default async function TelefoniaFijaPage() {
         overview={overview}
         accesos={accesos}
         accesosProvincias={accesosProvincias}
+        accesosProvinciasLatest={accesosProvinciasLatest}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
         ingresos={ingresos}

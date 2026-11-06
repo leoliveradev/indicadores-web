@@ -11,9 +11,9 @@ import type {
 } from "./types";
 
 export function getAccesosKPIItems(
-  response: ApiResponse<TelefoniaFijaAccesosRow>
+  response: TelefoniaFijaAccesosRow[]
 ): KPIItem[] {
-  const rows = response.data;
+  const rows = response;
 
   if (!rows.length) return [];
 
@@ -85,9 +85,9 @@ export function getAccesosDonutData(
 }
 
 export function getAccesosEvolutionData(
-  response: ApiResponse<TelefoniaFijaAccesosRow>
+  response: TelefoniaFijaAccesosRow[]
 ) {
-  return response.data.map((row) => ({
+  return response.map((row) => ({
     label: `${row.anio} T${row.trimestre}`,
     hogares: row.hogares,
     comercial: row.comercial,

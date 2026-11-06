@@ -1,10 +1,11 @@
 'use client';
-import { useState } from "react";
+import { useMemo, useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 
 import type {
   TelefoniaFijaAccesosRow,
+  TelefoniaFijaAccesosProvinciaRow,
 } from "@/lib/telefonia-fija";
 
 import {
@@ -24,36 +25,67 @@ import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
 type Props = {
   accesos: ApiResponse<TelefoniaFijaAccesosRow>;
+  accesosProvincias: ApiResponse<TelefoniaFijaAccesosProvinciaRow>;
 };
 
 export function TelefoniaFijaAccesos({
   accesos,
+  accesosProvincias,
 }: Props) {
+
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const filteredRows =
-    filterByPeriods(
+  const [provincia, setProvincia] =
+    useState("Argentina");
+
+  const isArgentina =
+    provincia === "Argentina";
+
+  const provincias = useMemo(
+    () =>
+      [
+        ...new Set(
+          accesosProvincias.data.map(
+            r => r.provincia
+          )
+        ),
+      ].sort(),
+    [accesosProvincias.data]
+  );
+
+  const currentRows = isArgentina
+    ? filterByPeriods(
       accesos.data,
+      period,
+      4
+    )
+    : filterByPeriods(
+      accesosProvincias.data.filter(
+        r => r.provincia === provincia
+      ),
       period,
       4
     );
 
   const kpiItems =
-    getAccesosKPIItems(accesos);
+    getAccesosKPIItems(
+      currentRows
+    );
 
   const evolutionData =
-    getAccesosEvolutionData({
-      ...accesos,
-      data: filteredRows,
-    });
+    getAccesosEvolutionData(
+      currentRows
+    );
 
   const insights =
     getAccesosInsights(
-      filteredRows
+      currentRows,
+      provincia
     );
 
   return (
@@ -70,6 +102,12 @@ export function TelefoniaFijaAccesos({
             Evolución histórica de accesos
           </h2>
 
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
+
           <PeriodFilter
             value={period}
             onChange={setPeriod}
@@ -78,6 +116,7 @@ export function TelefoniaFijaAccesos({
           <div className="chart-card">
             <LineChartBase
               data={evolutionData}
+              key={provincia}
               series={[
                 {
                   key: "hogares",

@@ -20,7 +20,6 @@ import {
 type Props = {
   accesos:
     ApiResponse<TelefoniaFijaAccesosProvinciaRow>;
-
   penetracion:
     ApiResponse<TelefoniaFijaPenetracionProvinciaRow>;
 };

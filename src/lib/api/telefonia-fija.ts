@@ -15,6 +15,12 @@ export async function getTelefoniaFijaAccesos() {
   );
 }
 
+export async function getTelefoniaFijaAccesosProvincias() {
+  return get<ApiResponse<TelefoniaFijaAccesosProvinciaRow>>(
+    "/api/v1/telefonia-fija/accesos/provincias"
+  );
+}
+
 export async function getTelefoniaFijaAccesosProvinciasLatest() {
   return get<ApiResponse<TelefoniaFijaAccesosProvinciaRow>>(
     "/api/v1/telefonia-fija/accesos/provincias/latest"

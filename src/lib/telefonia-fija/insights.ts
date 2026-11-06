@@ -9,9 +9,15 @@ import type {
 import { fmtDecimal, fmtPercent } from "@/lib/format";
 
 export function getAccesosInsights(
-  rows: TelefoniaFijaAccesosRow[]
+  rows: TelefoniaFijaAccesosRow[],
+  provincia?: string
 ): Insight[] {
   if (rows.length < 2) return [];
+
+  const scope =
+    provincia && provincia !== "Argentina"
+      ? ` en ${provincia}`
+      : "";
 
   const first = rows[0];
   const latest = rows[rows.length - 1];
@@ -37,7 +43,7 @@ export function getAccesosInsights(
   insights.push({
     type: "highlight",
     title: "Participación residencial",
-    text: `Los hogares representan ${fmtPercent(hogaresShare)} de los accesos actuales.`,
+    text: `Los hogares representan ${fmtPercent(hogaresShare)} de los accesos actuales.${scope}`,
   });
 
   if (variation < 0) {
@@ -103,7 +109,7 @@ export function getIngresosInsights(
   insights.push({
     type: "trend",
     title: "Variación de ingresos",
-    text: `Los ingresos variaron ${fmtDecimal(variation,0)}% durante el período seleccionado.`,
+    text: `Los ingresos variaron ${fmtDecimal(variation, 0)}% durante el período seleccionado.`,
   });
 
   if (latest.ingresos === peak) {
