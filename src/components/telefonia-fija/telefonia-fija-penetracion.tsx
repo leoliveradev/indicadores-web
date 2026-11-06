@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 
@@ -26,6 +26,7 @@ import { LineChartBase }
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
 import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 type Props = {
   penetracion: ApiResponse<TelefoniaFijaPenetracionRow>;
@@ -37,25 +38,16 @@ export function TelefoniaFijaPenetracion({
   penetracionProvincias,
 }: Props) {
 
-  const [provincia, setProvincia] =
-    useState("Argentina");
-
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const isArgentina =
-    provincia === "Argentina";
-
-  const provincias = useMemo(
-    () =>
-      [
-        ...new Set(
-          penetracionProvincias.data.map(
-            r => r.provincia
-          )
-        ),
-      ].sort(),
-    [penetracionProvincias.data]
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    penetracionProvincias.data
   );
 
   const currentRows = isArgentina

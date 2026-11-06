@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import { KPISection } from "@/components/home/kpi-section";
 import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 
@@ -24,6 +24,7 @@ import {
 import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
 import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 export function InternetPenetracion({
   penetracion,
@@ -32,25 +33,17 @@ export function InternetPenetracion({
   penetracion: ApiResponse<InternetPenetracionRow>;
   penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
 }) {
-  const [provincia, setProvincia] =
-    useState("Argentina");
-
+  
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const isArgentina =
-    provincia === "Argentina";
-
-  const provincias = useMemo(
-    () =>
-      [
-        ...new Set(
-          penetracionProvincias.data.map(
-            (r) => r.provincia
-          )
-        ),
-      ].sort(),
-    [penetracionProvincias.data]
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    penetracionProvincias.data
   );
 
   const rows = penetracion.data;

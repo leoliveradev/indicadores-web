@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 import type {
@@ -22,6 +22,7 @@ import { InsightsCard } from "@/components/ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
 import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 export function InternetTecnologia({
   tecnologias,
@@ -30,23 +31,18 @@ export function InternetTecnologia({
   tecnologias: ApiResponse<InternetTecnologiaRow>;
   tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
 }) {
-  const [provincia, setProvincia] =
-    useState("Argentina");
 
   const [period, setPeriod] = useState<
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
 
-  const provincias = useMemo(
-    () =>
-      [
-        ...new Set(
-          tecnologiasProvincias.data.map(
-            r => r.provincia
-          )
-        ),
-      ].sort(),
-    [tecnologiasProvincias.data]
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    tecnologiasProvincias.data
   );
 
   const rows = tecnologias.data;
@@ -54,9 +50,6 @@ export function InternetTecnologia({
   if (!rows.length) {
     return <div className="error-box">Sin datos disponibles</div>;
   }
-
-  const isArgentina =
-    provincia === "Argentina";
 
   const currentRows = isArgentina
     ? filterByPeriods(

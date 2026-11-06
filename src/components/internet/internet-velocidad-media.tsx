@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 import type {
@@ -25,6 +25,7 @@ import { LineChartBase }
 
 import { dispValue } from "@/lib/format";
 import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 export function InternetVelocidadMedia({
   velocidadMedia,
@@ -38,22 +39,13 @@ export function InternetVelocidadMedia({
     "all" | "10y" | "5y" | "3y" | "1y"
   >("all");
 
-  const [provincia, setProvincia] =
-    useState("Argentina");
-
-  const isArgentina =
-    provincia === "Argentina";
-
-  const provincias = useMemo(
-    () =>
-      [
-        ...new Set(
-          velocidadMediaProvincias.data.map(
-            (r) => r.provincia
-          )
-        ),
-      ].sort(),
-    [velocidadMediaProvincias.data]
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    velocidadMediaProvincias.data
   );
 
   const rows = velocidadMedia.data;
@@ -95,11 +87,6 @@ export function InternetVelocidadMedia({
       currentRows,
       provincia
     );
-
-  console.log(
-    velocidadMedia.data[0]
-  );
-
 
   return (
     <>

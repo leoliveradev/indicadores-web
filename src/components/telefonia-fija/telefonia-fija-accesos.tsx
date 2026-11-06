@@ -1,5 +1,5 @@
 'use client';
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 import type { ApiResponse } from "@/lib/types";
 
@@ -26,6 +26,7 @@ import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
 import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 type Props = {
   accesos: ApiResponse<TelefoniaFijaAccesosRow>;
@@ -40,22 +41,13 @@ export function TelefoniaFijaAccesos({
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const [provincia, setProvincia] =
-    useState("Argentina");
-
-  const isArgentina =
-    provincia === "Argentina";
-
-  const provincias = useMemo(
-    () =>
-      [
-        ...new Set(
-          accesosProvincias.data.map(
-            r => r.provincia
-          )
-        ),
-      ].sort(),
-    [accesosProvincias.data]
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    accesosProvincias.data
   );
 
   const currentRows = isArgentina
