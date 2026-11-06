@@ -2,8 +2,8 @@
 
 import { geoMercator, geoPath } from "d3-geo";
 import { useState } from "react";
-import { useGeoData } from "@/hooks/useGeoData";
-import { useColorScale } from "@/hooks/useColorScale";
+import { useGeoData } from "@/hooks/use-geo-data";
+import { useColorScale } from "@/hooks/use-color-scale";
 import { MapTooltip } from "@/components/ui/map/map-tooltip";
 import { MapLegend } from "@/components/ui/map/map-legend";
 import { PROVINCE_MAP } from "@/lib/maps";
