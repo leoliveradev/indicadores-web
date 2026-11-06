@@ -15,15 +15,7 @@ export type TelevisionAccesosProvinciaRow =
     provincia: string;
   };
 
-export interface TelevisionIngresosRow {
-  anio: number;
-  trimestre: number;
-
-  tv_suscripcion: number;
-  tv_satelital: number;
-}
-
-export interface TelevisionPenetracionRow {
+export type TelevisionPenetracionRow = {
   anio: number;
   trimestre: number;
 
@@ -34,15 +26,16 @@ export interface TelevisionPenetracionRow {
   tv_satelital_100_hogares: number;
 }
 
-export interface TelevisionPenetracionProvinciaRow {
+export type TelevisionPenetracionProvinciaRow = TelevisionPenetracionRow & {
   id: number;
   created_at: string;
+  provincia: string;
+}
 
+export type TelevisionIngresosRow = {
   anio: number;
   trimestre: number;
 
-  provincia: string;
-
-  tv_suscripcion_100habitantes: number;
-  tv_suscripcion_100hogares: number;
+  tv_suscripcion: number;
+  tv_satelital: number;
 }

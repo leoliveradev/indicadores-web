@@ -40,19 +40,19 @@ export function PenetracionProvinciaView({
   const provinciaData =
     provincias.data.map((d) => ({
       provincia: d.provincia,
-      total: d.tv_suscripcion_100hogares,
+      total: d.tv_suscripcion_100_hogares,
 
       tooltipData: [
         {
           label: "Hogares",
           value:
-            d.tv_suscripcion_100hogares.toFixed(2),
+            d.tv_suscripcion_100_hogares.toFixed(2),
           color: "var(--accent-green)",
         },
         {
           label: "Habitantes",
           value:
-            d.tv_suscripcion_100habitantes.toFixed(2),
+            d.tv_suscripcion_100_habitantes.toFixed(2),
           color: "var(--accent-amber)",
         },
       ],

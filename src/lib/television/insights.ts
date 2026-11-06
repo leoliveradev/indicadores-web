@@ -67,9 +67,15 @@ export function getIngresosInsights(
 }
 
 export function getPenetracionInsights(
-  rows: TelevisionPenetracionRow[]
+  rows: TelevisionPenetracionRow[],
+  provincia?: string
 ): Insight[] {
   if (!rows.length) return [];
+
+  const scope =
+    provincia && provincia !== "Argentina"
+      ? ` en ${provincia}`
+      : "";
 
   const first = rows[0];
   const latest = rows[rows.length - 1];
@@ -103,7 +109,7 @@ export function getPenetracionInsights(
   insights.push({
     type: "highlight",
     title: "Penetración actual",
-    text: `La TV por suscripción alcanzó ${fmtDecimal(latest.tv_suscripcion_100_hogares)} accesos cada 100 hogares.`,
+    text: `La TV por suscripción alcanzó ${fmtDecimal(latest.tv_suscripcion_100_hogares)} accesos cada 100 hogares.${scope}`,
   });
 
   insights.push({

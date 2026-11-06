@@ -47,6 +47,7 @@ type Props = {
   accesosProvinciasLatest: ApiResponse<TelevisionAccesosProvinciaRow>;
   penetracion: ApiResponse<TelevisionPenetracionRow>;
   penetracionProvincias: ApiResponse<TelevisionPenetracionProvinciaRow>;
+  penetracionProvinciasLatest: ApiResponse<TelevisionPenetracionProvinciaRow>;
   ingresos: ApiResponse<TelevisionIngresosRow>;
 };
 
@@ -57,6 +58,7 @@ export function TelevisionTabs({
   accesosProvinciasLatest,
   penetracion,
   penetracionProvincias,
+  penetracionProvinciasLatest,
   ingresos,
 }: Props) {
   const [active, setActive] =
@@ -93,7 +95,7 @@ export function TelevisionTabs({
         {active === "provincias" && (
           <TelevisionProvincias
             accesos={accesosProvinciasLatest}
-            penetracion={penetracionProvincias}
+            penetracion={penetracionProvinciasLatest}
           />
         )}
 
@@ -107,7 +109,7 @@ export function TelevisionTabs({
         {active === "penetracion" && (
           <TelevisionPenetracion
             penetracion={penetracion}
-            provincias={penetracionProvincias}
+            penetracionProvincias={penetracionProvincias}
           />
         )}
 

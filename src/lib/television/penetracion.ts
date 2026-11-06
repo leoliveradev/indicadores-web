@@ -11,9 +11,9 @@ import type {
 } from "./types";
 
 export function getPenetracionKPIItems(
-  response: ApiResponse<TelevisionPenetracionRow>
+  response: TelevisionPenetracionRow[]
 ): KPIItem[] {
-  const rows = response.data;
+  const rows = response;
 
   if (!rows.length) return [];
 
@@ -67,13 +67,13 @@ export function getPenetracionProvinciaSortedData(
   return [...response.data]
     .sort(
       (a, b) =>
-        b.tv_suscripcion_100hogares -
-        a.tv_suscripcion_100hogares
+        b.tv_suscripcion_100_hogares -
+        a.tv_suscripcion_100_hogares
     )
     .map((row) => ({
       provincia: row.provincia,
-      hogares: row.tv_suscripcion_100hogares,
+      hogares: row.tv_suscripcion_100_hogares,
       habitantes:
-        row.tv_suscripcion_100habitantes,
+        row.tv_suscripcion_100_habitantes,
     }));
 }

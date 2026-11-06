@@ -6,6 +6,7 @@ import {
   getTelevisionAccesosProvincias,
   getTelevisionAccesosProvinciasLatest,
   getTelevisionPenetracion,
+  getTelevisionPenetracionProvincias,
   getTelevisionPenetracionProvinciasLatest,
   getTelevisionIngresos,
 } from "@/lib/api/television";
@@ -29,15 +30,15 @@ export default async function TelevisionPage() {
     accesosProvinciasLatest,
     penetracion,
     penetracionProvincias,
+    penetracionProvinciasLatest,
     ingresos,
   ] = await Promise.all([
     getTelevisionAccesos(),
     getTelevisionAccesosProvincias(),
     getTelevisionAccesosProvinciasLatest(),
-
     getTelevisionPenetracion(),
+    getTelevisionPenetracionProvincias(),
     getTelevisionPenetracionProvinciasLatest(),
-
     getTelevisionIngresos(),
   ]);
 
@@ -58,6 +59,7 @@ export default async function TelevisionPage() {
         accesosProvinciasLatest={accesosProvinciasLatest}
         penetracion={penetracion}
         penetracionProvincias={penetracionProvincias}
+        penetracionProvinciasLatest={penetracionProvinciasLatest}
         ingresos={ingresos}
       />
     </>

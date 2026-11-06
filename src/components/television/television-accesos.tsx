@@ -113,22 +113,34 @@ export function TelevisionAccesos({
             <LineChartBase
               key={provincia}
               data={evolutionData}
-              series={[
-                {
-                  key: "tv_suscripcion",
-                  label: "TV por suscripción",
-                  color: "var(--accent-green)",
-                  strokeWidth: 3,
-                  activeDot: true,
-                },
-                {
-                  key: "tv_satelital",
-                  label: "TV satelital",
-                  color: "var(--accent-amber)",
-                  strokeWidth: 2,
-                  activeDot: true,
-                },
-              ]}
+              series={
+                isArgentina
+                  ? [
+                    {
+                      key: "tv_suscripcion",
+                      label: "TV por suscripción",
+                      color: "var(--accent-green)",
+                      strokeWidth: 3,
+                      activeDot: true,
+                    },
+                    {
+                      key: "tv_satelital",
+                      label: "TV satelital",
+                      color: "var(--accent-amber)",
+                      strokeWidth: 2,
+                      activeDot: true,
+                    },
+                  ]
+                  : [
+                    {
+                      key: "tv_suscripcion",
+                      label: "TV por suscripción",
+                      color: "var(--accent-green)",
+                      strokeWidth: 3,
+                      activeDot: true,
+                    }
+                  ]
+              }
               yFormatter={(v) =>
                 dispValue(v, {
                   format: "compact",

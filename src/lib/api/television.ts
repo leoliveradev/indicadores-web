@@ -34,6 +34,12 @@ export async function getTelevisionPenetracion() {
   );
 }
 
+export async function getTelevisionPenetracionProvincias() {
+  return get<ApiResponse<TelevisionPenetracionProvinciaRow>>(
+    "/api/v1/television/penetracion/provincias"
+  );
+}
+
 export async function getTelevisionPenetracionProvinciasLatest() {
   return get<ApiResponse<TelevisionPenetracionProvinciaRow>>(
     "/api/v1/television/penetracion/provincias/latest"
