@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet, IPostal } from "@/components/ui/icons";
+import { IPostal } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
