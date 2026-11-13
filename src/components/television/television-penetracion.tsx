@@ -13,6 +13,9 @@ import {
   getPenetracionKPIItems,
   getPenetracionEvolutionData,
   getPenetracionInsights,
+  getPenetracionProvinciaEvolutionData,
+  getPenetracionProvinciaInsights,
+  getPenetracionProvinciaKPIItems,
 } from "@/lib/television";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -50,33 +53,60 @@ export function TelevisionPenetracion({
     penetracionProvincias.data
   );
 
-  const currentRows = isArgentina
-    ? filterByPeriods(
-      penetracion.data,
-      period,
-      4
-    )
-    : filterByPeriods(
-      penetracionProvincias.data.filter(
-        (r) => r.provincia === provincia
-      ),
-      period,
-      4
-    );
+  // const currentRows = isArgentina
+  //   ? filterByPeriods(
+  //     penetracion.data,
+  //     period,
+  //     4
+  //   )
+  //   : filterByPeriods(
+  //     penetracionProvincias.data.filter(
+  //       (r) => r.provincia === provincia
+  //     ),
+  //     period,
+  //     4
+  //   );
+  const nationalRows = filterByPeriods(
+    penetracion.data,
+    period,
+    4
+  );
 
-  const kpiItems =
-    getPenetracionKPIItems(
-      currentRows
-    );
+  const provincialRows = filterByPeriods(
+    penetracionProvincias.data.filter(
+      (r) => r.provincia === provincia
+    ),
+    period,
+    4
+  );
 
-  const evolutionData =
-    getPenetracionEvolutionData(
-      currentRows
-    );
+  // const kpiItems =
+  //   getPenetracionKPIItems(
+  //     currentRows
+  //   );
 
-  const insights =
-    getPenetracionInsights(
-      currentRows,
+  // const evolutionData =
+  //   getPenetracionEvolutionData(
+  //     currentRows
+  //   );
+
+  // const insights =
+  //   getPenetracionInsights(
+  //     currentRows,
+  //     provincia
+  //   );
+  const kpiItems = isArgentina
+    ? getPenetracionKPIItems(nationalRows)
+    : getPenetracionProvinciaKPIItems(provincialRows);
+
+  const evolutionData = isArgentina
+    ? getPenetracionEvolutionData(nationalRows)
+    : getPenetracionProvinciaEvolutionData(provincialRows);
+
+  const insights = isArgentina
+    ? getPenetracionInsights(nationalRows)
+    : getPenetracionProvinciaInsights(
+      provincialRows,
       provincia
     );
 
@@ -112,18 +142,34 @@ export function TelevisionPenetracion({
             <LineChartBase
               key={provincia}
               data={evolutionData}
-              series={[
-                {
-                  key: "suscripcion_hogares",
-                  label: "TV Suscripción",
-                  color: "var(--accent-green)",
-                },
-                {
-                  key: "satelital_hogares",
-                  label: "TV Satelital",
-                  color: "var(--accent-amber)",
-                },
-              ]}
+              series={
+                isArgentina
+                  ? [
+                    {
+                      key: "suscripcion_hogares",
+                      label: "TV por suscripción",
+                      color: "var(--accent-green)",
+                      strokeWidth: 3,
+                      activeDot: true,
+                    },
+                    {
+                      key: "satelital_hogares",
+                      label: "TV satelital",
+                      color: "var(--accent-amber)",
+                      strokeWidth: 2,
+                      activeDot: true,
+                    },
+                  ]
+                  : [
+                    {
+                      key: "suscripcion_hogares",
+                      label: "TV por suscripción",
+                      color: "var(--accent-green)",
+                      strokeWidth: 3,
+                      activeDot: true,
+                    }
+                  ]
+              }
             />
 
           </div>

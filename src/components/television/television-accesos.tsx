@@ -13,6 +13,8 @@ import {
   getAccesosKPIItems,
   getAccesosEvolutionData,
   getAccesosInsights,
+  getAccesosProvinciaKPIItems,
+  getAccesosProvinciaInsights,
 } from "@/lib/television";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -28,6 +30,7 @@ import { InsightsCard } from "@/components/ui/insights/insights-card";
 import { dispValue } from "@/lib/format";
 import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
+import { getAccesosProvinciaEvolutionData } from "@/lib/mercado-postal";
 
 type Props = {
   accesos: ApiResponse<TelevisionAccesosRow>;
@@ -51,33 +54,32 @@ export function TelevisionAccesos({
     accesosProvincias.data
   );
 
-  const currentRows = isArgentina
-    ? filterByPeriods(
-      accesos.data,
-      period,
-      4
-    )
-    : filterByPeriods(
-      accesosProvincias.data.filter(
-        (r) => r.provincia === provincia
-      ),
-      period,
-      4
-    );
+  const nationalRows = filterByPeriods(
+    accesos.data,
+    period,
+    4
+  );
 
-  const kpiItems =
-    getAccesosKPIItems(
-      currentRows
-    );
+  const provincialRows = filterByPeriods(
+    accesosProvincias.data.filter(
+      (r) => r.provincia === provincia
+    ),
+    period,
+    4
+  );
 
-  const evolutionData =
-    getAccesosEvolutionData(
-      currentRows
-    );
+  const kpiItems = isArgentina
+    ? getAccesosKPIItems(nationalRows)
+    : getAccesosProvinciaKPIItems(provincialRows);
 
-  const insights =
-    getAccesosInsights(
-      currentRows,
+  const evolutionData = isArgentina
+    ? getAccesosEvolutionData(nationalRows)
+    : getAccesosProvinciaEvolutionData(provincialRows);
+
+  const insights = isArgentina
+    ? getAccesosInsights(nationalRows)
+    : getAccesosProvinciaInsights(
+      provincialRows,
       provincia
     );
 

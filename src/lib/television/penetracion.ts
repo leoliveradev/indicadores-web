@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+import { IInternet, ITV } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
@@ -41,6 +41,28 @@ export function getPenetracionKPIItems(
   ];
 }
 
+export function getPenetracionProvinciaKPIItems(
+  response: TelevisionPenetracionProvinciaRow[]
+): KPIItem[] {
+  const rows = response;
+
+  if (!rows.length) return [];
+
+  const latest = rows[rows.length - 1];
+
+  return [
+    {
+      label: "TV suscripción / 100 hogares",
+      icon: ITV,
+      value: latest.tv_suscripcion_100_hogares,
+      format: (v) =>
+        dispValue(v, {
+          decimals: 2,
+        }),
+    }
+  ];
+}
+
 export function getPenetracionEvolutionData(
   rows: TelevisionPenetracionRow[]
 ) {
@@ -58,6 +80,16 @@ export function getPenetracionEvolutionData(
 
     satelital_habitantes:
       row.tv_satelital_100_habitantes,
+  }));
+}
+
+export function getPenetracionProvinciaEvolutionData(
+  rows: TelevisionPenetracionProvinciaRow[]
+) {
+  return rows.map((row) => ({
+    label: `${row.anio} T${row.trimestre}`,
+    suscripcion_hogares:
+      row.tv_suscripcion_100_hogares,
   }));
 }
 

@@ -2,11 +2,13 @@ import type { Insight } from "@/lib/types";
 
 import type {
   TelevisionAccesosRow,
+  TelevisionAccesosProvinciaRow,
   TelevisionPenetracionRow,
   TelevisionIngresosRow,
+  TelevisionPenetracionProvinciaRow,
 } from "./types";
 
-import { fmtDecimal, fmtPercent } from "@/lib/format";
+import { dispValue, fmtDecimal, fmtPercent } from "@/lib/format";
 
 export function getAccesosInsights(
   rows: TelevisionAccesosRow[],
@@ -42,6 +44,66 @@ export function getAccesosInsights(
     },
   ];
 }
+
+export function getAccesosProvinciaInsights(
+  rows: TelevisionAccesosProvinciaRow[],
+  provincia: string
+): Insight[] {
+  if (!rows.length) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    first.tv_suscripcion > 0
+      ? (
+        (latest.tv_suscripcion -
+          first.tv_suscripcion) /
+        first.tv_suscripcion
+      ) * 100
+      : null;
+
+  const peak = Math.max(
+    ...rows.map((r) => r.tv_suscripcion)
+  );
+
+  const insights: Insight[] = [
+    {
+      type: "highlight",
+      title: "Accesos actuales",
+      text: `En ${provincia}, la TV por suscripción registra ${dispValue(
+        latest.tv_suscripcion,
+        { format: "compact" }
+      )} accesos en el último trimestre disponible.`,
+    },
+  ];
+
+  if (
+    variation !== null &&
+    Math.abs(variation) < 1000
+  ) {
+    insights.push({
+      type: "trend",
+      title: "Crecimiento histórico",
+      text: `Los accesos acumulan una variación de ${fmtPercent(
+        variation
+      )} desde el inicio de la serie.`,
+    });
+  }
+
+  if (
+    latest.tv_suscripcion === peak
+  ) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico",
+      text: "El último trimestre registra el mayor nivel de accesos de toda la serie provincial.",
+    });
+  }
+
+  return insights;
+}
+
 
 
 export function getIngresosInsights(
@@ -126,6 +188,75 @@ export function getPenetracionInsights(
       type: "record",
       title: "Máximo histórico",
       text: "El último período registra la mayor penetración sobre hogares de toda la serie.",
+    });
+  }
+
+  return insights;
+}
+
+export function getPenetracionProvinciaInsights(
+  rows: TelevisionPenetracionProvinciaRow[],
+  provincia: string
+): Insight[] {
+  if (!rows.length) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    first.tv_suscripcion_100_hogares > 0
+      ? (
+          (latest.tv_suscripcion_100_hogares -
+            first.tv_suscripcion_100_hogares) /
+          first.tv_suscripcion_100_hogares
+        ) * 100
+      : null;
+
+  const peak = Math.max(
+    ...rows.map(
+      (r) => r.tv_suscripcion_100_hogares
+    )
+  );
+
+  const insights: Insight[] = [];
+
+  if (
+    variation !== null &&
+    Math.abs(variation) < 1000
+  ) {
+    insights.push({
+      type: "trend",
+      title: "Crecimiento histórico",
+      text: `La penetración de TV por suscripción acumuló una variación de ${fmtPercent(
+        variation
+      )} desde el inicio de la serie.`,
+    });
+  }
+
+  insights.push({
+    type: "highlight",
+    title: "Penetración actual",
+    text: `En ${provincia} se registran ${latest.tv_suscripcion_100_hogares.toFixed(
+      2
+    )} accesos cada 100 hogares.`,
+  });
+
+  // insights.push({
+  //   type: "highlight",
+  //   title: "Relación hogares y habitantes",
+  //   text: `La penetración alcanza ${latest.tv_suscripcion_100_habitantes.toFixed(
+  //     2
+  //   )} accesos cada 100 habitantes.`,
+  // });
+
+  if (
+    latest.tv_suscripcion_100_hogares ===
+    peak
+  ) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico",
+      text: "El último trimestre registra el mayor nivel de penetración de toda la serie provincial.",
     });
   }
 

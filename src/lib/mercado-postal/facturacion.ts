@@ -11,6 +11,7 @@ import type {
   MercadoPostalFacturacionRow,
   MercadoPostalProvinciaRow,
 } from "./types";
+import { TelevisionAccesosProvinciaRow } from "../television";
 
 export function getFacturacionKPIItems(
   response: MercadoPostalFacturacionRow[]
@@ -121,5 +122,14 @@ export function getFacturacionProvinciaEvolutionData(
   return rows.map((r) => ({
     label: `${r.anio} T${r.trimestre}`,
     pesos: r.pesos,
+  }));
+}
+
+export function getAccesosProvinciaEvolutionData(
+  rows: TelevisionAccesosProvinciaRow[]
+) {
+  return rows.map((row) => ({
+    label: `${row.anio} T${row.trimestre}`,
+    tv_suscripcion: row.tv_suscripcion,
   }));
 }

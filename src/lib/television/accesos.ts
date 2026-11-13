@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+import { ITV } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
@@ -26,7 +26,7 @@ export function getAccesosKPIItems(
   return [
     {
       label: "Accesos totales",
-      icon: IInternet,
+      icon: ITV,
       value: total,
       format: (v) =>
         dispValue(v, {
@@ -35,7 +35,7 @@ export function getAccesosKPIItems(
     },
     {
       label: "TV por suscripción",
-      icon: IInternet,
+      icon: ITV,
       value: latest.tv_suscripcion,
       format: (v) =>
         dispValue(v, {
@@ -44,12 +44,30 @@ export function getAccesosKPIItems(
     },
     {
       label: "TV satelital",
-      icon: IInternet,
+      icon: ITV,
       value: latest.tv_satelital,
       format: (v) =>
         dispValue(v, {
           format: "compact",
         }),
+    },
+  ];
+}
+
+export function getAccesosProvinciaKPIItems(
+  rows: TelevisionAccesosProvinciaRow[]
+): KPIItem[] {
+  if (!rows.length) return [];
+
+  const latest = rows[rows.length - 1];
+
+  return [
+    {
+      label: "TV por suscripción",
+      icon: ITV,
+      value: latest.tv_suscripcion,
+      format: (v) =>
+        dispValue(v, { format: "compact" }),
     },
   ];
 }
