@@ -27,6 +27,12 @@ export async function getMercadoPostalPersonal() {
   );
 }
 
+export async function getMercadoPostalFacturacionProduccionProvincias() {
+  return get<ApiResponse<MercadoPostalProvinciaRow>>(
+    "/api/v1/mercado-postal/facturacion-produccion/provincias"
+  );
+}
+
 export async function getMercadoPostalProvinciasLatest() {
   return get<ApiResponse<MercadoPostalProvinciaRow>>(
     "/api/v1/mercado-postal/facturacion-produccion/provincias/latest"

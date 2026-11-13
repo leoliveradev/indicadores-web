@@ -6,12 +6,16 @@ import type { ApiResponse } from "@/lib/types";
 
 import type {
   MercadoPostalProduccionRow,
+  MercadoPostalProvinciaRow,
 } from "@/lib/mercado-postal";
 
 import {
   getProduccionKPIItems,
   getProduccionEvolutionData,
-  getProduccionInsights
+  getProduccionInsights,
+  getProduccionProvinciaKPIItems,
+  getProduccionProvinciaEvolutionData,
+  getProduccionProvinciaInsights
 } from "@/lib/mercado-postal";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -35,36 +39,55 @@ import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue }
   from "@/lib/format";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
 type Props = {
   produccion: ApiResponse<MercadoPostalProduccionRow>;
+  produccionProvincias: ApiResponse<MercadoPostalProvinciaRow>;
 };
 
 export function MercadoPostalProduccion({
   produccion,
+  produccionProvincias,
 }: Props) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const filteredRows =
-    filterByPeriods(
-      produccion.data,
-      period,
-      12
-    );
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    produccionProvincias.data
+  );
 
-  const kpiItems =
-    getProduccionKPIItems(produccion);
+  const nationalRows = filterByPeriods(
+    produccion.data,
+    period,
+    12
+  );
 
-  const evolutionData =
-    getProduccionEvolutionData(
-      filteredRows
-    );
+  const provincialRows = filterByPeriods(
+    produccionProvincias.data.filter(
+      (r) => r.provincia === provincia
+    ),
+    period,
+    4
+  );
 
-  const insights =
-    getProduccionInsights(
-      filteredRows
-    )
+  const kpiItems = isArgentina
+    ? getProduccionKPIItems(nationalRows)
+    : getProduccionProvinciaKPIItems(provincialRows);
+
+  const evolutionData = isArgentina
+    ? getProduccionEvolutionData(nationalRows)
+    : getProduccionProvinciaEvolutionData(provincialRows);
+
+  const insights = isArgentina
+    ? getProduccionInsights(nationalRows)
+    : getProduccionProvinciaInsights(provincialRows, provincia);
 
   return (
     <>
@@ -77,8 +100,16 @@ export function MercadoPostalProduccion({
         <div className="section-inner">
 
           <h2 className="section-heading">
-            Evolución histórica de producción
+            {isArgentina
+              ? "Evolución histórica de producción"
+              : `Evolución histórica de producción · ${provincia}`}
           </h2>
+
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
 
           <PeriodFilter
             value={period}
@@ -88,25 +119,36 @@ export function MercadoPostalProduccion({
           <div className="chart-card">
 
             <LineChartBase
+              key={provincia}
               data={evolutionData}
-              series={[
-                {
-                  key: "postales",
-                  label: "Postales",
-                  color: "var(--blue-300)",
-                  strokeWidth: 3,
-                },
-                {
-                  key: "telegraficas",
-                  label: "Telegráficas",
-                  color: "var(--accent-green)",
-                },
-                {
-                  key: "monetarios",
-                  label: "Monetarios",
-                  color: "var(--accent-amber)",
-                },
-              ]}
+              series={
+                isArgentina
+                  ? [
+                    {
+                      key: "postales",
+                      label: "Postales",
+                      color: "var(--blue-300)",
+                    },
+                    {
+                      key: "telegraficas",
+                      label: "Telegráficas",
+                      color: "var(--accent-green)",
+                    },
+                    {
+                      key: "monetarios",
+                      label: "Monetarios",
+                      color: "var(--accent-amber)",
+                    },
+                  ]
+                  : [
+                    {
+                      key: "unidades",
+                      label: "Producción",
+                      color: "var(--blue-300)",
+                      strokeWidth: 3,
+                    },
+                  ]
+              }
               tooltipFormatter={(v) =>
                 v.toLocaleString("es-AR")
               }

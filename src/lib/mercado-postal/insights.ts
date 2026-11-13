@@ -2,9 +2,10 @@ import { Insight } from "../types";
 import type {
   MercadoPostalFacturacionRow,
   MercadoPostalProduccionRow,
-  MercadoPostalPersonalRow
+  MercadoPostalPersonalRow,
+  MercadoPostalProvinciaRow
 } from "./types";
-import { fmtNumber, fmtPercent } from "@/lib/format";
+import { dispCurrencyCompact, dispValue, fmtNumber, fmtPercent } from "@/lib/format";
 
 export function getFacturacionInsights(
   rows: MercadoPostalFacturacionRow[]
@@ -99,6 +100,71 @@ export function getFacturacionInsights(
       type: "record",
       title: "Máximo histórico",
       text: "El último período registra el mayor nivel de facturación de toda la serie.",
+    });
+  }
+
+  return insights;
+}
+
+export function getFacturacionProvinciaInsights(
+  rows: MercadoPostalProvinciaRow[],
+  provincia: string
+): Insight[] {
+  if (!rows.length) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    first.pesos > 0
+      ? ((latest.pesos - first.pesos) / first.pesos) * 100
+      : null;
+
+  const peakFacturacion = Math.max(
+    ...rows.map((r) => r.pesos)
+  );
+
+  const peakUnidades = Math.max(
+    ...rows.map((r) => r.unidades)
+  );
+
+  const insights: Insight[] = [
+    {
+      type: "highlight",
+      title: "Facturación actual",
+      text: `La facturación postal en ${provincia} alcanzó ${dispCurrencyCompact(latest.pesos)} en el último trimestre disponible.`,
+    },
+    {
+      type: "highlight",
+      title: "Actividad postal",
+      text: `Durante el último trimestre se registraron ${dispValue(latest.unidades)} envíos o transacciones postales.`,
+    },
+  ];
+
+  if (
+    variation !== null &&
+    Math.abs(variation) < 1000
+  ) {
+    insights.push({
+      type: "trend",
+      title: "Crecimiento histórico",
+      text: `La facturación provincial acumula una variación de ${fmtPercent(variation, 0)} desde el inicio de la serie.`,
+    });
+  }
+
+  if (latest.pesos === peakFacturacion) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico de facturación",
+      text: "El último trimestre registra el mayor nivel de facturación de toda la serie provincial.",
+    });
+  }
+
+  if (latest.unidades === peakUnidades) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico de actividad",
+      text: "El último trimestre registra la mayor cantidad de envíos o transacciones de toda la serie.",
     });
   }
 
@@ -201,6 +267,60 @@ export function getProduccionInsights(
       type: "record",
       title: "Máximo histórico",
       text: "El último período registra el mayor nivel de producción de toda la serie.",
+    });
+  }
+
+  return insights;
+}
+
+export function getProduccionProvinciaInsights(
+  rows: MercadoPostalProvinciaRow[],
+  provincia: string
+): Insight[] {
+  if (!rows.length) return [];
+
+  const first = rows[0];
+  const latest = rows[rows.length - 1];
+
+  const variation =
+    first.unidades > 0
+      ? ((latest.unidades - first.unidades) /
+        first.unidades) * 100
+      : null;
+
+  const peak = Math.max(
+    ...rows.map((r) => r.unidades)
+  );
+
+  const insights: Insight[] = [];
+
+  if (variation !== null && Math.abs(variation) < 1000) {
+    insights.push({
+      type: "trend",
+      title: "Crecimiento histórico",
+      text: `La producción provincial acumula una variación de ${fmtPercent(
+        variation
+      )} desde el inicio de la serie.`,
+    });
+  }
+
+  insights.push({
+    type: "highlight",
+    title: "Producción actual",
+    text: `En ${provincia}, se registraron ${dispValue(latest.unidades, { format: "compact" })} unidades en el último trimestre disponible.`,
+  });
+
+  insights.push({
+    type: "highlight",
+    title: "Facturación asociada",
+    text: `La actividad postal generó ${dispCurrencyCompact(latest.pesos)} durante el último trimestre.`,
+  });
+
+  if (latest.unidades === peak) {
+    insights.push({
+      type: "record",
+      title: "Máximo histórico",
+      text: "El último trimestre registra el mayor nivel de producción de toda la serie provincial.",
     });
   }
 

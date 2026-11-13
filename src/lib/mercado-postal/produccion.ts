@@ -1,18 +1,19 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+import { IInternet, IPostal } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
 import type {
   MercadoPostalProduccionRow,
+  MercadoPostalProvinciaRow,
 } from "./types";
 
 export function getProduccionKPIItems(
-  response: ApiResponse<MercadoPostalProduccionRow>
+  response: MercadoPostalProduccionRow[]
 ): KPIItem[] {
-  const rows = response.data;
+  const rows = response;
 
   if (!rows.length) return [];
 
@@ -26,7 +27,7 @@ export function getProduccionKPIItems(
   return [
     {
       label: "Producción total",
-      icon: IInternet,
+      icon: IPostal,
       value: total,
       format: (v) =>
         dispValue(v, {
@@ -35,7 +36,7 @@ export function getProduccionKPIItems(
     },
     {
       label: "Postales",
-      icon: IInternet,
+      icon: IPostal,
       value: latest.postales,
       format: (v) =>
         dispValue(v, {
@@ -44,7 +45,7 @@ export function getProduccionKPIItems(
     },
     {
       label: "Telegráficas",
-      icon: IInternet,
+      icon: IPostal,
       value: latest.telegraficas,
       format: (v) =>
         dispValue(v, {
@@ -53,12 +54,29 @@ export function getProduccionKPIItems(
     },
     {
       label: "Monetarios",
-      icon: IInternet,
+      icon: IPostal,
       value: latest.monetarios,
       format: (v) =>
         dispValue(v, {
           format: "compact",
         }),
+    },
+  ];
+}
+
+export function getProduccionProvinciaKPIItems(
+  rows: MercadoPostalProvinciaRow[]
+): KPIItem[] {
+  if (!rows.length) return [];
+
+  const latest = rows[rows.length - 1];
+
+  return [
+    {
+      label: "Producción total",
+      icon: IPostal,
+      value: latest.unidades,
+      format: (v) => dispValue(v, { format: "compact" }),
     },
   ];
 }
@@ -100,5 +118,14 @@ export function getProduccionEvolutionData(
     postales: row.postales,
     telegraficas: row.telegraficas,
     monetarios: row.monetarios,
+  }));
+}
+
+export function getProduccionProvinciaEvolutionData(
+  rows: MercadoPostalProvinciaRow[]
+) {
+  return rows.map((r) => ({
+    label: `${r.anio} T${r.trimestre}`,
+    unidades: r.unidades,
   }));
 }

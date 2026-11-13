@@ -6,11 +6,14 @@ import type { ApiResponse } from "@/lib/types";
 
 import type {
   MercadoPostalFacturacionRow,
+  MercadoPostalProvinciaRow,
 } from "@/lib/mercado-postal";
 
 import {
   getFacturacionKPIItems,
   getFacturacionEvolutionData,
+  getFacturacionProvinciaKPIItems,
+  getFacturacionProvinciaEvolutionData,
 } from "@/lib/mercado-postal";
 
 import { KPISection } from "@/components/home/kpi-section";
@@ -35,40 +38,62 @@ import { InsightsCard }
 
 import {
   getFacturacionInsights,
+  getFacturacionProvinciaInsights,
 } from "@/lib/mercado-postal/insights";
 
-import { dispCurrency, dispCurrencyCompact }
-  from "@/lib/format";
+import {
+  dispCurrency,
+  dispCurrencyCompact
+} from "@/lib/format";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
+import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
 type Props = {
   facturacion: ApiResponse<MercadoPostalFacturacionRow>;
+  facturacionProvincias: ApiResponse<MercadoPostalProvinciaRow>;
 };
 
 export function MercadoPostalFacturacion({
   facturacion,
+  facturacionProvincias,
 }: Props) {
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
-  const filteredRows =
-    filterByPeriods(
-      facturacion.data,
-      period,
-      12
-    );
+  const {
+    provincia,
+    setProvincia,
+    provincias,
+    isArgentina,
+  } = useProvinciaSelector(
+    facturacionProvincias.data
+  );
 
-  const kpiItems =
-    getFacturacionKPIItems(facturacion);
+  const nationalRows = filterByPeriods(
+    facturacion.data,
+    period,
+    12
+  );
 
-  const evolutionData =
-    getFacturacionEvolutionData(
-      filteredRows
-    );
+  const provincialRows = filterByPeriods(
+    facturacionProvincias.data.filter(
+      (r) => r.provincia === provincia
+    ),
+    period,
+    4
+  );
 
-  const insights =
-    getFacturacionInsights(
-      filteredRows
-    );
+  const kpiItems = isArgentina
+    ? getFacturacionKPIItems(nationalRows)
+    : getFacturacionProvinciaKPIItems(provincialRows);
+
+  const evolutionData = isArgentina
+    ? getFacturacionEvolutionData(nationalRows)
+    : getFacturacionProvinciaEvolutionData(provincialRows);
+
+  const insights = isArgentina
+    ? getFacturacionInsights(nationalRows)
+    : getFacturacionProvinciaInsights(provincialRows, provincia);
 
   return (
     <>
@@ -81,8 +106,16 @@ export function MercadoPostalFacturacion({
         <div className="section-inner">
 
           <h2 className="section-heading">
-            Evolución histórica de facturación
+            {isArgentina
+              ? "Evolución histórica de facturación"
+              : `Evolución histórica de facturación · ${provincia}`}
           </h2>
+
+          <ProvinciaFilter
+            value={provincia}
+            options={provincias}
+            onChange={setProvincia}
+          />
 
           <PeriodFilter
             value={period}
@@ -92,26 +125,37 @@ export function MercadoPostalFacturacion({
           <div className="chart-card">
 
             <LineChartBase
+              key={provincia}
               data={evolutionData}
               yDomain={[0, "dataMax"]}
-              series={[
-                {
-                  key: "postales",
-                  label: "Postales",
-                  color: "var(--blue-300)",
-                  strokeWidth: 3,
-                },
-                {
-                  key: "telegraficas",
-                  label: "Telegráficas",
-                  color: "var(--accent-green)",
-                },
-                {
-                  key: "monetarios",
-                  label: "Monetarios",
-                  color: "var(--accent-amber)",
-                },
-              ]}
+              series={
+                isArgentina
+                  ? [
+                    {
+                      key: "postales",
+                      label: "Postales",
+                      color: "var(--blue-300)",
+                    },
+                    {
+                      key: "telegraficas",
+                      label: "Telegráficas",
+                      color: "var(--accent-green)",
+                    },
+                    {
+                      key: "monetarios",
+                      label: "Monetarios",
+                      color: "var(--accent-amber)",
+                    },
+                  ]
+                  : [
+                    {
+                      key: "pesos",
+                      label: "Facturación",
+                      color: "var(--blue-300)",
+                      strokeWidth: 3,
+                    },
+                  ]
+              }
               yFormatter={(v) =>
                 dispCurrencyCompact(v)
               }

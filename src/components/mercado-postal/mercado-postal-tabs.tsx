@@ -42,45 +42,40 @@ const TABS: {
   key: TabKey;
   label: string;
 }[] = [
-  {
-    key: "resumen",
-    label: "Resumen",
-  },
-  {
-    key: "provincias",
-    label: "Provincias",
-  },
-  {
-    key: "facturacion",
-    label: "Facturación",
-  },
-  {
-    key: "produccion",
-    label: "Producción",
-  },
-  {
-    key: "personal",
-    label: "Personal",
-  },
-];
+    {
+      key: "resumen",
+      label: "Resumen",
+    },
+    {
+      key: "provincias",
+      label: "Provincias",
+    },
+    {
+      key: "facturacion",
+      label: "Facturación",
+    },
+    {
+      key: "produccion",
+      label: "Producción",
+    },
+    {
+      key: "personal",
+      label: "Personal",
+    },
+  ];
 
 type Props = {
-  facturacion:
-    ApiResponse<MercadoPostalFacturacionRow>;
-
-  produccion:
-    ApiResponse<MercadoPostalProduccionRow>;
-
-  personal:
-    ApiResponse<MercadoPostalPersonalRow>;
-
-  provincias:
-    ApiResponse<MercadoPostalProvinciaRow>;
+  facturacion: ApiResponse<MercadoPostalFacturacionRow>;
+  produccion: ApiResponse<MercadoPostalProduccionRow>;
+  facturacionProduccionProvincias: ApiResponse<MercadoPostalProvinciaRow>;
+  personal: ApiResponse<MercadoPostalPersonalRow>;
+  provincias: ApiResponse<MercadoPostalProvinciaRow>;
 };
 
 export function MercadoPostalTabs({
   facturacion,
   produccion,
+  facturacionProduccionProvincias,
   personal,
   provincias,
 }: Props) {
@@ -96,11 +91,10 @@ export function MercadoPostalTabs({
           {TABS.map((tab) => (
             <button
               key={tab.key}
-              className={`tab-btn ${
-                active === tab.key
-                  ? "active"
-                  : ""
-              }`}
+              className={`tab-btn ${active === tab.key
+                ? "active"
+                : ""
+                }`}
               onClick={() =>
                 setActive(tab.key)
               }
@@ -127,12 +121,14 @@ export function MercadoPostalTabs({
         {active === "facturacion" && (
           <MercadoPostalFacturacion
             facturacion={facturacion}
+            facturacionProvincias={facturacionProduccionProvincias}
           />
         )}
 
         {active === "produccion" && (
           <MercadoPostalProduccion
             produccion={produccion}
+            produccionProvincias={facturacionProduccionProvincias}
           />
         )}
 

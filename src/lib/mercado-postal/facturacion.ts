@@ -9,12 +9,13 @@ import {
 
 import type {
   MercadoPostalFacturacionRow,
+  MercadoPostalProvinciaRow,
 } from "./types";
 
 export function getFacturacionKPIItems(
-  response: ApiResponse<MercadoPostalFacturacionRow>
+  response: MercadoPostalFacturacionRow[]
 ): KPIItem[] {
-  const rows = response.data;
+  const rows = response;
 
   if (!rows.length) return [];
 
@@ -57,6 +58,23 @@ export function getFacturacionKPIItems(
   ];
 }
 
+export function getFacturacionProvinciaKPIItems(
+  rows: MercadoPostalProvinciaRow[]
+): KPIItem[] {
+  if (!rows.length) return [];
+
+  const latest = rows[rows.length - 1];
+
+  return [
+    {
+      label: "Facturación total",
+      icon: IDinero,
+      value: latest.pesos,
+      format: (v) => dispCurrencyCompact(v),
+    },
+  ];
+}
+
 export function getFacturacionDonutData(
   response: ApiResponse<MercadoPostalFacturacionRow>
 ) {
@@ -94,5 +112,14 @@ export function getFacturacionEvolutionData(
     postales: row.postales,
     telegraficas: row.telegraficas,
     monetarios: row.monetarios,
+  }));
+}
+
+export function getFacturacionProvinciaEvolutionData(
+  rows: MercadoPostalProvinciaRow[]
+) {
+  return rows.map((r) => ({
+    label: `${r.anio} T${r.trimestre}`,
+    pesos: r.pesos,
   }));
 }

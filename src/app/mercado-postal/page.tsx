@@ -9,6 +9,7 @@ import {
   getMercadoPostalFacturacion,
   getMercadoPostalProduccion,
   getMercadoPostalPersonal,
+  getMercadoPostalFacturacionProduccionProvincias,
   getMercadoPostalProvinciasLatest,
 } from "@/lib/api/mercado-postal";
 
@@ -17,11 +18,13 @@ export default async function MercadoPostalPage() {
     facturacion,
     produccion,
     personal,
+    facturacionProduccionProvincias,
     provincias,
   ] = await Promise.all([
     getMercadoPostalFacturacion(),
     getMercadoPostalProduccion(),
     getMercadoPostalPersonal(),
+    getMercadoPostalFacturacionProduccionProvincias(),
     getMercadoPostalProvinciasLatest(),
   ]);
 
@@ -35,6 +38,7 @@ export default async function MercadoPostalPage() {
       <MercadoPostalTabs
         facturacion={facturacion}
         produccion={produccion}
+        facturacionProduccionProvincias={facturacionProduccionProvincias}
         personal={personal}
         provincias={provincias}
       />
