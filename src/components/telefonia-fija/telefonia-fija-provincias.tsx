@@ -17,11 +17,15 @@ import {
   PenetracionProvinciaView,
 } from "./provincias/penetracion-provincia-view";
 
+export type TelefoniaFijaProvinciaView =
+  | "accesos"
+  | "penetracion";
+
 type Props = {
   accesos:
-    ApiResponse<TelefoniaFijaAccesosProvinciaRow>;
+  ApiResponse<TelefoniaFijaAccesosProvinciaRow>;
   penetracion:
-    ApiResponse<TelefoniaFijaPenetracionProvinciaRow>;
+  ApiResponse<TelefoniaFijaPenetracionProvinciaRow>;
 };
 
 export function TelefoniaFijaProvincias({
@@ -29,56 +33,26 @@ export function TelefoniaFijaProvincias({
   penetracion,
 }: Props) {
 
-  const [view, setView] = useState<
-    "accesos" |
-    "penetracion"
-  >("accesos");
+  const [view, setView] =
+    useState<TelefoniaFijaProvinciaView>(
+      "accesos"
+    );
 
   return (
     <>
-      <section className="section-wrap">
-        <div className="section-inner">
-
-          <div className="filter-group">
-
-            <label className="filter-label">
-              Indicador
-            </label>
-
-            <select
-              className="filter-select"
-              value={view}
-              onChange={(e) =>
-                setView(
-                  e.target.value as
-                    | "accesos"
-                    | "penetracion"
-                )
-              }
-            >
-              <option value="accesos">
-                Accesos
-              </option>
-
-              <option value="penetracion">
-                Penetración
-              </option>
-            </select>
-
-          </div>
-
-        </div>
-      </section>
-
       {view === "accesos" && (
         <AccesosProvinciaView
           provincias={accesos}
+          view={view}
+          onViewChange={setView}
         />
       )}
 
       {view === "penetracion" && (
         <PenetracionProvinciaView
           provincias={penetracion}
+          view={view}
+          onViewChange={setView}
         />
       )}
     </>

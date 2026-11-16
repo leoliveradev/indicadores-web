@@ -19,14 +19,26 @@ import { ScrollableRanking }
   from "@/components/ui/ranking/scrollable-ranking";
 
 import { dispValue } from "@/lib/format";
+import { KPISection } from "@/components/home/kpi-section";
+import { getAccesosProvinciaHighlights } from "@/lib/television/provincias";
+import { IndicatorFilter } from "@/components/ui/filters/indicator-filter";
+
+import type {
+  TelevisionProvinciaView,
+} from "../television-provincias";
 
 type Props = {
-  provincias:
-    ApiResponse<TelevisionAccesosProvinciaRow>;
+  provincias: ApiResponse<TelevisionAccesosProvinciaRow>;
+  view: TelevisionProvinciaView;
+  onViewChange: (
+    view: TelevisionProvinciaView
+  ) => void;
 };
 
 export function AccesosProvinciaView({
   provincias,
+  view,
+  onViewChange,
 }: Props) {
   const [
     selectedProvincia,
@@ -52,61 +64,69 @@ export function AccesosProvinciaView({
     }));
 
   const top = rankingData[0];
+  const highlights =
+    getAccesosProvinciaHighlights(
+      provincias.data
+    );
 
   return (
-    <section className="section-wrap">
-      <div className="section-inner">
+    <>
+      <KPISection
+        title="Exploración provincial"
+        items={highlights}
+      />
 
-        <h2 className="section-heading">
-          Distribución provincial
-        </h2>
+      <IndicatorFilter
+        value={view}
+        onChange={onViewChange}
+        options={[
+          {
+            value: "accesos",
+            label: "Accesos",
+          },
+          {
+            value: "penetracion",
+            label: "Penetración",
+          },
+        ]}
+      />
 
-        <p className="chart-description">
-          La provincia con mayor cantidad de
-          accesos es{" "}
-          <strong>
-            {top.provincia}
-          </strong>{" "}
-          con{" "}
-          <strong>
-            {top.total.toLocaleString("es-AR")}
-          </strong>{" "}
-          accesos.
-        </p>
+      <p className="chart-description">
+        La provincia líder es{" "}
+        <strong>{top.provincia}</strong>.
+      </p>
 
-        <div className="geo-layout">
+      <div className="geo-layout">
 
-          <div className="chart-card">
-            <ProvinciasMap
-              data={provinciaData}
-              selectedProvincia={
-                selectedProvincia
-              }
-              onProvinciaHover={
-                setSelectedProvincia
-              }
-              legendFormatter={(v) =>
-                dispValue(v, {
-                  format: "compact",
-                })
-              }
-            />
-          </div>
-
-          <ScrollableRanking
-            title={`Provincias (${rankingData.length})`}
-            items={rankingItems}
-            selectedId={
+        <div className="chart-card">
+          <ProvinciasMap
+            data={provinciaData}
+            selectedProvincia={
               selectedProvincia
             }
-            onSelect={
+            onProvinciaHover={
               setSelectedProvincia
             }
+            legendFormatter={(v) =>
+              dispValue(v, {
+                format: "compact",
+              })
+            }
           />
-
         </div>
 
+        <ScrollableRanking
+          title={`Provincias (${rankingData.length})`}
+          items={rankingItems}
+          selectedId={
+            selectedProvincia
+          }
+          onSelect={
+            setSelectedProvincia
+          }
+        />
+
       </div>
-    </section>
+    </>
   );
 }

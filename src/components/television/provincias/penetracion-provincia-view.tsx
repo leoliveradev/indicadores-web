@@ -18,13 +18,26 @@ import { ProvinciasMap }
 import { ScrollableDualRanking }
   from "@/components/ui/ranking/scrollable-dual-ranking";
 
+import type {
+  TelevisionProvinciaView,
+} from "../television-provincias";
+
+import { IndicatorFilter } from "@/components/ui/filters/indicator-filter";
+import { getPenetracionProvinciaHighlights } from "@/lib/television/provincias";
+import { KPISection } from "@/components/home/kpi-section";
+
 type Props = {
-  provincias:
-    ApiResponse<TelevisionPenetracionProvinciaRow>;
+  provincias: ApiResponse<TelevisionPenetracionProvinciaRow>;
+  view: TelevisionProvinciaView;
+  onViewChange: (
+    view: TelevisionProvinciaView
+  ) => void;
 };
 
 export function PenetracionProvinciaView({
   provincias,
+  view,
+  onViewChange,
 }: Props) {
 
   const [
@@ -60,55 +73,73 @@ export function PenetracionProvinciaView({
 
   const top = rankingData[0];
 
+  const highlights =
+    getPenetracionProvinciaHighlights(
+      provincias.data
+    );
+
   return (
-    <section className="section-wrap alt">
-      <div className="section-inner">
+    <>
+      <KPISection
+        title="Exploración provincial"
+        items={highlights}
+      />
 
-        <h2 className="section-heading">
-          Penetración por provincia
-        </h2>
+      <IndicatorFilter
+        value={view}
+        onChange={onViewChange}
+        options={[
+          {
+            value: "accesos",
+            label: "Accesos",
+          },
+          {
+            value: "penetracion",
+            label: "Penetración",
+          },
+        ]}
+      />
 
-        <p className="chart-description">
-          La mayor penetración corresponde a{" "}
-          <strong>{top.provincia}</strong>{" "}
-          con{" "}
-          <strong>
-            {top.hogares.toFixed(2)}
-          </strong>{" "}
-          accesos cada 100 hogares.
-        </p>
+      <p className="chart-description">
+        La mayor penetración corresponde a{" "}
+        <strong>{top.provincia}</strong>{" "}
+        con{" "}
+        <strong>
+          {top.hogares.toFixed(2)}
+        </strong>{" "}
+        accesos cada 100 hogares.
+      </p>
 
-        <div className="geo-layout">
+      <div className="geo-layout">
 
-          <div className="chart-card">
-            <ProvinciasMap
-              data={provinciaData}
-              selectedProvincia={
-                selectedProvincia
-              }
-              onProvinciaHover={
-                setSelectedProvincia
-              }
-            />
-          </div>
-
-          <ScrollableDualRanking
-            title={`Provincias (${rankingData.length})`}
-            items={rankingData.map((r) => ({
-              id: r.provincia,
-              label: r.provincia,
-              primary: r.hogares,
-              secondary: r.habitantes,
-            }))}
-            primaryLabel="Hogares"
-            secondaryLabel="Habitantes"
-            selectedId={selectedProvincia}
-            onSelect={setSelectedProvincia}
+        <div className="chart-card">
+          <ProvinciasMap
+            data={provinciaData}
+            selectedProvincia={
+              selectedProvincia
+            }
+            onProvinciaHover={
+              setSelectedProvincia
+            }
           />
-
         </div>
 
+        <ScrollableDualRanking
+          title={`Provincias (${rankingData.length})`}
+          items={rankingData.map((r) => ({
+            id: r.provincia,
+            label: r.provincia,
+            primary: r.hogares,
+            secondary: r.habitantes,
+          }))}
+          primaryLabel="Hogares"
+          secondaryLabel="Habitantes"
+          selectedId={selectedProvincia}
+          onSelect={setSelectedProvincia}
+        />
+
       </div>
-    </section>
+
+    </>
   );
 }

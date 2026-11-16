@@ -18,12 +18,26 @@ import { ProvinciasMap }
 import { ScrollableDualRanking }
   from "@/components/ui/ranking/scrollable-dual-ranking";
 
+import type {
+  InternetProvinciaView,
+} from "../internet-provincias";
+import { getPenetracionProvinciaHighlights } from "@/lib/internet/provincias";
+import { KPISection } from "@/components/home/kpi-section";
+import { IndicatorFilter } from "@/components/ui/filters/indicator-filter";
+
+type Props = {
+  penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
+  view: InternetProvinciaView;
+  onViewChange: (
+    view: InternetProvinciaView
+  ) => void;
+};
+
 export function PenetracionProvinciaView({
   penetracionProvincias,
-}: {
-  penetracionProvincias:
-  ApiResponse<InternetPenetracionProvinciaRow>;
-}) {
+  view,
+  onViewChange,
+}: Props) {
 
   const [
     selectedProvincia,
@@ -71,66 +85,86 @@ export function PenetracionProvinciaView({
           : a
     );
 
+  const highlights =
+    getPenetracionProvinciaHighlights(
+      penetracionProvincias.data
+    );
+
   return (
-    <section className="section-wrap alt">
-      <div className="section-inner">
+    <>
+      <KPISection
+        title="Exploración provincial"
+        items={highlights}
+      />
 
-        <h2 className="section-heading">
-          Penetración por provincia
-        </h2>
+      <IndicatorFilter
+        value={view}
+        onChange={onViewChange}
+        options={[
+          {
+            value: "tecnologia",
+            label: "Tecnología",
+          },
+          {
+            value: "velocidad",
+            label: "Velocidad media",
+          },
+          {
+            value: "penetracion",
+            label: "Penetración",
+          },
+        ]}
+      />
+      <p className="chart-description">
+        La mayor penetración
+        corresponde a{" "}
+        <strong>
+          {top.provincia}
+        </strong>{" "}
+        con{" "}
+        <strong>
+          {top.accesos_cada_100_hogares.toFixed(
+            2
+          )}
+        </strong>{" "}
+        accesos cada 100 hogares.
+      </p>
 
-        <p className="chart-description">
-          La mayor penetración
-          corresponde a{" "}
-          <strong>
-            {top.provincia}
-          </strong>{" "}
-          con{" "}
-          <strong>
-            {top.accesos_cada_100_hogares.toFixed(
-              2
-            )}
-          </strong>{" "}
-          accesos cada 100 hogares.
-        </p>
+      <div className="geo-layout">
 
-        <div className="geo-layout">
-
-          <div className="chart-card">
-            <ProvinciasMap
-              data={provinciaData}
-              selectedProvincia={
-                selectedProvincia
-              }
-              onProvinciaHover={
-                setSelectedProvincia
-              }
-            />
-          </div>
-
-          <ScrollableDualRanking
-            title={`Provincias (${rankingData.length})`}
-            items={rankingData.map(
-              (r) => ({
-                id: r.provincia,
-                label: r.provincia,
-                primary: r.hogares,
-                secondary: r.habitantes,
-              })
-            )}
-            primaryLabel="Hogares"
-            secondaryLabel="Habitantes"
-            selectedId={
+        <div className="chart-card">
+          <ProvinciasMap
+            data={provinciaData}
+            selectedProvincia={
               selectedProvincia
             }
-            onSelect={
+            onProvinciaHover={
               setSelectedProvincia
             }
           />
-
         </div>
 
+        <ScrollableDualRanking
+          title={`Provincias (${rankingData.length})`}
+          items={rankingData.map(
+            (r) => ({
+              id: r.provincia,
+              label: r.provincia,
+              primary: r.hogares,
+              secondary: r.habitantes,
+            })
+          )}
+          primaryLabel="Hogares"
+          secondaryLabel="Habitantes"
+          selectedId={
+            selectedProvincia
+          }
+          onSelect={
+            setSelectedProvincia
+          }
+        />
+
       </div>
-    </section>
+    </>
   );
 }

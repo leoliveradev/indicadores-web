@@ -20,12 +20,33 @@ import { ScrollableRanking }
 
 import { dispValue } from "@/lib/format";
 
+import { KPISection }
+  from "@/components/home/kpi-section";
+
+import { IndicatorFilter }
+  from "@/components/ui/filters/indicator-filter";
+
+import {
+  getVelocidadMediaProvinciaHighlights,
+} from "@/lib/internet/provincias";
+
+import type {
+  InternetProvinciaView,
+} from "../internet-provincias";
+
+type Props = {
+  provincias: ApiResponse<InternetVelocidadMediaProvinciasRow>;
+  view: InternetProvinciaView;
+  onViewChange: (
+    view: InternetProvinciaView
+  ) => void;
+};
+
 export function VelocidadMediaProvinciaView({
   provincias,
-}: {
-  provincias:
-    ApiResponse<InternetVelocidadMediaProvinciasRow>;
-}) {
+  view,
+  onViewChange,
+}: Props) {
   const [
     selectedProvincia,
     setSelectedProvincia,
@@ -44,6 +65,11 @@ export function VelocidadMediaProvinciaView({
     }));
 
   const top = rankingData[0];
+
+  const highlights =
+    getVelocidadMediaProvinciaHighlights(
+      provincias.data
+    );
 
   const provinciaData =
     provincias.data.map((d) => ({
@@ -64,58 +90,69 @@ export function VelocidadMediaProvinciaView({
     }));
 
   return (
-    <section className="section-wrap">
-      <div className="section-inner">
+    <>
 
-        <h2 className="section-heading">
-          Distribución provincial
-        </h2>
+      <KPISection
+        title="Exploración provincial"
+        items={highlights}
+      />
 
-        <p className="chart-description">
-          La provincia con mayor velocidad media es{" "}
-          <strong>
-            {top.provincia}
-          </strong>{" "}
-          con{" "}
-          <strong>
-            {top.mbps.toFixed(1)} Mbps
-          </strong>.
-        </p>
+      <IndicatorFilter
+        value={view}
+        onChange={onViewChange}
+        options={[
+          {
+            value: "tecnologia",
+            label: "Tecnología",
+          },
+          {
+            value: "velocidad",
+            label: "Velocidad media",
+          },
+          {
+            value: "penetracion",
+            label: "Penetración",
+          },
+        ]}
+      />
 
-        <div className="geo-layout">
+      <p className="chart-description">
+        La provincia líder es{" "}
+        <strong>{top.provincia}</strong>.
+      </p>
 
-          <div className="chart-card">
-            <ProvinciasMap
-              data={provinciaData}
-              selectedProvincia={
-                selectedProvincia
-              }
-              onProvinciaHover={
-                setSelectedProvincia
-              }
-            />
-          </div>
+      <div className="geo-layout">
 
-          <ScrollableRanking
-            title={`Provincias (${rankingData.length}) · Mbps`}
-            items={rankingItems}
-            selectedId={
+        <div className="chart-card">
+          <ProvinciasMap
+            data={provinciaData}
+            selectedProvincia={
               selectedProvincia
             }
-            onSelect={
+            onProvinciaHover={
               setSelectedProvincia
             }
-            formatter={(v) =>
-              dispValue(v, {
-                format: "number",
-                decimals: 2,
-              })
-            }
           />
-
         </div>
 
+        <ScrollableRanking
+          title={`Provincias (${rankingData.length}) · Mbps`}
+          items={rankingItems}
+          selectedId={
+            selectedProvincia
+          }
+          onSelect={
+            setSelectedProvincia
+          }
+          formatter={(v) =>
+            dispValue(v, {
+              format: "number",
+              decimals: 2,
+            })
+          }
+        />
+
       </div>
-    </section>
+    </>
   );
 }

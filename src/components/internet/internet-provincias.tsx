@@ -14,6 +14,11 @@ import type {
   InternetPenetracionProvinciaRow,
 } from "@/lib/internet";
 
+export type InternetProvinciaView =
+  | "tecnologia"
+  | "velocidad"
+  | "penetracion";
+
 type Props = {
   tecnologias:
   ApiResponse<InternetTecnologiaProvinciaRow>;
@@ -30,76 +35,38 @@ export function InternetProvincias({
   velocidadMedia,
   penetracion,
 }: Props) {
-  const [view, setView] = useState<
-    "tecnologia" |
-    "velocidad" |
-    "penetracion"
-  >("tecnologia");
+  const [view, setView] =
+    useState<InternetProvinciaView>(
+      "tecnologia"
+    );
 
   return (
-    <section className="section-wrap">
-      <div className="section-inner">
+    <>
+      {view === "tecnologia" && (
+        <TecnologiaProvinciaView
+          tecnologiasProvincias={tecnologias}
+          view={view}
+          onViewChange={setView}
+        />
 
-        <h2 className="section-heading">
-          Exploración provincial
-        </h2>
+      )}
 
-        <div className="filter-toolbar">
-          <div className="filter-group">
-            <label className="filter-label">
-              Indicador
-            </label>
+      {view === "velocidad" && (
+        <VelocidadMediaProvinciaView
+          provincias={velocidadMedia}
+          view={view}
+          onViewChange={setView}
+        />
+      )}
 
-            <select
-              value={view}
-              onChange={(e) =>
-                setView(
-                  e.target.value as
-                  | "tecnologia"
-                  | "velocidad"
-                  | "penetracion"
-                )
-              }
-              className="filter-select"
-            >
-              <option value="tecnologia">
-                Tecnología
-              </option>
+      {view === "penetracion" && (
+        <PenetracionProvinciaView
+          penetracionProvincias={penetracion}
+          view={view}
+          onViewChange={setView}
+        />
+      )}
 
-              <option value="velocidad">
-                Velocidad media
-              </option>
-
-              <option value="penetracion">
-                Penetración
-              </option>
-            </select>
-          </div>
-        </div>
-
-        {view === "tecnologia" && (
-          <TecnologiaProvinciaView
-            tecnologiasProvincias={
-              tecnologias
-            }
-          />
-        )}
-
-        {view === "velocidad" && (
-          <VelocidadMediaProvinciaView
-            provincias={velocidadMedia}
-          />
-        )}
-
-        {view === "penetracion" && (
-          <PenetracionProvinciaView
-            penetracionProvincias={
-              penetracion
-            }
-          />
-        )}
-
-      </div>
-    </section>
+    </>
   );
 }

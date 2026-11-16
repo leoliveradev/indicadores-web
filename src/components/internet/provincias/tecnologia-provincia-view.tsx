@@ -17,12 +17,34 @@ import { ScrollableRanking }
 
 import { dispValue } from "@/lib/format";
 
+import { KPISection }
+  from "@/components/home/kpi-section";
+
+import { IndicatorFilter }
+  from "@/components/ui/filters/indicator-filter";
+
+import {
+  getTecnologiaProvinciaHighlights,
+} from "@/lib/internet/provincias";
+
+
+import type {
+  InternetProvinciaView,
+} from "../internet-provincias";
+
+type Props = {
+  tecnologiasProvincias: ApiResponse<InternetTecnologiaProvinciaRow>;
+  view: InternetProvinciaView;
+  onViewChange: (
+    view: InternetProvinciaView
+  ) => void;
+};
+
 export function TecnologiaProvinciaView({
   tecnologiasProvincias,
-}: {
-  tecnologiasProvincias:
-    ApiResponse<InternetTecnologiaProvinciaRow>;
-}) {
+  view,
+  onViewChange,
+}: Props) {
 
   const [
     selectedProvincia,
@@ -52,58 +74,80 @@ export function TecnologiaProvinciaView({
       value: item.total,
     }));
 
+  const highlights =
+    getTecnologiaProvinciaHighlights(
+      tecnologiasProvincias.data
+    );
+
   return (
-    <section className="section-wrap alt">
-      <div className="section-inner">
+    <>
 
-        <h2 className="section-heading">
-          Accesos por tecnología en provincias
-        </h2>
+      <KPISection
+        title="Exploración provincial"
+        items={highlights}
+      />
 
-        <p className="chart-description">
-          La provincia con mayor cantidad
-          de accesos es{" "}
-          <strong>
-            {top.provincia}
-          </strong>{" "}
-          ({top.total.toLocaleString("es-AR")}),
-          concentrando la mayor infraestructura
-          tecnológica del país.
-        </p>
+      <IndicatorFilter
+        value={view}
+        onChange={onViewChange}
+        options={[
+          {
+            value: "tecnologia",
+            label: "Tecnología",
+          },
+          {
+            value: "velocidad",
+            label: "Velocidad media",
+          },
+          {
+            value: "penetracion",
+            label: "Penetración",
+          },
+        ]}
+      />
 
-        <div className="geo-layout">
+      <p className="chart-description">
+        La provincia con mayor cantidad
+        de accesos es{" "}
+        <strong>
+          {top.provincia}
+        </strong>{" "}
+        ({top.total.toLocaleString("es-AR")}),
+        concentrando la mayor infraestructura
+        tecnológica del país.
+      </p>
 
-          <div className="chart-card">
-            <ProvinciasMap
-              data={provinciaData}
-              selectedProvincia={
-                selectedProvincia
-              }
-              onProvinciaHover={
-                setSelectedProvincia
-              }
-              legendFormatter={(v) =>
-                dispValue(v, {
-                  format: "compact",
-                })
-              }
-            />
-          </div>
+      <div className="geo-layout">
 
-          <ScrollableRanking
-            title={`Provincias (${rankingData.length})`}
-            items={rankingItems}
-            selectedId={
+        <div className="chart-card">
+          <ProvinciasMap
+            data={provinciaData}
+            selectedProvincia={
               selectedProvincia
             }
-            onSelect={
+            onProvinciaHover={
               setSelectedProvincia
             }
+            legendFormatter={(v) =>
+              dispValue(v, {
+                format: "compact",
+              })
+            }
           />
-
         </div>
 
+        <ScrollableRanking
+          title={`Provincias (${rankingData.length})`}
+          items={rankingItems}
+          selectedId={
+            selectedProvincia
+          }
+          onSelect={
+            setSelectedProvincia
+          }
+        />
+
       </div>
-    </section>
+    </>
   );
 }
