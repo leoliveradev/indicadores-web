@@ -210,3 +210,214 @@ export const I4G = ({ size = 32, color = "var(--accent-red)" }: IconProps) => (
     <path d="M6.5 4.5a7 7 0 0 1 11 0" />
   </svg>
 );
+
+export const IHogar = ({
+  size = 32,
+  color = "var(--blue-400)",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* techo */}
+    <path d="M3 11l9-7 9 7" />
+
+    {/* cuerpo */}
+    <path d="M5 10.5V20h14v-9.5" />
+
+    {/* puerta */}
+    <path d="M10 20v-5h4v5" />
+  </svg>
+);
+
+export const IHabitantes = ({
+  size = 32,
+  color = "var(--accent-green)",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* persona central */}
+    <circle cx="12" cy="8" r="2.5" />
+    <path d="M8 18c0-2.2 1.8-4 4-4s4 1.8 4 4" />
+
+    {/* persona izquierda */}
+    <circle cx="6" cy="10" r="1.8" />
+    <path d="M3.5 18c0-1.8 1.2-3.2 3-3.6" />
+
+    {/* persona derecha */}
+    <circle cx="18" cy="10" r="1.8" />
+    <path d="M20.5 18c0-1.8-1.2-3.2-3-3.6" />
+  </svg>
+);
+
+export const ISms = ({
+  size = 32,
+  color = "var(--accent-red)",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* burbuja */}
+    <path d="M5 6h14a2 2 0 0 1 2 2v7a2 2 0 0 1-2 2H10l-5 4v-4H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2z" />
+
+    {/* texto */}
+    <line x1="8" y1="10" x2="16" y2="10" />
+    <line x1="8" y1="13" x2="14" y2="13" />
+  </svg>
+);
+
+export const ILlamadas = ({
+  size = 32,
+  color = "var(--accent-red)",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* auricular */}
+    <path d="M22 16.92v3a2 2 0 0 1-2.18 2
+    a19.8 19.8 0 0 1-8.63-3.11
+    a19.5 19.5 0 0 1-6-6
+    A19.8 19.8 0 0 1 2.08 4.2
+    A2 2 0 0 1 4.06 2h3
+    a2 2 0 0 1 2 1.72
+    c.12.9.37 1.78.72 2.61
+    a2 2 0 0 1-.45 2.11
+    L8.09 9.91
+    a16 16 0 0 0 6 6
+    l1.47-1.24
+    a2 2 0 0 1 2.11-.45
+    c.83.35 1.71.6 2.61.72
+    A2 2 0 0 1 22 16.92z" />
+
+    {/* ondas */}
+    <path d="M15.5 5.5a4 4 0 0 1 3 3" />
+    <path d="M15.5 2.5a7 7 0 0 1 6 6" />
+  </svg>
+);
+
+export const ITiempo = ({
+  size = 32,
+  color = "var(--accent-red)",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* cuerpo */}
+    <circle cx="12" cy="13" r="7" />
+
+    {/* corona */}
+    <path d="M12 3v2" />
+    <path d="M9.5 3h5" />
+
+    {/* agujas */}
+    <path d="M12 13V9" />
+    <path d="M12 13l3 2" />
+  </svg>
+);
+
+export const IEmpresa = ({
+  size = 32,
+  color = "var(--blue-500)",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* edificio */}
+    <rect
+      x="6"
+      y="3"
+      width="12"
+      height="18"
+      rx="1"
+    />
+
+    {/* ventanas */}
+    <path d="M9 7h.01" />
+    <path d="M12 7h.01" />
+    <path d="M15 7h.01" />
+
+    <path d="M9 11h.01" />
+    <path d="M12 11h.01" />
+    <path d="M15 11h.01" />
+
+    <path d="M9 15h.01" />
+    <path d="M12 15h.01" />
+    <path d="M15 15h.01" />
+
+    {/* puerta */}
+    <path d="M11 21v-3h2v3" />
+  </svg>
+);
+
+export const IGobierno = ({
+  size = 32,
+  color = "var(--blue-500)",
+}: IconProps) => (
+  <svg
+    width={size}
+    height={size}
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke={color}
+    strokeWidth="1.8"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    {/* techo */}
+    <path d="M3 8l9-4 9 4" />
+
+    {/* columnas */}
+    <path d="M6 10v7" />
+    <path d="M10 10v7" />
+    <path d="M14 10v7" />
+    <path d="M18 10v7" />
+
+    {/* base */}
+    <path d="M4 20h16" />
+
+    {/* arquitrabe */}
+    <path d="M4.5 10h15" />
+  </svg>
+);

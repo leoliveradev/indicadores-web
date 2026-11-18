@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+import { IHabitantes } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
@@ -21,7 +21,7 @@ export function getPersonalKPIItems(
   return [
     {
       label: "Personal ocupado",
-      icon: IInternet,
+      icon: IHabitantes,
       value: latest.personal_ocupado,
       format: (v) =>
         dispValue(v, {

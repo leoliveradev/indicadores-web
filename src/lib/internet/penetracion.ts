@@ -5,6 +5,8 @@ import {
   InternetPenetracionProvinciaRow,
 } from "@/lib/internet";
 
+import { IHabitantes, IHogar } from "@/components/ui/icons";
+
 import { dispValue  } from "@/lib/format";
 import { getTopN } from "./common";
 
@@ -19,7 +21,7 @@ export function getPenetracionKPIItems(
     {
       label: "Accesos / 100 hogares",
       value: latest.accesos_cada_100_hogares,
-      // icon: "home",
+      icon: IHogar,
       format: (v: number) =>
         dispValue(v, {
           format: "number",
@@ -29,7 +31,7 @@ export function getPenetracionKPIItems(
     {
       label: "Accesos / 100 habitantes",
       value: latest.accesos_cada_100_habitantes,
-      // icon: "users",
+      icon: IHabitantes,
       format: (v: number) =>
         dispValue(v, {
           format: "number",

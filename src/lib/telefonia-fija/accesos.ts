@@ -1,7 +1,12 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+import {
+  IFija,
+  IHogar,
+  IEmpresa,
+  IGobierno,
+} from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
@@ -22,28 +27,28 @@ export function getAccesosKPIItems(
   return [
     {
       label: "Accesos totales",
-      icon: IInternet,
+      icon: IFija,
       value: latest.total,
       format: (v) =>
         dispValue(v, { format: "compact" }),
     },
     {
       label: "Hogares",
-      icon: IInternet,
+      icon: IHogar,
       value: latest.hogares,
       format: (v) =>
         dispValue(v, { format: "compact" }),
     },
     {
       label: "Comercial",
-      icon: IInternet,
+      icon: IEmpresa,
       value: latest.comercial,
       format: (v) =>
         dispValue(v, { format: "compact" }),
     },
     {
       label: "Gobierno",
-      icon: IInternet,
+      icon: IGobierno,
       value: latest.gobierno,
       format: (v) =>
         dispValue(v, { format: "compact" }),

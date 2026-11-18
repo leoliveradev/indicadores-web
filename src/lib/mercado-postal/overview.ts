@@ -3,7 +3,7 @@ import type { KPIItem } from "@/components/home/kpi-section";
 
 import {
   IDinero,
-  IInternet,
+  IHabitantes,
 } from "@/components/ui/icons";
 
 import {
@@ -47,7 +47,7 @@ export function getMercadoPostalOverviewItems(
     },
     {
       label: "Personal ocupado",
-      icon: IInternet,
+      icon: IHabitantes,
       value: latestPersonal.personal_ocupado,
       format: (v) =>
         dispValue(v, {

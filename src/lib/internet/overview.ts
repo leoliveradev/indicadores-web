@@ -1,4 +1,4 @@
-import { IInternet, IVelocidad, IDinero } from "@/components/ui/icons";
+import { IInternet, IVelocidad, IDinero, IHogar } from "@/components/ui/icons";
 import { dispValue, dispCurrencyCompact } from "@/lib/format";
 import type { Overview } from "@/lib/home/types";
 import type { KPIItem } from "@/components/home/kpi-section";
@@ -19,7 +19,7 @@ export function getInternetOverviewItems(data: Overview): KPIItem[] {
     // },
     {
       label: "Penetración hogares",
-      icon: IInternet,
+      icon: IHogar,
       value: data.penetracion.internet,
       format: (v) => dispValue(v, {
         multiline: true,

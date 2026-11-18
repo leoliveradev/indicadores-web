@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet } from "@/components/ui/icons";
+import { IHabitantes, IHogar } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
@@ -22,7 +22,7 @@ export function getPenetracionKPIItems(
   return [
     {
       label: "Accesos / 100 habitantes",
-      icon: IInternet,
+      icon: IHabitantes,
       value: latest.accesos_100_hab,
       format: (v) =>
         dispValue(v, {
@@ -31,7 +31,7 @@ export function getPenetracionKPIItems(
     },
     {
       label: "Accesos / 100 hogares",
-      icon: IInternet,
+      icon: IHogar,
       value: latest.accesos_100_hog,
       format: (v) =>
         dispValue(v, {

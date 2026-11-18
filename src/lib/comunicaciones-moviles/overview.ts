@@ -4,6 +4,8 @@ import type { KPIItem } from "@/components/home/kpi-section";
 import {
   IInternet,
   IDinero,
+  IMovil,
+  IHabitantes,
 } from "@/components/ui/icons";
 
 import {
@@ -17,7 +19,7 @@ export function getMovilesOverviewItems(
   return [
     {
       label: "Accesos móviles",
-      icon: IInternet,
+      icon: IMovil,
       value: data.accesos.moviles,
       format: (v) =>
         dispValue(v, {
@@ -26,7 +28,7 @@ export function getMovilesOverviewItems(
     },
     {
       label: "Penetración",
-      icon: IInternet,
+      icon: IHabitantes,
       value: data.penetracion.moviles,
       format: (v) =>
         dispValue(v, {

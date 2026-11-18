@@ -2,8 +2,9 @@ import type { Overview } from "@/lib/home/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
 import {
-  IInternet,
   IDinero,
+  ITV,
+  IHogar,
 } from "@/components/ui/icons";
 
 import {
@@ -17,7 +18,7 @@ export function getTelevisionOverviewItems(
   return [
     {
       label: "Accesos TV",
-      icon: IInternet,
+      icon: ITV,
       value: data.accesos.tv,
       format: (v) =>
         dispValue(v, {
@@ -26,7 +27,7 @@ export function getTelevisionOverviewItems(
     },
     {
       label: "Penetración",
-      icon: IInternet,
+      icon: IHogar,
       value: data.penetracion.tv,
       format: (v) =>
         dispValue(v, {

@@ -1,7 +1,7 @@
 import type { ApiResponse } from "@/lib/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
-import { IInternet, ITV } from "@/components/ui/icons";
+import { IHogar, IInternet, ITV } from "@/components/ui/icons";
 
 import { dispValue } from "@/lib/format";
 
@@ -22,7 +22,7 @@ export function getPenetracionKPIItems(
   return [
     {
       label: "TV suscripción / 100 hogares",
-      icon: IInternet,
+      icon: IHogar,
       value: latest.tv_suscripcion_100_hogares,
       format: (v) =>
         dispValue(v, {
@@ -31,7 +31,7 @@ export function getPenetracionKPIItems(
     },
     {
       label: "TV satelital / 100 hogares",
-      icon: IInternet,
+      icon: IHogar,
       value: latest.tv_satelital_100_hogares,
       format: (v) =>
         dispValue(v, {
@@ -53,7 +53,7 @@ export function getPenetracionProvinciaKPIItems(
   return [
     {
       label: "TV suscripción / 100 hogares",
-      icon: ITV,
+      icon: IHogar,
       value: latest.tv_suscripcion_100_hogares,
       format: (v) =>
         dispValue(v, {

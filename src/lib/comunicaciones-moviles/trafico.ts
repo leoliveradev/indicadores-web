@@ -8,6 +8,7 @@ import {
 } from "./types";
 
 import { dispValue } from "@/lib/format";
+import { ILlamadas, ISms, ITiempo } from "@/components/ui/icons";
 
 export function getTraficoKPIItems(
   llamadas: ApiResponse<ComunicacionesMovilesLlamadasRow>,
@@ -26,7 +27,7 @@ export function getTraficoKPIItems(
   return [
     {
       label: "Llamadas",
-      icon: () => null,
+      icon: ILlamadas,
       value: latestLlamadas.total,
       format: (v) =>
         dispValue(v, {
@@ -35,7 +36,7 @@ export function getTraficoKPIItems(
     },
     {
       label: "Minutos",
-      icon: () => null,
+      icon: ITiempo,
       value: latestMinutos.total,
       format: (v) =>
         dispValue(v, {
@@ -44,7 +45,7 @@ export function getTraficoKPIItems(
     },
     {
       label: "SMS",
-      icon: () => null,
+      icon: ISms,
       value: latestSms.sms,
       format: (v) =>
         dispValue(v, {

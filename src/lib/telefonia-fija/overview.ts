@@ -2,8 +2,9 @@ import type { Overview } from "@/lib/home/types";
 import type { KPIItem } from "@/components/home/kpi-section";
 
 import {
-  IInternet,
   IDinero,
+  IHogar,
+  IFija,
 } from "@/components/ui/icons";
 
 import {
@@ -17,7 +18,7 @@ export function getTelefoniaFijaOverviewItems(
   return [
     {
       label: "Accesos fijos",
-      icon: IInternet,
+      icon: IFija,
       value: data.accesos.fija,
       format: (v) =>
         dispValue(v, {
@@ -26,7 +27,7 @@ export function getTelefoniaFijaOverviewItems(
     },
     {
       label: "Penetración hogares",
-      icon: IInternet,
+      icon: IHogar,
       value: data.penetracion.fija,
       format: (v) =>
         dispValue(v, {
