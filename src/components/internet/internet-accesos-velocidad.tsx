@@ -36,6 +36,7 @@ import { InsightsCard }
 import { dispValue }
   from "@/lib/format";
 import { KPISection } from "../home/kpi-section";
+import { ProvinciaFilter } from "@/components/ui/filters/provincia-filter";
 
 type Props = {
   velocidades: ApiResponse<InternetAccesosVelocidadRow>;
@@ -200,36 +201,13 @@ export function InternetAccesosVelocidad({
           Accesos por velocidad
         </h2>
 
-        <div className="mb-4">
-          <label
-            className="block text-sm font-medium mb-2"
-          >
-            Provincia
-          </label>
-
-          <select
-            value={provincia}
-            onChange={(e) =>
-              setProvincia(
-                e.target.value
-              )
-            }
-            className="border rounded-md px-3 py-2"
-          >
-            <option value="all">
-              Todas las provincias
-            </option>
-
-            {provincias.map((p) => (
-              <option
-                key={p}
-                value={p}
-              >
-                {p}
-              </option>
-            ))}
-          </select>
-        </div>
+        <ProvinciaFilter
+          value={provincia}
+          options={provincias}
+          onChange={setProvincia}
+          allLabel="Todas las provincias"
+          allValue="all"
+        />
 
         <p className="chart-description">
           Accesos relevados:{" "}
