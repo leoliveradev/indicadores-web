@@ -20,7 +20,7 @@ import { ScrollableRanking }
 
 import { dispValue } from "@/lib/format";
 import { KPISection } from "@/components/home/kpi-section";
-import { getAccesosProvinciaHighlights } from "@/lib/television/provincias";
+import { getAccesosProvinciaKPIItems } from "@/lib/television/provincias";
 import { IndicatorFilter } from "@/components/ui/filters/indicator-filter";
 
 import type {
@@ -64,8 +64,8 @@ export function AccesosProvinciaView({
     }));
 
   const top = rankingData[0];
-  const highlights =
-    getAccesosProvinciaHighlights(
+  const kpiItems =
+    getAccesosProvinciaKPIItems(
       provincias.data
     );
 
@@ -73,7 +73,7 @@ export function AccesosProvinciaView({
     <>
       <KPISection
         title="Exploración provincial"
-        items={highlights}
+        items={kpiItems}
       />
 
       <IndicatorFilter

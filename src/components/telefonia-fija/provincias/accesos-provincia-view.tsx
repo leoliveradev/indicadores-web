@@ -23,7 +23,7 @@ import { dispValue } from "@/lib/format";
 import type {
   TelefoniaFijaProvinciaView,
 } from "../telefonia-fija-provincias";
-import { getAccesosProvinciaHighlights } from "@/lib/telefonia-fija/provincias";
+import { getAccesosProvinciaKPIItems } from "@/lib/telefonia-fija/provincias";
 import { KPISection } from "@/components/home/kpi-section";
 import { IndicatorFilter } from "@/components/ui/filters/indicator-filter";
 
@@ -66,8 +66,8 @@ export function AccesosProvinciaView({
 
   const top = rankingData[0];
 
-  const highlights =
-    getAccesosProvinciaHighlights(
+  const kpiItems =
+    getAccesosProvinciaKPIItems(
       provincias.data
     );
 
@@ -75,7 +75,7 @@ export function AccesosProvinciaView({
     <>
       <KPISection
         title="Exploración provincial"
-        items={highlights}
+        items={kpiItems}
       />
 
       <IndicatorFilter

@@ -23,7 +23,7 @@ import type {
 } from "../television-provincias";
 
 import { IndicatorFilter } from "@/components/ui/filters/indicator-filter";
-import { getPenetracionProvinciaHighlights } from "@/lib/television/provincias";
+import { getPenetracionProvinciaKPIItems } from "@/lib/television/provincias";
 import { KPISection } from "@/components/home/kpi-section";
 
 type Props = {
@@ -73,8 +73,8 @@ export function PenetracionProvinciaView({
 
   const top = rankingData[0];
 
-  const highlights =
-    getPenetracionProvinciaHighlights(
+  const kpiItems =
+    getPenetracionProvinciaKPIItems(
       provincias.data
     );
 
@@ -82,7 +82,7 @@ export function PenetracionProvinciaView({
     <>
       <KPISection
         title="Exploración provincial"
-        items={highlights}
+        items={kpiItems}
       />
 
       <IndicatorFilter

@@ -8,7 +8,7 @@ import type {
 
 import { dispValue } from "@/lib/format";
 
-export function getPenetracionProvinciaHighlights(
+export function getPenetracionProvinciaKPIItems(
   rows: InternetPenetracionProvinciaRow[]
 ): KPIItem[] {
   if (!rows.length) return [];
@@ -58,7 +58,7 @@ export function getPenetracionProvinciaHighlights(
 }
 
 
-export function getTecnologiaProvinciaHighlights(
+export function getTecnologiaProvinciaKPIItems(
   rows: InternetTecnologiaProvinciaRow[]
 ): KPIItem[] {
   if (!rows.length) return [];
@@ -109,7 +109,7 @@ export function getTecnologiaProvinciaHighlights(
   ];
 }
 
-export function getVelocidadMediaProvinciaHighlights(
+export function getVelocidadMediaProvinciaKPIItems(
   rows: InternetVelocidadMediaProvinciasRow[]
 ): KPIItem[] {
   if (!rows.length) return [];

@@ -1,8 +1,11 @@
 import { KPIItem } from "@/components/home/kpi-section";
 import { dispValue } from "../format";
-import { TelefoniaFijaAccesosProvinciaRow, TelefoniaFijaPenetracionProvinciaRow } from "./types";
+import { 
+  TelefoniaFijaAccesosProvinciaRow, 
+  TelefoniaFijaPenetracionProvinciaRow 
+} from "./types";
 
-export function getAccesosProvinciaHighlights(
+export function getAccesosProvinciaKPIItems(
   rows: TelefoniaFijaAccesosProvinciaRow[]
 ): KPIItem[] {
   if (!rows.length) return [];
@@ -54,7 +57,7 @@ export function getAccesosProvinciaHighlights(
   ];
 }
 
-export function getPenetracionProvinciaHighlights(
+export function getPenetracionProvinciaKPIItems(
   rows: TelefoniaFijaPenetracionProvinciaRow[]
 ): KPIItem[] {
   if (!rows.length) return [];

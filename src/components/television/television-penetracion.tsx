@@ -53,19 +53,6 @@ export function TelevisionPenetracion({
     penetracionProvincias.data
   );
 
-  // const currentRows = isArgentina
-  //   ? filterByPeriods(
-  //     penetracion.data,
-  //     period,
-  //     4
-  //   )
-  //   : filterByPeriods(
-  //     penetracionProvincias.data.filter(
-  //       (r) => r.provincia === provincia
-  //     ),
-  //     period,
-  //     4
-  //   );
   const nationalRows = filterByPeriods(
     penetracion.data,
     period,
@@ -80,21 +67,6 @@ export function TelevisionPenetracion({
     4
   );
 
-  // const kpiItems =
-  //   getPenetracionKPIItems(
-  //     currentRows
-  //   );
-
-  // const evolutionData =
-  //   getPenetracionEvolutionData(
-  //     currentRows
-  //   );
-
-  // const insights =
-  //   getPenetracionInsights(
-  //     currentRows,
-  //     provincia
-  //   );
   const kpiItems = isArgentina
     ? getPenetracionKPIItems(nationalRows)
     : getPenetracionProvinciaKPIItems(provincialRows);

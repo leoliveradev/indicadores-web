@@ -6,7 +6,7 @@ import type {
 
 import { dispValue } from "@/lib/format";
 
-export function getAccesosProvinciaHighlights(
+export function getAccesosProvinciaKPIItems(
   rows: TelevisionAccesosProvinciaRow[]
 ): KPIItem[] {
   if (!rows.length) return [];
@@ -60,7 +60,7 @@ export function getAccesosProvinciaHighlights(
   ];
 }
 
-export function getPenetracionProvinciaHighlights(
+export function getPenetracionProvinciaKPIItems(
   rows: TelevisionPenetracionProvinciaRow[]
 ): KPIItem[] {
   if (!rows.length) return [];

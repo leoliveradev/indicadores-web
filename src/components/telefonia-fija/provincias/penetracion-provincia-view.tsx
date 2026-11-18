@@ -25,7 +25,7 @@ import { IndicatorFilter }
   from "@/components/ui/filters/indicator-filter";
 
 import {
-  getPenetracionProvinciaHighlights,
+  getPenetracionProvinciaKPIItems,
 } from "@/lib/telefonia-fija/provincias";
 
 import type {
@@ -78,8 +78,8 @@ export function PenetracionProvinciaView({
 
   const top = rankingData[0];
 
-  const highlights =
-    getPenetracionProvinciaHighlights(
+  const kpiItems =
+    getPenetracionProvinciaKPIItems(
       provincias.data
     );
 
@@ -87,7 +87,7 @@ export function PenetracionProvinciaView({
     <>
       <KPISection
         title="Exploración provincial"
-        items={highlights}
+        items={kpiItems}
       />
 
       <IndicatorFilter

@@ -24,7 +24,7 @@ import { IndicatorFilter }
   from "@/components/ui/filters/indicator-filter";
 
 import {
-  getTecnologiaProvinciaHighlights,
+  getTecnologiaProvinciaKPIItems,
 } from "@/lib/internet/provincias";
 
 
@@ -74,8 +74,8 @@ export function TecnologiaProvinciaView({
       value: item.total,
     }));
 
-  const highlights =
-    getTecnologiaProvinciaHighlights(
+  const kpiItems =
+    getTecnologiaProvinciaKPIItems(
       tecnologiasProvincias.data
     );
 
@@ -84,7 +84,7 @@ export function TecnologiaProvinciaView({
 
       <KPISection
         title="Exploración provincial"
-        items={highlights}
+        items={kpiItems}
       />
 
       <IndicatorFilter

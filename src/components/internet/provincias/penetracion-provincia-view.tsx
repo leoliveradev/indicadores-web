@@ -21,7 +21,7 @@ import { ScrollableDualRanking }
 import type {
   InternetProvinciaView,
 } from "../internet-provincias";
-import { getPenetracionProvinciaHighlights } from "@/lib/internet/provincias";
+import { getPenetracionProvinciaKPIItems } from "@/lib/internet/provincias";
 import { KPISection } from "@/components/home/kpi-section";
 import { IndicatorFilter } from "@/components/ui/filters/indicator-filter";
 
@@ -85,8 +85,8 @@ export function PenetracionProvinciaView({
           : a
     );
 
-  const highlights =
-    getPenetracionProvinciaHighlights(
+  const kpiItems =
+    getPenetracionProvinciaKPIItems(
       penetracionProvincias.data
     );
 
@@ -94,7 +94,7 @@ export function PenetracionProvinciaView({
     <>
       <KPISection
         title="Exploración provincial"
-        items={highlights}
+        items={kpiItems}
       />
 
       <IndicatorFilter

@@ -27,7 +27,7 @@ import { IndicatorFilter }
   from "@/components/ui/filters/indicator-filter";
 
 import {
-  getVelocidadMediaProvinciaHighlights,
+  getVelocidadMediaProvinciaKPIItems,
 } from "@/lib/internet/provincias";
 
 import type {
@@ -66,8 +66,8 @@ export function VelocidadMediaProvinciaView({
 
   const top = rankingData[0];
 
-  const highlights =
-    getVelocidadMediaProvinciaHighlights(
+  const kpiItems =
+    getVelocidadMediaProvinciaKPIItems(
       provincias.data
     );
 
@@ -94,7 +94,7 @@ export function VelocidadMediaProvinciaView({
 
       <KPISection
         title="Exploración provincial"
-        items={highlights}
+        items={kpiItems}
       />
 
       <IndicatorFilter
