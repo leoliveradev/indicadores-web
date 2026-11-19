@@ -21,7 +21,7 @@ import { LineChartBase } from "@/components/ui/charts/line-chart-base";
 import { InsightsCard } from "@/components/ui/insights/insights-card";
 
 import { dispValue } from "@/lib/format";
-import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { GeoFilter } from "@/components/ui/filters/geo-filter";
 import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 export function InternetTecnologia({
@@ -99,7 +99,8 @@ export function InternetTecnologia({
               : `Evolución de accesos por tecnología · ${provincia}`}
           </h2>
 
-          <ProvinciaFilter
+          <GeoFilter
+            label="Provincia"
             value={provincia}
             options={provincias}
             onChange={setProvincia}

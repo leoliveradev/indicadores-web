@@ -90,3 +90,18 @@ export type InternetAccesosVelocidadComparacionKpi = {
   nacional: number;
   diferencia: number;
 };
+
+
+export type InternetAccesosVelocidadLocalidadRow = {
+  id: number;
+  created_at: string;
+
+  provincia: string;
+  partido: string;
+  localidad: string;
+
+  link_indec: number;
+
+  velocidad: number;
+  accesos: number;
+};

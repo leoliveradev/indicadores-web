@@ -18,14 +18,16 @@ import { KPISection } from "@/components/home/kpi-section";
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
 
+  import { LineChartBase }
+    from "@/components/ui/charts/line-chart-base";
+
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
-import { LineChartBase }
-  from "@/components/ui/charts/line-chart-base";
+
+import { GeoFilter } from "@/components/ui/filters/geo-filter";
+import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 import { dispValue } from "@/lib/format";
-import { ProvinciaFilter } from "../ui/filters/provincia-filter";
-import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 export function InternetVelocidadMedia({
   velocidadMedia,
@@ -106,7 +108,8 @@ export function InternetVelocidadMedia({
               : `Evolución histórica de la velocidad media · ${provincia}`}
           </h2>
 
-          <ProvinciaFilter
+          <GeoFilter
+            label="Provincia"
             value={provincia}
             options={provincias}
             onChange={setProvincia}

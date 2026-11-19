@@ -36,7 +36,7 @@ import { InsightsCard }
 import { dispValue }
   from "@/lib/format";
 import { KPISection } from "../home/kpi-section";
-import { ProvinciaFilter } from "@/components/ui/filters/provincia-filter";
+import { GeoFilter } from "@/components/ui/filters/geo-filter";
 
 type Props = {
   velocidades: ApiResponse<InternetAccesosVelocidadRow>;
@@ -201,7 +201,8 @@ export function InternetAccesosVelocidad({
           Accesos por velocidad
         </h2>
 
-        <ProvinciaFilter
+        <GeoFilter
+          label="Provincia"
           value={provincia}
           options={provincias}
           onChange={setProvincia}

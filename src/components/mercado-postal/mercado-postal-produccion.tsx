@@ -39,8 +39,9 @@ import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue }
   from "@/lib/format";
+  
+import { GeoFilter } from "@/components/ui/filters/geo-filter";
 import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
-import { ProvinciaFilter } from "../ui/filters/provincia-filter";
 
 type Props = {
   produccion: ApiResponse<MercadoPostalProduccionRow>;
@@ -105,7 +106,8 @@ export function MercadoPostalProduccion({
               : `Evolución histórica de producción · ${provincia}`}
           </h2>
 
-          <ProvinciaFilter
+          <GeoFilter
+            label="Provincia"
             value={provincia}
             options={provincias}
             onChange={setProvincia}

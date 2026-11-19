@@ -23,7 +23,7 @@ import {
 
 import { filterByPeriods, PeriodFilterValue } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
-import { ProvinciaFilter } from "../ui/filters/provincia-filter";
+import { GeoFilter } from "@/components/ui/filters/geo-filter";
 import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
 export function InternetPenetracion({
@@ -33,7 +33,7 @@ export function InternetPenetracion({
   penetracion: ApiResponse<InternetPenetracionRow>;
   penetracionProvincias: ApiResponse<InternetPenetracionProvinciaRow>;
 }) {
-  
+
   const [period, setPeriod] =
     useState<PeriodFilterValue>("all");
 
@@ -99,7 +99,8 @@ export function InternetPenetracion({
               : `Evolución de penetración · ${provincia}`}
           </h2>
 
-          <ProvinciaFilter
+          <GeoFilter
+            label="Provincia"
             value={provincia}
             options={provincias}
             onChange={setProvincia}
