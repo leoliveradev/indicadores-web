@@ -8,6 +8,7 @@ import type {
   InternetVelocidadMediaRow, 
   InternetVelocidadMediaProvinciasRow,
   InternetIngresosRow,
+  InternetAccesosVelocidadLocalidadRow,
 } from "@/lib/internet";
 
 export function getInternetTecnologias() {
@@ -31,6 +32,69 @@ export function getInternetTecnologiaProvinciasLatest() {
 export function getInternetAccesosVelocidadProvincias() {
   return get<ApiResponse<InternetAccesosVelocidadRow>>(
     "/api/v1/internet/accesos/velocidad/provincias/latest"
+  );
+}
+
+type AccesosVelocidadLocalidadesParams = {
+  provincia?: string;
+  partido?: string;
+  localidad?: string;
+  page?: number;
+  limit?: number;
+};
+
+export function getInternetAccesosVelocidadLocalidades(
+  params?: AccesosVelocidadLocalidadesParams
+) {
+  const searchParams =
+    new URLSearchParams();
+
+  if (params?.provincia) {
+    searchParams.set(
+      "provincia",
+      params.provincia
+    );
+  }
+
+  if (params?.partido) {
+    searchParams.set(
+      "partido",
+      params.partido
+    );
+  }
+
+  if (params?.localidad) {
+    searchParams.set(
+      "localidad",
+      params.localidad
+    );
+  }
+
+  if (params?.page) {
+    searchParams.set(
+      "page",
+      String(params.page)
+    );
+  }
+
+  if (params?.limit) {
+    searchParams.set(
+      "limit",
+      String(params.limit)
+    );
+  }
+
+  const query =
+    searchParams.toString();
+
+  return get<
+    ApiResponse<
+      InternetAccesosVelocidadLocalidadRow
+    >
+  >(
+    `/api/v1/internet/accesos/velocidad/localidades${
+      query ? `?${query}` : ""
+    }`
   );
 }
 
