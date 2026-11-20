@@ -398,3 +398,39 @@ export function getAccesosVelocidadComparacionInsights(
 
   return insights;
 }
+
+export function getAccesosVelocidadLocalidadInsights(
+  localidad: string,
+  rangos: InternetAccesosVelocidadRangoItem[],
+  porcentaje100Plus: number
+): Insight[] {
+
+  if (!rangos.length) {
+    return [];
+  }
+
+  const principalRango =
+    rangos.reduce((a, b) =>
+      b.accesos > a.accesos
+        ? b
+        : a
+    );
+
+  return [
+    {
+      type: "record",
+      title: "Rango predominante",
+      text:
+        `La mayor concentración de accesos en ${localidad} se encuentra en el rango ${principalRango.rango}.`,
+    },
+
+    {
+      type: "highlight",
+      title: "Conexiones de alta velocidad",
+      text:
+        `${fmtPercent(
+          porcentaje100Plus
+        )} de los accesos corresponden a velocidades superiores a 100 Mbps.`,
+    },
+  ];
+}

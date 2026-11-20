@@ -7,3 +7,4 @@ export * from "./penetracion";
 export * from "./ingresos";
 export * from "./insights";
 export * from "./accesos-velocidad";
+export * from "./accesos-velocidad-kpis";
