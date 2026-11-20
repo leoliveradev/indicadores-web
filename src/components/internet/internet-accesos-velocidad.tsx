@@ -14,9 +14,12 @@ import {
   getAccesosVelocidadData,
   getAccesosVelocidadRangosData,
   getAccesosVelocidadComparacionData,
+} from "@/lib/internet/accesos-velocidad";
+
+import {
   getAccesosVelocidadComparacionKpi,
   getAccesosVelocidadComparacionKPIItems,
-} from "@/lib/internet/accesos-velocidad";
+} from "@/lib/internet/accesos-velocidad-kpis";
 
 import {
   getAccesosVelocidadComparacionInsights,
@@ -35,7 +38,7 @@ import { InsightsCard }
 
 import { dispValue }
   from "@/lib/format";
-import { KPISection } from "../home/kpi-section";
+import { KPISection } from "@/components/home/kpi-section";
 import { GeoFilter } from "@/components/ui/filters/geo-filter";
 
 type Props = {
@@ -204,7 +207,10 @@ export function InternetAccesosVelocidad({
         <GeoFilter
           label="Provincia"
           value={provincia}
-          options={provincias}
+          options={provincias.map((provincia) => ({
+            value: provincia,
+            label: provincia,
+          }))}
           onChange={setProvincia}
           allLabel="Todas las provincias"
           allValue="all"
