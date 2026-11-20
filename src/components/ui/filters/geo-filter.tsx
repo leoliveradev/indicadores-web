@@ -1,7 +1,12 @@
+type SelectOption = {
+  value: string;
+  label: string;
+};
+
 type Props = {
   label: string;
   value: string;
-  options: string[];
+  options: SelectOption[];
   onChange: (value: string) => void;
 
   allLabel?: string;
@@ -35,10 +40,10 @@ export function GeoFilter({
 
         {options.map((option) => (
           <option
-            key={option}
-            value={option}
+            key={option.value}
+            value={option.value}
           >
-            {option}
+            {option.label}
           </option>
         ))}
       </select>
