@@ -18,8 +18,8 @@ import { KPISection } from "@/components/home/kpi-section";
 import { InsightsCard }
   from "@/components/ui/insights/insights-card";
 
-  import { LineChartBase }
-    from "@/components/ui/charts/line-chart-base";
+import { LineChartBase }
+  from "@/components/ui/charts/line-chart-base";
 
 import { filterByPeriods } from "@/lib/utils/filter-period";
 import { PeriodFilter } from "@/components/ui/filters/period-filter";
@@ -111,7 +111,10 @@ export function InternetVelocidadMedia({
           <GeoFilter
             label="Provincia"
             value={provincia}
-            options={provincias}
+            options={provincias.map((provincia) => ({
+              value: provincia,
+              label: provincia,
+            }))}
             onChange={setProvincia}
           />
 

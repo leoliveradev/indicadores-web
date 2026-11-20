@@ -102,7 +102,10 @@ export function TelevisionAccesos({
           <GeoFilter
             label="Provincia"
             value={provincia}
-            options={provincias}
+            options={provincias.map((provincia) => ({
+              value: provincia,
+              label: provincia,
+            }))}
             onChange={setProvincia}
           />
 

@@ -39,7 +39,7 @@ import { InsightsCard } from "../ui/insights/insights-card";
 
 import { dispValue }
   from "@/lib/format";
-  
+
 import { GeoFilter } from "@/components/ui/filters/geo-filter";
 import { useProvinciaSelector } from "@/hooks/use-provincia-selector";
 
@@ -109,7 +109,10 @@ export function MercadoPostalProduccion({
           <GeoFilter
             label="Provincia"
             value={provincia}
-            options={provincias}
+            options={provincias.map((provincia) => ({
+              value: provincia,
+              label: provincia,
+            }))}
             onChange={setProvincia}
           />
 
